@@ -1,0 +1,25 @@
+{
+  "name": "bloodboiler",
+  "version": "1.0.0",
+  "description": "A API boilerplate using ExpressJS/MongoDB authentication ready and more",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0"
+  }
+}
