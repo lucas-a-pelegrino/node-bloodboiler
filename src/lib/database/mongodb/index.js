@@ -4,7 +4,7 @@ const {
   dbUser,
   dbPassword,
   host,
-} = require('../../../../config.json');
+} = require('../../../config/config');
 
 module.exports = {
   connect: async () => {
