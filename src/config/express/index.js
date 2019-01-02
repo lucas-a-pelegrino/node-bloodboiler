@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const version = require('../config.json');
+const { version } = require('../config.json');
 const routes = require('../../routes');
 const database = require('../../lib/database/mongodb');
 
