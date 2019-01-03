@@ -1,28 +1,24 @@
 const { Schema } = require('mongoose');
 
-// const { Schema } = mongoose.Schema;
-
 const userSchema = new Schema({
-  // Default user attributes;
   name: {
     type: String,
-    required: [true],
+    required: true,
   },
   email: {
     type: String,
-    required: [true],
+    required: true,
     index: true,
   },
   password: {
     type: String,
-    required: [true],
+    required: true,
   },
   meta: {
     token: String,
     os: String,
   },
 
-  // Set other attributes for user here;
-}, { timestamps: true, collection: 'users' });
+}, { timestamps: true });
 
 module.exports = { userSchema };

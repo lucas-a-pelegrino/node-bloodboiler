@@ -1,14 +1,32 @@
 const mongoose = require('mongoose');
 const {
-  users,
+  userSchema,
 } = require('../models/user/schema');
 
-module.exports = {
-  getUsers: (filters) => {
-    const model = mongoose.model('User', users);
+const model = mongoose.model('User', userSchema);
 
+module.exports = {
+  getUsers: () => {
     try {
-      return model.find(filters);
+      return model.find();
+    } catch (error) {
+      console.error(error); // eslint-disable-line
+      return error;
+    }
+  },
+
+  getUserById: (id) => {
+    try {
+      return model.findById(id);
+    } catch (error) {
+      console.error(error); // eslint-disable-line
+      return error;
+    }
+  },
+
+  createUser: (params) => {
+    try {
+      return model.create(params);
     } catch (error) {
       console.error(error); // eslint-disable-line
       return error;
