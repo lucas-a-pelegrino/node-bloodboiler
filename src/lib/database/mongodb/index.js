@@ -19,6 +19,7 @@ module.exports = {
       await mongoose.connect(`mongodb://${dbUrl}`, {
         useNewUrlParser: true,
         useCreateIndex: true,
+        useFindAndModify: false,
       });
     } catch (error) {
       throw new Error(error);

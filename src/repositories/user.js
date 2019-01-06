@@ -10,7 +10,6 @@ module.exports = {
     try {
       return model.find();
     } catch (error) {
-      console.error(error); // eslint-disable-line
       return error;
     }
   },
@@ -19,7 +18,16 @@ module.exports = {
     try {
       return model.findById(id);
     } catch (error) {
-      console.error(error); // eslint-disable-line
+      return error;
+    }
+  },
+
+  getUserByEmail: (email) => {
+    try {
+      return model.findOne({
+        email,
+      });
+    } catch (error) {
       return error;
     }
   },
@@ -28,7 +36,14 @@ module.exports = {
     try {
       return model.create(params);
     } catch (error) {
-      console.error(error); // eslint-disable-line
+      return error;
+    }
+  },
+
+  updateUser: (id, params) => {
+    try {
+      return model.findByIdAndUpdate(id, { $set: params }, { new: true });
+    } catch (error) {
       return error;
     }
   },
