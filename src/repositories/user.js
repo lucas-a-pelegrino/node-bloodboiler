@@ -24,9 +24,7 @@ module.exports = {
 
   getUserByEmail: (email) => {
     try {
-      return model.findOne({
-        email,
-      });
+      return model.findOne({ email }, { _id: false });
     } catch (error) {
       return error;
     }

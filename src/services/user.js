@@ -1,7 +1,7 @@
 const {
   getUsers,
   getUserById,
-  // getUserByEmail,
+  getUserByEmail,
   createUser,
   updateUser,
 } = require('../repositories');
@@ -12,11 +12,10 @@ module.exports = {
 
   getUserById: id => getUserById(id),
 
-  createUser: (params) => {
+  createUser: async (params) => {
     try {
-      // TODO: Validate email uniqueness
-      // const user = getUserByEmail(params.email);
-      // if (user) return { errors: ['email-already-in-use'] };
+      const user = await getUserByEmail(params.email);
+      if (user) return { errors: ['email-already-in-use'] };
       params.password = encryptor.hashPassword(params.password); // eslint-disable-line
       return createUser(params);
     } catch (error) {
