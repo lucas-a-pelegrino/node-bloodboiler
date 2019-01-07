@@ -4,7 +4,7 @@ const {
   dbUser,
   dbPassword,
   host,
-} = require('../../../../config.json');
+} = require('../../../config/config');
 
 module.exports = {
   connect: async () => {
@@ -18,6 +18,8 @@ module.exports = {
 
       await mongoose.connect(`mongodb://${dbUrl}`, {
         useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
       });
     } catch (error) {
       throw new Error(error);

@@ -3,5 +3,6 @@
   "database": "node-bloodboiler",
   "dbUser": "",
   "dbPassword": "",
-  "host": "localhost"
+  "host": "localhost",
+  "secret": "b76d3ead-09b3-4007-b124-e0264c9ce554"
 }
