@@ -4,6 +4,7 @@ const {
   getUserByEmail,
   createUser,
   updateUser,
+  deleteUser,
 } = require('../repositories');
 const encryptor = require('../utils/encryptor');
 
@@ -25,4 +26,6 @@ module.exports = {
   },
 
   updateUserById: (id, params) => updateUser(id, params),
+
+  deleteUserById: id => deleteUser(id),
 };

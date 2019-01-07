@@ -45,4 +45,12 @@ module.exports = {
       return error;
     }
   },
+
+  deleteUser: (id) => {
+    try {
+      return model.findByIdAndDelete(id);
+    } catch (error) {
+      return error;
+    }
+  },
 };
