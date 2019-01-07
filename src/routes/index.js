@@ -2,17 +2,14 @@ const {
   Router,
 } = require('express');
 
-const {
-  list,
-} = require('../controllers/user/list');
-
 const router = Router();
-
-router.get('/', (req, res) => { 
-  return res.status(200).json({ message: 'test' });
-});
+const userRoutes = require('../controllers/user');
 
 // User routes
-router.get('/users', list);
+router.get('/users', userRoutes.list);
+router.get('/users/:_id', userRoutes.get);
+router.post('/users', userRoutes.create);
+router.put('/users/:_id', userRoutes.update);
+router.delete('/users/:_id', userRoutes.destroy);
 
 module.exports = router;
