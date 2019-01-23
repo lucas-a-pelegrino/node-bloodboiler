@@ -1,6 +1,5 @@
 const {
   authenticateUser,
-  updateUserById,
 } = require('../../services');
 
 module.exports = {

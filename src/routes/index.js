@@ -3,7 +3,7 @@ const {
 } = require('express');
 
 const router = Router();
-const isAuthorized = require('../middlewares/isAuthorized');
+const { isAuthorized } = require('../middlewares');
 const authRoutes = require('../controllers/auth');
 const userRoutes = require('../controllers/user');
 
