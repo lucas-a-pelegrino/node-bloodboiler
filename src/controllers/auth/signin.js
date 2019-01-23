@@ -1,14 +1,14 @@
 const {
   authenticateUser,
+  updateUserById,
 } = require('../../services');
 
 module.exports = {
   signin: async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, meta } = req.body;
 
     try {
-      const auth = await authenticateUser(email, password);
-      // TODO: Create service that saves user meta to db.
+      const auth = await authenticateUser(email, password, meta);
       return res.status(200).json({
         auth,
       });

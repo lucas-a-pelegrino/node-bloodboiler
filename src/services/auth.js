@@ -1,8 +1,11 @@
-const { getUserByEmail } = require('../repositories');
+const {
+  getUserByEmail,
+  updateUser,
+} = require('../repositories');
 const { encryptor } = require('../utils');
 
 module.exports = {
-  authenticateUser: async (email, password) => {
+  authenticateUser: async (email, password, meta = null) => {
     if (!email || !password) {
       throw new Error('missing-email-or-password', 401);
     }
@@ -15,6 +18,10 @@ module.exports = {
 
       if (!encryptor.comparePassword(password, user.password)) {
         throw new Error('password-invalid');
+      }
+
+      if (meta) {
+        await updateUser(user.id, { meta });
       }
 
       const token = encryptor.generateToken({ id: user.id, name: user.name, email: user.email });
