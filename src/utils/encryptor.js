@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require('./jwt');
 
 module.exports = {
 
@@ -6,4 +7,5 @@ module.exports = {
 
   comparePassword: (password, userPassword) => bcrypt.compareSync(password, userPassword),
 
+  generateToken: user => jwt.issue({ user }),
 };
