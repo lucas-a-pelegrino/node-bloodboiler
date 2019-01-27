@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
-const { schema } = require('./schema');
+const { userSchema } = require('./schema');
 
 // Hooks
+userSchema.methods.toJSON = function toJSON() {
+  const obj = this.toObject();
+  delete obj.password;
+  delete obj.__v;
+  return obj;
+};
 
-const User = mongoose.model('User', schema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;

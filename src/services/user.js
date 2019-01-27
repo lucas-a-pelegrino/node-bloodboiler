@@ -20,7 +20,6 @@ module.exports = {
       params.password = encryptor.hashPassword(params.password); // eslint-disable-line
       return createUser(params);
     } catch (error) {
-      console.error(error); // eslint-disable-line
       return error;
     }
   },

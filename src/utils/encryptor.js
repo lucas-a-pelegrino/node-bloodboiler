@@ -8,4 +8,6 @@ module.exports = {
   comparePassword: (password, userPassword) => bcrypt.compareSync(password, userPassword),
 
   generateToken: user => jwt.issue({ user }),
+
+  generateRandString: () => Math.random().toString(36).substring(2, 15),
 };

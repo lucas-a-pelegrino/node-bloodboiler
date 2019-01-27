@@ -1,19 +1,16 @@
 const mongoose = require('mongoose');
 const {
   database,
-  dbUser,
-  dbPassword,
-  host,
 } = require('../../../config/config');
 
 module.exports = {
   connect: async () => {
     try {
       let dbUrl;
-      if (dbUser && dbPassword) {
-        dbUrl = `${dbUser}:${dbPassword}@${host}:27017/${database}`;
+      if (database.user && database.password) {
+        dbUrl = `${database.user}:${database.password}@${database.host}:${database.port}/${database.name}`;
       } else {
-        dbUrl = `${host}:27017/${database}`;
+        dbUrl = `${database.host}:${database.port}/${database.name}`;
       }
 
       await mongoose.connect(`mongodb://${dbUrl}`, {

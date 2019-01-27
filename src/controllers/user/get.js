@@ -12,7 +12,6 @@ module.exports = {
         user,
       });
     } catch (error) {
-      console.error(error); // eslint-disable-line
       res.status(500).json({
         errors: [error],
       });
