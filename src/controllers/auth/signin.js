@@ -1,13 +1,13 @@
 const {
-  authenticateUser,
-} = require('../../services');
+  authenticate,
+} = require('../../services/auth');
 
 module.exports = {
   signin: async (req, res) => {
     const { email, password, meta } = req.body;
 
     try {
-      const auth = await authenticateUser(email, password, meta);
+      const auth = await authenticate(email, password, meta);
       return res.status(200).json({
         auth,
       });

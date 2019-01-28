@@ -1,14 +1,14 @@
 const {
-  resetUserPassword,
-} = require('../../services');
+  resetPassword,
+} = require('../../services/auth');
 const { mailer } = require('../../utils');
 
 module.exports = {
-  forgetPassword: async (req, res) => {
+  forgotPassword: async (req, res) => {
     const email = req.param('email');
 
     try {
-      const user = await resetUserPassword(email);
+      const user = await resetPassword(email);
       const response = await mailer.dispatchMail(user);
       return res.status(200).json(response);
     } catch (error) {

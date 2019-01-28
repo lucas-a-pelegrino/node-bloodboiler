@@ -11,7 +11,6 @@ const userRoutes = require('../controllers/user');
 router.post('/auth/signin', authRoutes.signin);
 router.get('/auth/forgot-password/:email', authRoutes.forgetPassword);
 
-
 // User routes
 router.get('/users', isAuthorized, userRoutes.list);
 router.get('/users/:_id', isAuthorized, userRoutes.get);
