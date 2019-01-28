@@ -1,6 +1,6 @@
 const {
   deleteUserById,
-} = require('../../services');
+} = require('../../services/user');
 
 module.exports = {
   destroy: async (req, res) => {

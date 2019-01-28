@@ -22,9 +22,9 @@ module.exports = {
     }
   },
 
-  getUserByEmail: (email) => {
+  getUserBy: (param) => {
     try {
-      return model.findOne({ email });
+      return model.findOne(param);
     } catch (error) {
       return error;
     }

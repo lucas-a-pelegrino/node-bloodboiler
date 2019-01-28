@@ -1,6 +1,6 @@
 const { promisify } = require('util');
 const jwt = require('../utils/jwt');
-const { getUserById } = require('../services');
+const { getUserById } = require('../services/user');
 
 const verify = promisify(jwt.verify);
 

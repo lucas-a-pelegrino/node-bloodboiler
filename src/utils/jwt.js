@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {
   secret,
-} = require('../config/config.json');
+} = require('../config/config');
 
 module.exports = {
   issue: payload => jwt.sign(payload, secret, { algorithm: 'HS256' }),
