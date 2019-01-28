@@ -1,5 +1,5 @@
 const {
-  getUserByEmail,
+  getUserBy,
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
@@ -11,7 +11,7 @@ module.exports = {
     }
 
     try {
-      const user = await getUserByEmail(email);
+      const user = await getUserBy({ email });
       if (!user) {
         throw new Error('user-not-found');
       }

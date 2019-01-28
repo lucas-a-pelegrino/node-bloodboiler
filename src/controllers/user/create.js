@@ -8,12 +8,11 @@ module.exports = {
 
     try {
       const user = await createUser(params);
-      res.status(200).json({
+      return res.status(200).json({
         user,
       });
     } catch (error) {
-      console.error(error); // eslint-disable-line
-      res.status(500).json({
+      return res.status(500).json({
         errors: [error],
       });
     }
