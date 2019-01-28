@@ -1,6 +1,6 @@
 const {
   updateUserById,
-} = require('../../services');
+} = require('../../services/user');
 
 module.exports = {
   update: async (req, res) => {
