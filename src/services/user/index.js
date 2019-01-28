@@ -3,6 +3,7 @@ const { getUserById } = require('./get');
 const { createUser } = require('./create');
 const { updateUserById } = require('./update');
 const { deleteUserById } = require('./destroy');
+const { resetPasswordByToken } = require('./reset-password');
 
 module.exports = {
   getUsers,
@@ -10,4 +11,5 @@ module.exports = {
   createUser,
   updateUserById,
   deleteUserById,
+  resetPasswordByToken,
 };

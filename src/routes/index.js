@@ -17,6 +17,6 @@ router.get('/users/:_id', isAuthorized, userRoutes.get);
 router.post('/users', isAuthorized, userRoutes.create);
 router.put('/users/:_id', isAuthorized, userRoutes.update);
 router.delete('/users/:_id', isAuthorized, userRoutes.destroy);
-// router.patch('/users/:token/reset-password', userRoutes.resetPassword);
+router.patch('/users/:token/reset-password', userRoutes.resetPassword);
 
 module.exports = router;
