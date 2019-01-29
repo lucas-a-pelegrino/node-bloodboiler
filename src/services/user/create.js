@@ -16,7 +16,7 @@ module.exports = {
 
       return createUser(params);
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };

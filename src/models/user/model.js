@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { userSchema } = require('./schema');
+const userSchema = require('./schema');
 
 // Hooks
 userSchema.methods.toJSON = function toJSON() {

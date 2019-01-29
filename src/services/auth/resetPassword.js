@@ -25,7 +25,7 @@ module.exports = {
 
       return updated;
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };

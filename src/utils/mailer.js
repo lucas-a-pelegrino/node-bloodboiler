@@ -44,7 +44,7 @@ module.exports = {
 
       return dispatcher;
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };

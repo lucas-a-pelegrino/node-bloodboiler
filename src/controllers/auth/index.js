@@ -1,5 +1,5 @@
 const { signin } = require('./signin');
-const { forgotPassword } = require('./forgot-password');
+const { forgotPassword } = require('./forgotPassword');
 
 module.exports = {
   signin,
