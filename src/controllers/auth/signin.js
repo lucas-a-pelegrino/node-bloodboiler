@@ -14,7 +14,7 @@ module.exports = {
     } catch (error) {
       // TODO: Implement custom error handler for authenticaiton failure.
       return res.status(500).json({
-        errors: [error],
+        errors: [error.message],
       });
     }
   },

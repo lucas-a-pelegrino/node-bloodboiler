@@ -37,7 +37,7 @@ module.exports = {
         token,
       };
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };

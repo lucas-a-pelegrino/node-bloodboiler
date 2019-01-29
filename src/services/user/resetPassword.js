@@ -34,7 +34,7 @@ module.exports = {
 
       return updatedUser;
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };

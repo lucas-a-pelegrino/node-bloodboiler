@@ -26,13 +26,15 @@ const userSchema = new Schema({
     type: Date,
   },
 
-}, { timestamps: true });
+}, { timestamps: true, collection: 'users' });
 
 userSchema.methods.toJSON = function toJSON() {
   const obj = this.toObject();
   delete obj.password;
   delete obj.__v;
+  delete obj.passwordResetToken;
+  delete obj.passwordResetTokenExpiresAt;
   return obj;
 };
 
-module.exports = { userSchema };
+module.exports = userSchema;

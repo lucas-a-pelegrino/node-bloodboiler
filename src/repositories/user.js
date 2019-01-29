@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
-const {
-  userSchema,
-} = require('../models/user/schema');
+const userSchema = require('../models/user/schema');
 
 const model = mongoose.model('User', userSchema);
 
 module.exports = {
   getUsers: () => {
     try {
-      return model.find();
+      return model.find({});
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -18,7 +16,7 @@ module.exports = {
     try {
       return model.findById(id);
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -26,7 +24,7 @@ module.exports = {
     try {
       return model.findOne(param);
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -34,7 +32,7 @@ module.exports = {
     try {
       return model.create(params);
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -42,7 +40,7 @@ module.exports = {
     try {
       return model.findByIdAndUpdate(id, { $set: params }, { new: true });
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 
@@ -50,7 +48,7 @@ module.exports = {
     try {
       return model.findByIdAndDelete(id);
     } catch (error) {
-      return error;
+      throw error;
     }
   },
 };
