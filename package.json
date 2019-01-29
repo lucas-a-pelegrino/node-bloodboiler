@@ -15,7 +15,9 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
-    "nodemailer": "^5.1.1"
+    "nodemailer": "^5.1.1",
+    "swagger-express": "^1.0.5",
+    "swagger-express-middleware": "^2.0.1"
   },
   "devDependencies": {
     "eslint": "^5.11.1",
