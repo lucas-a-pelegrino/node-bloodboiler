@@ -1,0 +1,63 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Robbyson issues report api
+
+schemes:
+  - http
+  - https
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+
+host: 'localhost:3000'
+
+basePath: '/api/v1'
+
+paths:
+  '/auth/signin':
+    post:
+      summary: summary
+      description: description
+      parameters: 
+        - in: body
+          name: auth
+          schema:
+            type: object
+            required: 
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              meta:
+                type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthSuccess'
+        500:
+          description: Generic server error
+          schema:
+            $ref: '#/definitions/Error'
+        422:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Error:
+    type: array
+    items:
+      type: string
+  AuthSuccess:
+    type: object
+    properties:
+      auth:
+        type: object
