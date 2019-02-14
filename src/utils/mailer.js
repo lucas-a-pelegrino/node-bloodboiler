@@ -40,9 +40,7 @@ module.exports = {
               <span><b>ATENTION</b> If you have not request for this, contact your system administrator.</span>`,
       };
 
-      const dispatcher = await transporter.sendMail(message);
-
-      return dispatcher;
+      return transporter.sendMail(message);
     } catch (error) {
       throw error;
     }
