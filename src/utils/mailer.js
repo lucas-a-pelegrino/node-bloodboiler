@@ -30,19 +30,17 @@ module.exports = {
         to: user.email,
         subject: 'Password Reset',
         text: `You have request a password reset, access the link below to update your password:\n
-              ${baseUrl}/password-reset/${user.resetToken}\n
+              ${baseUrl}/users/${user.passwordResetToken}/reset-password\n
               If you have not request for this, contact your system administrator.`,
         html: `<span>You have request a password reset, access the link below to update your password:</span>
               <br>
-              <span>${baseUrl}/password-reset/${user.resetToken}</span>
+              <span>${baseUrl}/users/${user.passwordResetToken}/reset-password</span>
               <br>
               <hr>
               <span><b>ATENTION</b> If you have not request for this, contact your system administrator.</span>`,
       };
 
-      const dispatcher = await transporter.sendMail(message);
-
-      return dispatcher;
+      return transporter.sendMail(message);
     } catch (error) {
       throw error;
     }
