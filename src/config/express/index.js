@@ -10,7 +10,7 @@ const app = express();
 database.connect();
 
 app.set('port', process.env.PORT || 3000);
-const host = process.env.HOST || 'http://localhost:3000';
+const host = process.env.HOST || 'localhost';
 
 app.use(express.static('public'));
 app.use(

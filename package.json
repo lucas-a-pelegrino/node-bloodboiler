@@ -25,13 +25,25 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
+    "jest-yaml-transform": "^0.2.0",
     "nodemon": "^1.18.10",
     "supertest": "^3.3.0"
   },
   "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/public/"
-    ]
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "yml"
+    ],
+    "transform": {
+      "\\.yml$": "jest-yaml-transform"
+    }
   }
 }
