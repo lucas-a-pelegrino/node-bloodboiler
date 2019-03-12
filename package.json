@@ -27,5 +27,11 @@
     "jest": "^23.6.0",
     "nodemon": "^1.18.10",
     "supertest": "^3.3.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/public/"
+    ]
   }
 }

@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '1.0'
-  title: node-api-bloodboiler
+  title: "Node Boilerplate"
 
 schemes:
   - http
@@ -220,9 +220,6 @@ paths:
           type: string
         - in: body
           name: password
-          required:
-            - password
-            - passwordConfirmation
           schema:
             type: object
             properties:
