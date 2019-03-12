@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
   "license": "MIT",
@@ -27,14 +27,5 @@
     "jest": "^23.6.0",
     "nodemon": "^1.18.10",
     "supertest": "^3.3.0"
-  },
-  "jest": {
-    "verbose": true,
-    "automock": true,
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "<rootDir>/public",
-      "<rootDir>/node_modules"
-    ]
   }
 }
