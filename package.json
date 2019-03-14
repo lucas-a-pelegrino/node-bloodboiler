@@ -31,10 +31,10 @@
   },
   "jest": {
     "verbose": true,
+    "automock": false,
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/public/"
+      "/node_modules/"
     ],
     "moduleFileExtensions": [
       "js",
