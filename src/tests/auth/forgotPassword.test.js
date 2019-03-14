@@ -18,7 +18,9 @@ describe('Authentication Test', () => {
     };
 
     const response = await request(app).get(`${apiVersion}/auth/forgot-password/${params.email}`);
-
+    
     expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toBe('email-sent');
   });
 });
