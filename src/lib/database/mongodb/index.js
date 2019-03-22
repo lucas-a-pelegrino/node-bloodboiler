@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {
   database,
-} = require('../../../config/config');
+} = require('../../../config/env/development');
 
 module.exports = {
   connect: async () => {
