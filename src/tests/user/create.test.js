@@ -3,13 +3,13 @@ const app = require('../../config/express');
 const {
   version,
 } = require('../../config/config.js');
-const mongoose = require('mongoose');
 
 describe('POST /users', () => {
   const apiVersion = `/api/${version}`;
   let headers;
 
   beforeAll(async () => {
+    jest.setTimeout(5000);
     const body = {
       email: "johndoe@email.com",
       password: "12341234",
@@ -22,17 +22,13 @@ describe('POST /users', () => {
     };
   });
 
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
-
   const params = {
     name: 'Jane Doe',
     email: 'janedoe@email.com',
     password: '123123test'
   };
 
-  it('Should create an user by ID.', async () => {
+  it('Should create an user', async () => {
 
     const response = await request(app)
                             .post(`${apiVersion}/users`)

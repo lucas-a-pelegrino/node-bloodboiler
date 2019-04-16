@@ -3,7 +3,6 @@ const app = require('../../config/express');
 const {
   version,
 } = require('../../config/config.js');
-const mongoose = require('mongoose');
 
 describe('PUT /users/:id', () => {
   const apiVersion = `/api/${version}`;
@@ -11,6 +10,7 @@ describe('PUT /users/:id', () => {
   let headers;
 
   beforeAll(async () => {
+    jest.setTimeout(5000);
     const body = {
       email: "johndoe@email.com",
       password: "12341234",
@@ -22,10 +22,6 @@ describe('PUT /users/:id', () => {
     headers = {
       token,
     };
-  });
-
-  afterAll(async () => {
-    await mongoose.disconnect();
   });
 
   it('Should update an user by ID.', async () => {

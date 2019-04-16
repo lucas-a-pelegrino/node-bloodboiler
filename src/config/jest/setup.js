@@ -2,15 +2,14 @@ const mongoose = require('mongoose');
 
 const {
   database,
-} = require('../config/env/development');
+} = require('../env/test');
 
 const {
   createUser,
-} = require('../services/user');
+} = require('../../services/user');
 
 beforeAll(async done => { // eslint-disable-line
   try {
-    console.log('Finish beforeall');
     let dbUrl;
     if (database.user && database.password) {
       dbUrl = `${database.user}:${database.password}@${database.host}:${database.port}/${database.name}`;
@@ -23,7 +22,7 @@ beforeAll(async done => { // eslint-disable-line
       useCreateIndex: true,
       useFindAndModify: false,
     });
-
+    mongoose.connection.db.dropCollection('users');
 
     const params = {
       name: 'John Doe',
@@ -38,11 +37,9 @@ beforeAll(async done => { // eslint-disable-line
   }
 });
 
-afterAll(async done => { // eslint-disable-line
+afterAll(done => { // eslint-disable-line
   try {
-    await mongoose.connection.db.dropDatabase();
-    await mongoose.disconnect();
-    console.log('Finish afterall');
+    mongoose.disconnect();
     done();
   } catch (error) {
     throw new Error(error);

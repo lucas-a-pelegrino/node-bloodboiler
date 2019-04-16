@@ -3,9 +3,9 @@ const app = require('../../config/express');
 const {
   version,
 } = require('../../config/config.js');
-const mongoose = require('mongoose');
 
 describe('GET /users', () => {
+  jest.setTimeout(5000);
   const apiVersion = `/api/${version}`;
   let headers;
 
@@ -20,10 +20,6 @@ describe('GET /users', () => {
     headers = {
       token,
     };
-  });
-
-  afterAll(async () => {
-    await mongoose.disconnect();
   });
 
   it('Should list users.', async () => {

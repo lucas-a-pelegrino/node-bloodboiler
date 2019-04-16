@@ -3,8 +3,6 @@ const app = require('../../config/express');
 const {
   version,
 } = require('../../config/config.js');
-const mongoose = require('mongoose');
-
 
 describe('GET /users/:id', () => {
   const apiVersion = `/api/${version}`;
@@ -12,6 +10,7 @@ describe('GET /users/:id', () => {
   let headers;
 
   beforeAll(async () => {
+    jest.setTimeout(5000);
     const body = {
       email: "johndoe@email.com",
       password: "12341234",
@@ -25,15 +24,11 @@ describe('GET /users/:id', () => {
     };
   });
 
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
-
   it('Should get user data based on the user id.', async () => {
     const response = await request(app)
                             .get(`${apiVersion}/users/${userId}`)
                             .set('Authorization', headers.token);
-
+    
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('_id');
     expect(response.body).toHaveProperty('name');
