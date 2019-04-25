@@ -8,12 +8,11 @@ module.exports = {
 
     try {
       const auth = await authenticate(email, password, meta);
-      return res.status(200).json({
+      res.status(200).json({
         auth,
       });
     } catch (error) {
-      // TODO: Implement custom error handler for authenticaiton failure.
-      return res.status(error.status).json({
+      res.status(error.status).json({
         name: error.name,
         message: error.message,
       });

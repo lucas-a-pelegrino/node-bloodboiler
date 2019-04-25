@@ -8,13 +8,13 @@ const AuthorizationError = require('../../lib/errors/AuthorizationError');
 module.exports = {
   authenticate: async (email, password, meta = null) => {
     if (!email || !password) {
-      throw new AuthorizationError('missing-email-or-password', 401);
+      throw new AuthorizationError('missing-email-or-password', 400);
     }
 
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new AuthorizationError('user-not-found', 401);
+        throw new AuthorizationError('user-not-found', 404);
       }
 
       if (!encryptor.comparePassword(password, user.password)) {
