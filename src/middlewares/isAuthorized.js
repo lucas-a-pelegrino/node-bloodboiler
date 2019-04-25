@@ -1,6 +1,7 @@
 const { promisify } = require('util');
 const jwt = require('../utils/jwt');
 const { getUserById } = require('../services/user');
+const ErrorHandler = require('../lib/errors');
 
 const verify = promisify(jwt.verify);
 
@@ -17,17 +18,17 @@ module.exports = async (req, res, next) => {
         if (/^Bearer$/i.test(scheme)) {
           token = credentials;
         } else {
-          return res.status(401).json({ errors: ['wrong-authorization-format'] });
+          throw new ErrorHandler.AuthorizationError('wrong-authorization-format', 401);
         }
       }
     } else {
-      return res.status(401).json({ errors: ['wrong-authorization-format'] });
+      throw new ErrorHandler.AuthorizationError('wrong-authorization-format', 401);
     }
     const decoded = await verify(token);
     const user = await getUserById(decoded.user.id);
 
     if (!user) {
-      return res.status(401).json({ errors: ['user-not-found'] });
+      throw new ErrorHandler.ApplicationError('user-not-found', 404);
     }
 
     req.session = {
@@ -37,6 +38,9 @@ module.exports = async (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(401).json(error);
+    res.status(error.status).json({
+      name: error.name,
+      message: error.message,
+    });
   }
 };
