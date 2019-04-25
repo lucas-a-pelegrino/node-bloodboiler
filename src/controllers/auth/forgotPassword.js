@@ -12,8 +12,9 @@ module.exports = {
       const response = await mailer.dispatchMail(user);
       res.status(200).json(response);
     } catch (error) {
-      res.status(500).json({
-        errors: [error],
+      res.status(error.status).json({
+        name: error.name,
+        message: error.message,
       });
     }
   },
