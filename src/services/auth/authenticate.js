@@ -3,21 +3,22 @@ const {
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
+const AuthorizationError = require('../../lib/errors/AuthorizationError');
 
 module.exports = {
   authenticate: async (email, password, meta = null) => {
     if (!email || !password) {
-      throw new Error('missing-email-or-password');
+      throw new AuthorizationError('missing-email-or-password', 401);
     }
 
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new Error('user-not-found');
+        throw new AuthorizationError('user-not-found', 401);
       }
 
       if (!encryptor.comparePassword(password, user.password)) {
-        throw new Error('password-invalid');
+        throw new AuthorizationError('password-invalid', 401);
       }
 
       if (meta) {
