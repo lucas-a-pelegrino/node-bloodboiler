@@ -9,8 +9,10 @@ module.exports = {
 
     try {
       const user = await resetPassword(email);
-      const response = await mailer.dispatchMail(user);
-      res.status(200).json(response);
+      mailer.dispatchMail(user);
+      res.status(200).json({
+        message: 'email-sent',
+      });
     } catch (error) {
       res.status(500).json({
         errors: [error],

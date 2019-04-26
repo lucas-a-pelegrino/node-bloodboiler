@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles"
   },
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
   "license": "MIT",
@@ -25,7 +25,25 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
+    "jest-yaml-transform": "^0.2.0",
     "nodemon": "^1.18.10",
     "supertest": "^3.3.0"
+  },
+  "jest": {
+    "verbose": true,
+    "automock": false,
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "yml"
+    ],
+    "transform": {
+      "\\.yml$": "jest-yaml-transform"
+    }
   }
 }
