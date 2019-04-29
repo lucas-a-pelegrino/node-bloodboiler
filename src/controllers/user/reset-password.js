@@ -2,7 +2,7 @@ const { resetPasswordByToken } = require('../../services/user');
 
 module.exports = {
   resetPassword: async (req, res) => {
-    const token = req.param('token');
+    const { token } = req.params;
     const {
       password,
       passwordConfirmation,

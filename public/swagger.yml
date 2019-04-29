@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '1.0'
-  title: Robbyson issues report api
+  title: "Node Boilerplate"
 
 schemes:
   - http
@@ -20,8 +20,10 @@ basePath: '/api/v1'
 paths:
   '/auth/signin':
     post:
-      summary: summary
-      description: description
+      summary: Authenticate user
+      description: Authenticate user
+      tags: 
+        - Authentication
       parameters: 
         - in: body
           name: auth
@@ -36,7 +38,12 @@ paths:
               password:
                 type: string
               meta:
-                type: string
+                type: object
+                properties:
+                  token:
+                    type: string
+                  os:
+                    type: string
       responses:
         200:
           description: OK
@@ -50,14 +57,216 @@ paths:
           description: Error
           schema:
             $ref: '#/definitions/Error'
+  '/auth/forgot-password/{email}':
+    get:
+      summary: Forgot password
+      description: Forgot password
+      tags: 
+        - Authentication
+      parameters:
+        - in: path
+          name: email
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/users':
+    parameters: 
+      - in: header
+        description: Bearer {token}
+        name: authorization
+        required: true
+        type: string
+
+    get:
+      summary: List
+      description: List users
+      tags: 
+        - Users
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        500:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+
+    post:
+      tags:
+        - Users
+      summary: Create
+      description: Create an user
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: '#/definitions/User'
+        500:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+  '/users/{_id}':
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        type: string
+      - in: header
+        name: authorization
+        required: true
+        type: string
+        description: Bearer {token}
+
+    get:
+      tags:
+        - Users
+      summary: Get
+      description: Get an user
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: Error server
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+
+    put:
+      tags:
+        - Users
+      summary: Update
+      description: Update an user
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: Error server
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+
+    delete:
+      tags:
+        - Users
+      summary: Delete
+      description: Delete an user
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/User'
+        500:
+          description: Error server
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/UnauthorizedError'
+
+  '/users/{token}/reset-password':
+    patch:
+      tags:
+        - Users
+      summary: Reset password
+      description: Reset password
+      parameters:
+        - in: path
+          name: token
+          required: true
+          type: string
+        - in: body
+          name: password
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+              passwordConfirmation:
+                type: string
+      responses:
+        200:
+          description: Ok
+        500:
+          description: Error server
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   Error:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: string
+  
+  UnauthorizedError:
     type: array
     items:
       type: string
+      default: wrong-authorization-format
+
   AuthSuccess:
     type: object
     properties:
       auth:
         type: object
+  
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      meta:
+        type: object
+        properties:
+          token:
+            type: string
+          os:
+            type: string

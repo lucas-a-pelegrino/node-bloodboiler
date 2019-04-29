@@ -4,19 +4,19 @@ const {
 
 const router = Router();
 const { isAuthorized } = require('../middlewares');
-const authRoutes = require('../controllers/auth');
-const userRoutes = require('../controllers/user');
+const authController = require('../controllers/auth');
+const userController = require('../controllers/user');
 
 // Authentication routes
-router.post('/auth/signin', authRoutes.signin);
-router.get('/auth/forgot-password/:email', authRoutes.forgotPassword);
+router.post('/auth/signin', authController.signin);
+router.get('/auth/forgot-password/:email', authController.forgotPassword);
 
 // User routes
-router.get('/users', isAuthorized, userRoutes.list);
-router.get('/users/:_id', isAuthorized, userRoutes.get);
-router.post('/users', isAuthorized, userRoutes.create);
-router.put('/users/:_id', isAuthorized, userRoutes.update);
-router.delete('/users/:_id', isAuthorized, userRoutes.destroy);
-router.patch('/users/:token/reset-password', userRoutes.resetPassword);
+router.get('/users', isAuthorized, userController.list);
+router.get('/users/:_id', isAuthorized, userController.get);
+router.post('/users', isAuthorized, userController.create);
+router.put('/users/:_id', isAuthorized, userController.update);
+router.delete('/users/:_id', isAuthorized, userController.destroy);
+router.patch('/users/:token/reset-password', userController.resetPassword);
 
 module.exports = router;
