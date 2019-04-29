@@ -30,11 +30,13 @@
     "supertest": "^3.3.0"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./src/config/jest/setup.js",
     "verbose": true,
     "automock": false,
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/config/"
     ],
     "moduleFileExtensions": [
       "js",
