@@ -3,15 +3,10 @@ const app = require('../../config/express');
 const {
   version,
 } = require('../../config/config.js');
-const mongoose = require('mongoose');
 
 
 describe('Authentication Test', () => {
   const apiVersion = `/api/${version}`;
-  
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
   
   it('Should sign in the user via email/password', async () => {
     const body = {

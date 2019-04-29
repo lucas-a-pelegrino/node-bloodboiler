@@ -3,7 +3,7 @@ const { get } = require('./get');
 const { create } = require('./create');
 const { update } = require('./update');
 const { destroy } = require('./destroy');
-const { resetPassword } = require('./reset-password');
+const { resetPassword } = require('./resetPassword');
 
 module.exports = {
   list,
