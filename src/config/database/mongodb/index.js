@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+
 const {
   database,
-} = require('../../../config/env/development');
+} = require(`../../../config/env/${process.env.NODE_ENV}`); //eslint-disable-line
 
 module.exports = {
   connect: async () => {

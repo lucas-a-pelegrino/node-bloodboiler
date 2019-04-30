@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
+
 const {
   secret,
-} = require('../config/config');
+} = require(`../config/env/${process.env.NODE_ENV}`); //eslint-disable-line
 
 module.exports = {
   issue: payload => jwt.sign(payload, secret, { algorithm: 'HS256' }),

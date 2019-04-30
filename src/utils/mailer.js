@@ -1,10 +1,9 @@
 const nodemailer = require('nodemailer');
+
 const {
   baseUrl,
-} = require('../config/config');
-const {
   mailAuth,
-} = require('../config/config');
+} = require(`../config/env/${process.env.NODE_ENV}`); //eslint-disable-line
 
 module.exports = {
   dispatchMail: async (user) => {
