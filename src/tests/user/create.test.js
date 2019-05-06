@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../config/express');
-const { version } = require(`../env/${process.env.NODE_ENV}`);
+const { version } = require('../../config/env/test');
 
 describe('POST /users', () => {
   const apiVersion = `/api/${version}`;
