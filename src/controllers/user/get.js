@@ -10,8 +10,9 @@ module.exports = {
       const user = await getUserById(_id);
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).json({
-        errors: [error],
+      res.status(error.status).json({
+        name: error.name,
+        message: error.message,
       });
     }
   },

@@ -9,8 +9,9 @@ module.exports = {
       const count = users.length;
       res.status(200).json({ data: users, count });
     } catch (error) {
-      res.status(500).json({
-        errors: [error],
+      res.status(error.status).json({
+        name: error.name,
+        message: error.message,
       });
     }
   },
