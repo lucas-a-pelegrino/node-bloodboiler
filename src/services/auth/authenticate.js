@@ -8,17 +8,17 @@ const ErrorHandler = require('../../lib/errors');
 module.exports = {
   authenticate: async (email, password, meta = null) => {
     if (!email || !password) {
-      throw new ErrorHandler.AuthorizationError('missing-email-or-password', 400);
+      throw new ErrorHandler.AuthorizationError('missing-email-or-password');
     }
 
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new ErrorHandler.AuthorizationError('user-not-found', 404);
+        throw new ErrorHandler.AuthorizationError('user-not-found');
       }
 
       if (!encryptor.comparePassword(password, user.password)) {
-        throw new ErrorHandler.AuthorizationError('password-invalid', 401);
+        throw new ErrorHandler.AuthorizationError('password-invalid');
       }
 
       if (meta) {

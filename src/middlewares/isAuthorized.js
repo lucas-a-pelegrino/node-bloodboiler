@@ -18,11 +18,11 @@ module.exports = async (req, res, next) => {
         if (/^Bearer$/i.test(scheme)) {
           token = credentials;
         } else {
-          throw new ErrorHandler.AuthorizationError('wrong-authorization-format', 401);
+          throw new ErrorHandler.AuthorizationError('wrong-authorization-format');
         }
       }
     } else {
-      throw new ErrorHandler.AuthorizationError('wrong-authorization-format', 401);
+      throw new ErrorHandler.AuthorizationError('wrong-authorization-format');
     }
     const decoded = await verify(token);
     const user = await getUserById(decoded.user.id);

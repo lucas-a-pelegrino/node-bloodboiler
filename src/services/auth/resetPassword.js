@@ -8,13 +8,13 @@ const ErrorHandler = require('../../lib/errors');
 module.exports = {
   resetPassword: async (email) => {
     if (!email) {
-      throw new ErrorHandler.AuthorizationError('missing-email', 400);
+      throw new ErrorHandler.AuthorizationError('missing-email');
     }
 
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new ErrorHandler.AuthorizationError('user-not-found', 404);
+        throw new ErrorHandler.ApplicationError('user-not-found', 404);
       }
 
       const token = encryptor.generateRandString() + encryptor.generateRandString();

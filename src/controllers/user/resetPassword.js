@@ -10,9 +10,12 @@ module.exports = {
 
     try {
       const result = await resetPasswordByToken(token, password, passwordConfirmation);
-      return res.status(200).json(result);
+      res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json(error);
+      res.status(error.status).json({
+        name: error.name,
+        message: error.message,
+      });
     }
   },
 };
