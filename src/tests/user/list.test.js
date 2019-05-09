@@ -1,8 +1,6 @@
 const request = require('supertest');
 const app = require('../../config/express');
-const {
-  version,
-} = require('../../config/config.js');
+const { version } = require('../../config/env/test');
 
 describe('GET /users', () => {
   jest.setTimeout(5000);
