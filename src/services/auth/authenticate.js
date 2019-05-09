@@ -14,7 +14,7 @@ module.exports = {
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new ErrorHandler.AuthorizationError('user-not-found');
+        throw new ErrorHandler.ApplicationError('user-not-found', 404);
       }
 
       if (!encryptor.comparePassword(password, user.password)) {
