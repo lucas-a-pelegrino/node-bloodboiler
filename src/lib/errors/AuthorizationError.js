@@ -1,7 +1,7 @@
-const AppError = require('./appError');
+const ApplicationError = require('./ApplicationError');
 
-module.exports = class AuthorizationError extends AppError {
+module.exports = class AuthorizationError extends ApplicationError {
   constructor(message) {
-    super(message || 'an-unknown-error-occurred');
+    super(message, 401);
   }
 };
