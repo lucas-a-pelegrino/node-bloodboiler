@@ -2,7 +2,6 @@ const request = require('supertest');
 const app = require('../../config/express');
 const { version } = require('../../config/env/test');
 
-
 describe('Authentication Test', () => {
   const apiVersion = `/api/${version}`;
   

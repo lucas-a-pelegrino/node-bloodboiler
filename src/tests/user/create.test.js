@@ -46,7 +46,7 @@ describe('POST /users', () => {
                             .set('Authorization', headers.token)
                             .send(params);
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(409);
     expect(response.body).toHaveProperty('errors');
     expect(new RegExp('email-already-in-use', 'i').test(response.body.errors[0]));
   });

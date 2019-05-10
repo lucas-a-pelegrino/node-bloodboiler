@@ -20,6 +20,7 @@ beforeAll(done => { // eslint-disable-line
 
 afterAll(done => { // eslint-disable-line
   try {
+    mongoose.connection.db.dropCollection('users');
     mongoose.disconnect();
     done();
   } catch (error) {
