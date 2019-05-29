@@ -1,7 +1,14 @@
 module.exports = {
+  /**
+   * Query Builder
+   * @param {Object} conditions - Search conditions for the query.
+   * @param {Array} projection - Requested fields for the query. Example: [ 'name', 'email' ]
+   * @param {Object} options - Accepts skip, limit, sort.
+   */
   queryBuilder: (conditions = null, projection = null, options = { skip: 0, limit: 10, sort: { createdAt: 1 } }) => { // eslint-disable-line
     const pipeline = [];
 
+    // Validate conditions type: must be of type OBJECT and content must match model attributes.
     if (conditions) {
       const match = {
         $match: {},
@@ -14,6 +21,7 @@ module.exports = {
       pipeline.push(match);
     }
 
+    // Validate projection type: must be of type ARRAY and content must match model attributes.
     if (projection) {
       const project = {
         $project: {},
