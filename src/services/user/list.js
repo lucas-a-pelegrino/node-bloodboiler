@@ -1,10 +1,11 @@
+const { queryBuilder } = require('../../utils/queryBuilder');
 const { getUsers } = require('../../repositories');
 
 module.exports = {
-  getUsers: () => {
+  getUsers: (conditions, projections, options) => {
     try {
-      // TODO: Create query builder service to filter, find data based on the user criteria.
-      return getUsers();
+      const query = queryBuilder(conditions, projections, options);
+      return getUsers(query);
     } catch (error) {
       throw error;
     }
