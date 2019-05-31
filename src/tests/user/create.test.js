@@ -47,7 +47,8 @@ describe('POST /users', () => {
                             .send(params);
 
     expect(response.status).toBe(409);
-    expect(response.body).toHaveProperty('errors');
-    expect(new RegExp('email-already-in-use', 'i').test(response.body.errors[0]));
+    expect(response.body).toHaveProperty('name');
+    expect(response.body).toHaveProperty('message');
+    expect(new RegExp('email-already-in-use', 'i').test(response.body.message));
   });
 });
