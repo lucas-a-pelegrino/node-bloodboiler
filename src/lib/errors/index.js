@@ -1,7 +1,5 @@
-const ApplicationError = require('./AuthorizationError');
-const AuthorizationError = require('./AuthorizationError');
+const ApplicationError = require('./ApplicationError');
 
 module.exports = {
   ApplicationError,
-  AuthorizationError,
 };
