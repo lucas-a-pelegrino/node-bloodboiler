@@ -7,7 +7,7 @@ module.exports = {
    * @param {Array} projection - Requested fields for the query. Example: [ 'name', 'email' ]
    * @param {Object} options - Accepts skip, limit, sort.
    */
-  queryBuilder: (conditions = null, projection = null, options = { skip: 0, limit: 10, sort: { createdAt: 1 } }) => { // eslint-disable-line
+  queryBuilder: (conditions, projection, options) => {
     const pipeline = [];
 
     // Validate conditions type: must be of type OBJECT and content must match model attributes.
@@ -46,18 +46,22 @@ module.exports = {
 
     if (options) {
       if (options.skip) {
-        const skip = {
+        pipeline.push({
           $skip: parseInt(options.skip, 10),
-        };
-
-        pipeline.push(skip);
+        });
+      } else {
+        pipeline.push({
+          $skip: 0,
+        });
       }
-
       if (options.limit) {
-        const limit = {
+        pipeline.push({
           $limit: parseInt(options.limit, 10),
-        };
-        pipeline.push(limit);
+        });
+      } else {
+        pipeline.push({
+          $limit: 10,
+        });
       }
 
       if (options.sort) {
@@ -70,6 +74,12 @@ module.exports = {
         });
 
         pipeline.push(sort);
+      } else {
+        pipeline.push({
+          $sort: {
+            createdAt: 1,
+          },
+        });
       }
     }
 
