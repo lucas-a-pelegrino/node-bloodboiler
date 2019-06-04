@@ -54,6 +54,7 @@ module.exports = {
           $skip: 0,
         });
       }
+
       if (options.limit) {
         pipeline.push({
           $limit: parseInt(options.limit, 10),

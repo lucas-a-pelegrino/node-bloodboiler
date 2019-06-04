@@ -7,7 +7,6 @@ describe('POST /users', () => {
   let headers;
 
   beforeAll(async () => {
-    jest.setTimeout(5000);
     const body = {
       email: "johndoe@email.com",
       password: "12341234",

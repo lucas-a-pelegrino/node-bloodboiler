@@ -3,28 +3,29 @@ const {
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
-const ErrorHandler = require('../../lib/errors');
+const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
   resetPasswordByToken: async (token, password, passwordConfirmation) => {
     try {
       if (!token) {
-        throw new ErrorHandler.ApplicationError('missing-reset-token', 400);
+        throw new ApplicationError('missing-reset-token', 422);
       }
 
       const user = await getUserBy({
         passwordResetToken: token,
       });
+
       if (!user) {
-        throw new ErrorHandler.ApplicationError('user-not-found', 404);
+        throw new ApplicationError('user-not-found', 404);
       }
 
       if (password !== passwordConfirmation) {
-        throw new ErrorHandler.AuthorizationError('passwords-dont-match');
+        throw new ApplicationError('passwords-dont-match', 403);
       }
 
       if (new Date() >= user.passwordResetTokenExpiresAt) {
-        throw new ErrorHandler.AuthorizationError('reset-token-expired');
+        throw new ApplicationError('reset-token-expired', 403);
       }
       password = encryptor.hashPassword(password); // eslint-disable-line
       const updatedUser = await updateUser(user.id, {

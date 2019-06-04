@@ -3,7 +3,6 @@ const app = require('../../config/express');
 const { version } = require('../../config/env/test');
 
 describe('GET /users', () => {
-  jest.setTimeout(5000);
   const apiVersion = `/api/${version}`;
   let headers;
 
