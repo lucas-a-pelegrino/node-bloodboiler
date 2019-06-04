@@ -7,10 +7,6 @@ const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
   resetPassword: async (email) => {
-    if (!email) {
-      throw new ApplicationError('missing-email', 403);
-    }
-
     try {
       const user = await getUserBy({ email });
       if (!user) {

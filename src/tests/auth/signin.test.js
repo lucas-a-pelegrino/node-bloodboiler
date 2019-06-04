@@ -45,7 +45,7 @@ describe('Authentication Test', () => {
     expect(response.body.auth.user).not.toHaveProperty('password');
   });
 
-  it('Should fail with missing email/password', async () => {
+  it('Should fail with status 403 and missing email/password', async () => {
     const body = {};
 
     const response = await request(app)
@@ -57,7 +57,7 @@ describe('Authentication Test', () => {
     expect(new RegExp('email-missing-email-or-password', 'i').test(response.body.message));
   });
 
-  it('Should fail with user not found', async () => {
+  it('Should fail with status 404 and user not found', async () => {
     const body = {
       email: "johndoe13@email.com",
       password: "12341234",
@@ -72,7 +72,7 @@ describe('Authentication Test', () => {
     expect(new RegExp('user-not-found', 'i').test(response.body.message));
   });
   
-  it('Should fail with incorrect password', async () => {
+  it('Should fail with status 401 and incorrect password', async () => {
     const body = {
       email: "johndoe@email.com",
       password: "43214321",
