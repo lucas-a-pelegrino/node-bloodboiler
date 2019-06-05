@@ -1,9 +1,15 @@
 const request = require('supertest');
+const faker = require('faker');
 const app = require('../../config/express');
 const { version } = require('../../config/env/test');
 
 describe('POST /users', () => {
   const apiVersion = `/api/${version}`;
+  const params = {
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  };
   let headers;
 
   beforeAll(async () => {
@@ -18,12 +24,6 @@ describe('POST /users', () => {
       token,
     };
   });
-
-  const params = {
-    name: 'Jane Doe',
-    email: 'janedoe@email.com',
-    password: '123123test'
-  };
 
   it('Should create an user', async () => {
 
