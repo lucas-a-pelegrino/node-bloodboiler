@@ -51,7 +51,7 @@ describe('Password Reset Test', () => {
 
     expect(response.status).toBe(403);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('passwords-dont-match', 'i').test(response.body.message));
+    expect(new RegExp('passwords-dont-match', 'i').test(response.body.message)).toBe(true);
   });
 
   it('Should respond with status 404 and user-not-found', async () => {
@@ -62,7 +62,7 @@ describe('Password Reset Test', () => {
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('user-not-found', 'i').test(response.body.message));
+    expect(new RegExp('user-not-found', 'i').test(response.body.message)).toBe(true);
   });
 
   it('Should reset user\'s password by Token.', async () => {
@@ -72,7 +72,7 @@ describe('Password Reset Test', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('password-succesfully-reseted', 'i').test(response.body.message));
+    expect(new RegExp('password-succesfully-reseted', 'i').test(response.body.message)).toBe(true);
   });
 
 });

@@ -54,7 +54,7 @@ describe('Authentication Test', () => {
 
     expect(response.status).toBe(403);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('email-missing-email-or-password', 'i').test(response.body.message));
+    expect(new RegExp('missing-email-or-password', 'i').test(response.body.message)).toBe(true);
   });
 
   it('Should fail with status 404 and user not found', async () => {
@@ -69,7 +69,7 @@ describe('Authentication Test', () => {
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('user-not-found', 'i').test(response.body.message));
+    expect(new RegExp('user-not-found', 'i').test(response.body.message)).toBe(true);
   });
   
   it('Should fail with status 401 and incorrect password', async () => {
@@ -84,7 +84,7 @@ describe('Authentication Test', () => {
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty('message');
-    expect(new RegExp('password-invalid', 'i').test(response.body.message));
+    expect(new RegExp('password-invalid', 'i').test(response.body.message)).toBe(true);
   });
 
 });
