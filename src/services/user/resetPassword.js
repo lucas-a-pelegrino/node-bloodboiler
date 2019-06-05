@@ -8,10 +8,6 @@ const { ApplicationError } = require('../../lib/errors');
 module.exports = {
   resetPasswordByToken: async (token, password, passwordConfirmation) => {
     try {
-      if (!token) {
-        throw new ApplicationError('missing-reset-token', 422);
-      }
-
       const user = await getUserBy({
         passwordResetToken: token,
       });
