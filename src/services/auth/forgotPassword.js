@@ -6,7 +6,7 @@ const { encryptor } = require('../../utils');
 const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
-  resetPassword: async (email) => {
+  forgotPassword: async (email) => {
     try {
       const user = await getUserBy({ email });
       if (!user) {
