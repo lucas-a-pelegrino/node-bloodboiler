@@ -9,8 +9,10 @@ module.exports = {
     } = req.body;
 
     try {
-      const result = await resetPasswordByToken(token, password, passwordConfirmation);
-      res.status(200).json(result);
+      await resetPasswordByToken(token, password, passwordConfirmation);
+      res.status(200).json({
+        message: 'password-succesfully-reseted',
+      });
     } catch (error) {
       res.status(error.status).json({
         name: error.name,

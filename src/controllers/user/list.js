@@ -5,7 +5,15 @@ const {
 module.exports = {
   list: async (req, res) => {
     try {
-      const users = await getUsers();
+      const {
+        conditions,
+        projection,
+        skip,
+        limit,
+        sort,
+      } = req.query;
+
+      const users = await getUsers(conditions, projection, { skip, limit, sort });
       const count = users.length;
       res.status(200).json({ data: users, count });
     } catch (error) {

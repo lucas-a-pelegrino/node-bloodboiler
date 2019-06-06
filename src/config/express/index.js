@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const swagger = require('swagger-express');
 // const createSwaggerMiddleware = require('swagger-express-middleware');
-const { version } = require('../config');
+const { version } = require(`../env/${process.env.NODE_ENV}`); //eslint-disable-line
 const routes = require('../../routes');
-const database = require('../../lib/database/mongodb');
+const database = require('../database/mongodb');
 
 const app = express();
 database.connect();

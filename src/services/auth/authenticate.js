@@ -3,22 +3,22 @@ const {
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
-const ErrorHandler = require('../../lib/errors');
+const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
   authenticate: async (email, password, meta = null) => {
     if (!email || !password) {
-      throw new ErrorHandler.AuthorizationError('missing-email-or-password');
+      throw new ApplicationError('missing-email-or-password', 403);
     }
 
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new ErrorHandler.AuthorizationError('user-not-found');
+        throw new ApplicationError('user-not-found', 404);
       }
 
       if (!encryptor.comparePassword(password, user.password)) {
-        throw new ErrorHandler.AuthorizationError('password-invalid');
+        throw new ApplicationError('password-invalid', 401);
       }
 
       if (meta) {

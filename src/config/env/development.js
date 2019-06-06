@@ -2,7 +2,7 @@ module.exports = {
   baseUrl: 'http://localhost:3000',
   version: 'v1',
   database: {
-    name: 'node-bloodboiler',
+    name: 'node-bloodboiler-development',
     host: 'localhost',
     port: '27017',
     user: '',

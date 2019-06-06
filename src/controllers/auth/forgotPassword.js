@@ -1,5 +1,5 @@
 const {
-  resetPassword,
+  forgotPassword,
 } = require('../../services/auth');
 const { mailer } = require('../../utils');
 
@@ -8,7 +8,7 @@ module.exports = {
     const { email } = req.params;
 
     try {
-      const user = await resetPassword(email);
+      const user = await forgotPassword(email);
       mailer.dispatchMail(user);
       res.status(200).json({
         message: 'email-sent',

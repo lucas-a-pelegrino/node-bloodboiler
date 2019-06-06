@@ -3,18 +3,14 @@ const {
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
-const ErrorHandler = require('../../lib/errors');
+const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
-  resetPassword: async (email) => {
-    if (!email) {
-      throw new ErrorHandler.AuthorizationError('missing-email');
-    }
-
+  forgotPassword: async (email) => {
     try {
       const user = await getUserBy({ email });
       if (!user) {
-        throw new ErrorHandler.ApplicationError('user-not-found', 404);
+        throw new ApplicationError('user-not-found', 404);
       }
 
       const token = encryptor.generateRandString() + encryptor.generateRandString();
