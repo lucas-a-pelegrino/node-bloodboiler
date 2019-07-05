@@ -1,5 +1,3 @@
-const { ApplicationError } = require('../lib/errors');
-
 module.exports = {
   /**
    * Query Builder
@@ -10,12 +8,7 @@ module.exports = {
   queryBuilder: (conditions, projection, options) => {
     const pipeline = [];
 
-    // Validate conditions type: must be of type OBJECT and content must match model attributes.
     if (conditions) {
-      if (typeof conditions !== 'object') {
-        throw new ApplicationError('search-condition-must-be-of-type-object', 422);
-      }
-
       const match = {
         $match: {},
       };
@@ -27,12 +20,7 @@ module.exports = {
       pipeline.push(match);
     }
 
-    // Validate projection type: must be of type ARRAY and content must match model attributes.
     if (projection) {
-      if (!Array.isArray(projection)) {
-        throw new ApplicationError('search-projection-must-be-of-type-array', 422);
-      }
-
       const project = {
         $project: {},
       };
