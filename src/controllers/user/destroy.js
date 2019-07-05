@@ -8,12 +8,13 @@ module.exports = {
 
     try {
       await deleteUserById(_id);
-      return res.status(200).json({
+      res.status(200).json({
         message: 'user-successfully-deleted',
       });
     } catch (error) {
-      return res.status(500).json({
-        errors: [error],
+      res.status(error.status).json({
+        name: error.name,
+        message: error.message,
       });
     }
   },

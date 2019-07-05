@@ -6,6 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
+    "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
     "test": "jest --detectOpenHandles"
   },
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
