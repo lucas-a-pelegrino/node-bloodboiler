@@ -32,6 +32,7 @@ module.exports = {
 
       return updatedUser;
     } catch (error) {
+      console.error('Error: ', error);
       throw error;
     }
   },

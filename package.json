@@ -1,6 +1,6 @@
 {
   "name": "bloodboiler",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A API boilerplate using ExpressJS/MongoDB authentication ready and more",
   "main": "app.js",
   "scripts": {
@@ -14,6 +14,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
@@ -22,7 +23,7 @@
     "swagger-express-middleware": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^5.11.1",
+    "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "faker": "^4.1.0",

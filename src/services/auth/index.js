@@ -1,7 +1,7 @@
 const { authenticate } = require('./authenticate');
-const { forgotPassword } = require('./forgotPassword');
+const { resetPassword } = require('./resetPassword');
 
 module.exports = {
   authenticate,
-  forgotPassword,
+  resetPassword,
 };
