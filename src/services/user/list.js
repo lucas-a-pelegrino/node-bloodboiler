@@ -7,6 +7,7 @@ module.exports = {
       const query = queryBuilder(conditions, projections, options);
       return getUsers(query);
     } catch (error) {
+      console.error('Error: ', error);
       throw error;
     }
   },
