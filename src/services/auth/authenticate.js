@@ -38,6 +38,7 @@ module.exports = {
         token,
       };
     } catch (error) {
+      console.error('Error: ', error);
       throw error;
     }
   },

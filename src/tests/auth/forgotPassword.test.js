@@ -1,10 +1,12 @@
 const request = require('supertest');
-const app = require('../../config/express');
-const {
-  version
-} = require('../../config/env/test');
 
-describe('Forgot Password Test', () => {
+const app = require('../../config/express');
+
+const {
+  [process.env.NODE_ENV]: { version },
+} = require('../../config/env');
+
+describe('Reset Password Test', () => {
   const apiVersion = `/api/${version}`;
 
   it('Should respond with status 200 and email-sent message', async () => {
@@ -12,7 +14,7 @@ describe('Forgot Password Test', () => {
       email: "johndoe@email.com",
     };
 
-    const response = await request(app).get(`${apiVersion}/auth/forgot-password/${params.email}`);
+    const response = await request(app).get(`${apiVersion}/auth/account/${params.email}/password`);
     
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message');
@@ -24,7 +26,7 @@ describe('Forgot Password Test', () => {
       email: 'johndoe123@email.com'
     };
 
-    const response = await request(app).get(`${apiVersion}/auth/forgot-password/${params.email}`);
+    const response = await request(app).get(`${apiVersion}/auth/account/${params.email}/password`);
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('message');

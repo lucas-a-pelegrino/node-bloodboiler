@@ -9,7 +9,7 @@ const {
   getUserById,
 } = require('../../services/user');
 const {
-  forgotPassword,
+  resetPassword,
 } = require('../../services/auth');
 
 
@@ -31,7 +31,7 @@ describe('Password Reset Test', () => {
 
     try {
       user = await createUser(body);
-      await forgotPassword(user.email);
+      await resetPassword(user.email);
       user = await getUserById(user.id);
       passwordResetToken = user.passwordResetToken;
     } catch (error) {
