@@ -1,7 +1,9 @@
 {
   "name": "bloodboiler",
-  "version": "0.1.0",
+  "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
   "description": "A API boilerplate using ExpressJS/MongoDB authentication ready and more",
+  "version": "0.1.0",
+  "license": "MIT",
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
@@ -9,8 +11,6 @@
     "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
     "test": "jest --coverage --detectOpenHandles"
   },
-  "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
