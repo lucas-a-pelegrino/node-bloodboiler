@@ -6,7 +6,12 @@ const model = mongoose.model('User', userSchema);
 module.exports = {
   getUsers: (query) => {
     try {
-      return model.aggregate(query);
+      return model.aggregate(query).project({
+        password: false,
+        __v: false,
+        passwordResetToken: false,
+        passwordResetTokenExpiresAt: false,
+      });
     } catch (error) {
       throw error;
     }

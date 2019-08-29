@@ -28,4 +28,34 @@ describe('GET /users', () => {
     expect(response.body).toHaveProperty('data');
     expect(response.body).toHaveProperty('count');
   });
+
+  it('Should list users with conditions filters applied.', async () => {
+    const response = await request(app)
+                            .get(`${apiVersion}/users?skip=0&limit=10&conditions[name]=john`)
+                            .set('Authorization', headers.token);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('count');
+  });
+
+  it('Should list users with projections filters applied.', async () => {
+    const response = await request(app)
+                            .get(`${apiVersion}/users?skip=0&limit=10&projection[0]=name&projection[1]=email`)
+                            .set('Authorization', headers.token);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('count');
+  });
+
+  it('Should list users with projections filters applied.', async () => {
+    const response = await request(app)
+                            .get(`${apiVersion}/users?skip=0&limit=10&sort[email]=-1`)
+                            .set('Authorization', headers.token);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('count');
+  });
 });
