@@ -4,9 +4,14 @@ const userSchema = require('../models/user/schema');
 const model = mongoose.model('User', userSchema);
 
 module.exports = {
-  getUsers: () => {
+  getUsers: (query) => {
     try {
-      return model.find({});
+      return model.aggregate(query).project({
+        password: false,
+        __v: false,
+        passwordResetToken: false,
+        passwordResetTokenExpiresAt: false,
+      });
     } catch (error) {
       throw error;
     }

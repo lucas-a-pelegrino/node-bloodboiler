@@ -1,18 +1,20 @@
 {
   "name": "bloodboiler",
-  "version": "1.0.0",
+  "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
   "description": "A API boilerplate using ExpressJS/MongoDB authentication ready and more",
+  "version": "0.1.0",
+  "license": "MIT",
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
-    "test": "jest --detectOpenHandles"
+    "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
+    "test": "jest --coverage --detectOpenHandles"
   },
-  "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
@@ -21,20 +23,24 @@
     "swagger-express-middleware": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^5.11.1",
+    "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "faker": "^4.1.0",
     "jest": "^23.6.0",
     "jest-yaml-transform": "^0.2.0",
     "nodemon": "^1.18.10",
     "supertest": "^3.3.0"
   },
   "jest": {
+    "globalSetup": "./src/config/jest/setup.jest.js",
+    "globalTeardown": "./src/config/jest/teardown.jest.js",
     "verbose": true,
     "automock": false,
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/config/"
     ],
     "moduleFileExtensions": [
       "js",

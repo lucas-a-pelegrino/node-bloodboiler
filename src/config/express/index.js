@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 // const swagger = require('swagger-express');
 // const createSwaggerMiddleware = require('swagger-express-middleware');
-const { version } = require('../config');
+const {
+  [process.env.NODE_ENV]: { version, corsOptions },
+} = require('../env');
 const routes = require('../../routes');
-const database = require('../../lib/database/mongodb');
+const database = require('../database/mongodb');
 
 const app = express();
 database.connect();
@@ -41,12 +44,13 @@ app.set('port', process.env.PORT || 3000);
 //   app.use(`/api/${version}`, routes);
 // });
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 app.use(
   bodyParser.urlencoded({
     extended: true,
   }),
 );
 
-app.use(`/api/${version}`, routes);
+Object.keys(routes).forEach(key => app.use(`/api/${version}/${key}`, routes[key]));
 
 module.exports = app;
