@@ -12,8 +12,8 @@ module.exports = {
     host: 'smtp.gmail.com',
     port: 465,
     auth: {
-      user: 'apps@ioasys.com.br',
-      pass: 'ioasys715',
+      user: 'email@email.com',
+      pass: 'password',
     },
   },
   database: {
