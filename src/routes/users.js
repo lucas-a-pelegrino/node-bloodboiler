@@ -3,7 +3,7 @@ const { usersController } = require('../controllers');
 const { isAuthorized } = require('../middlewares');
 
 router.get('/', isAuthorized, usersController.list);
-router.get('/:_id', isAuthorized, usersController.get);
+router.get('/:_id([0-9]+)', isAuthorized, usersController.get);
 router.post('/', isAuthorized, usersController.create);
 router.put('/:_id', isAuthorized, usersController.update);
 router.delete('/:_id', isAuthorized, usersController.destroy);
