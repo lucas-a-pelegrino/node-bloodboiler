@@ -29,7 +29,7 @@ module.exports = {
       const user = await usersServices.getUserById(_id);
       res.status(200).json(user);
     } catch (error) {
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         message: error.message,
       });
@@ -43,7 +43,7 @@ module.exports = {
       const user = await usersServices.createUser(params);
       res.status(200).json(user);
     } catch (error) {
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         message: error.message,
       });
@@ -58,7 +58,7 @@ module.exports = {
       const user = await usersServices.updateUserById(_id, params);
       res.status(200).json(user);
     } catch (error) {
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         message: error.message,
       });
@@ -74,7 +74,7 @@ module.exports = {
         message: 'user-successfully-deleted',
       });
     } catch (error) {
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         message: error.message,
       });
@@ -94,7 +94,7 @@ module.exports = {
         message: 'password-succesfully-reseted',
       });
     } catch (error) {
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         message: error.message,
       });
