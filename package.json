@@ -6,6 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
+    "prettier": "prettier \"**/*.{json,md,scss,yaml,yml}\"",
     "test": "jest --detectOpenHandles"
   },
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
@@ -21,12 +22,15 @@
     "swagger-express-middleware": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^5.11.1",
+    "eslint": "6.5.1",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "6.4.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "3.1.1",
     "jest": "^23.6.0",
     "jest-yaml-transform": "^0.2.0",
     "nodemon": "^1.18.10",
+    "prettier": "1.18.2",
     "supertest": "^3.3.0"
   },
   "jest": {
