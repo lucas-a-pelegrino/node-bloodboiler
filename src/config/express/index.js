@@ -6,7 +6,7 @@ const cors = require('cors');
 const {
   [process.env.NODE_ENV]: { version, corsOptions },
 } = require('../env');
-const routes = require('../../routes');
+const routes = require('../../routes/v1/routes');
 const database = require('../database/mongodb');
 
 const app = express();
@@ -51,6 +51,6 @@ app.use(
   }),
 );
 
-Object.keys(routes).forEach(key => app.use(`/api/${version}/${key}`, routes[key]));
+app.use(`/api/${version}`, routes);
 
 module.exports = app;
