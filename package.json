@@ -10,6 +10,7 @@
     "start:dev": "NODE_ENV=development nodemon app.js",
     "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
     "test": "jest --coverage --detectOpenHandles"
+    "prettier": "prettier \"**/*.{json,md,scss,yaml,yml}\"",
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -25,11 +26,14 @@
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "6.4.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "3.1.1",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
     "jest-yaml-transform": "^0.2.0",
     "nodemon": "^1.18.10",
+    "prettier": "1.18.2",
     "supertest": "^3.3.0"
   },
   "jest": {
