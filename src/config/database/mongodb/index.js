@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+
 const {
-  database,
-} = require('../../../config/config');
+  [process.env.NODE_ENV]: { database },
+} = require('../../env');
+
 
 module.exports = {
   connect: async () => {
@@ -19,7 +21,8 @@ module.exports = {
         useFindAndModify: false,
       });
     } catch (error) {
-      throw new Error(error);
+      console.error('Error: ', error);
+      throw error;
     }
   },
 };

@@ -3,27 +3,25 @@ const {
   updateUser,
 } = require('../../repositories');
 const { encryptor } = require('../../utils');
+const { ApplicationError } = require('../../lib/errors');
 
 module.exports = {
   resetPasswordByToken: async (token, password, passwordConfirmation) => {
     try {
-      if (!token) {
-        throw new Error('missing-reset-token');
-      }
-
       const user = await getUserBy({
         passwordResetToken: token,
       });
+
       if (!user) {
-        throw new Error('user-not-found');
+        throw new ApplicationError('user-not-found', 404);
       }
 
       if (password !== passwordConfirmation) {
-        throw new Error('passwords-dont-match');
+        throw new ApplicationError('passwords-dont-match', 403);
       }
 
       if (new Date() >= user.passwordResetTokenExpiresAt) {
-        throw new Error('reset-token-expired');
+        throw new ApplicationError('reset-token-expired', 403);
       }
       password = encryptor.hashPassword(password); // eslint-disable-line
       const updatedUser = await updateUser(user.id, {
@@ -34,6 +32,7 @@ module.exports = {
 
       return updatedUser;
     } catch (error) {
+      console.error('Error: ', error);
       throw error;
     }
   },
