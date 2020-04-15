@@ -1,27 +1,18 @@
 # Node API Bloodboiler
 
-A API boilerplate built on top of Express, with a ready to use user authentication and more.
+A API boilerplate built on top of ExpressJS.
 
-### Version: 0.1.0
-### Tech
-  - NodeJS: 10.16.0
-  - Express: 4.16.4
-  - Mongoose: 5.4.1
-  - MongoDB: 4.0.3
+### Version: v0.1.1
 
 ### Features
 
-  - Basic User CRUD
-  - Basic User Authentication using JWT
-  - Password Reset with Mailer
-  - Custom Error Handler
-  - Basic tests with JEST
-  - Query Builder
-
-### TODO
-
-  - Swagger
-  - Improve the query builder to allow associations searchs with populate (lookup)
+- **Database:** [Mongoose](https://mongoosejs.com)
+- **Authentication**: TODO;
+- **Logging:** TODO;
+- **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
+- **Error handling:** Basic error handler;
+- **HTTP Security:** TODO
+- Swagger
 
 ### Installation
 
@@ -33,8 +24,6 @@ $ npm install -d
 $ node app
 ```
 
-License
-----
+## License
 
 MIT
-
