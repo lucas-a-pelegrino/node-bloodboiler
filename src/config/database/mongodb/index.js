@@ -4,7 +4,6 @@ const {
   [process.env.NODE_ENV]: { database },
 } = require('../../env');
 
-
 module.exports = {
   connect: async () => {
     try {

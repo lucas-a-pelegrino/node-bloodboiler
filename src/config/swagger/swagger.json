@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Node Bloodboiler",
+    "version": "v0.1.1",
+    "description": "A API boilerplate built on top of expressJS"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Development Environment"
+    }
+  ],
+  "tags": [],
+  "paths": {},
+  "components": {
+    "schemas": {}
+  }
+}
