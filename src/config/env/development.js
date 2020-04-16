@@ -8,18 +8,18 @@ module.exports = {
     optionsSuccessStatus: 204,
   },
   mailAuth: {
-    host: 'smtp.gmail.com',
-    port: 465,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     auth: {
-      user: '',
-      pass: '',
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
     },
   },
   database: {
-    name: 'node-bloodboiler-development',
-    host: 'localhost',
-    port: '27017',
-    user: '',
-    password: '',
+    name: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
   },
 };
