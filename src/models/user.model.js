@@ -48,6 +48,11 @@ userSchema.methods.toJSON = function() {
   return omit(userRaw.toObject(), ['password', '__v']);
 };
 
+userSchema.methods.transform = function() {
+  const userRaw = this;
+  return omit(userRaw.toJSON(), ['password', '__v']);
+};
+
 userSchema.pre('save', async function(next) {
   const user = this;
   if (user.isModified('password')) {

@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 module.exports = {
-  list: (query) => User.aggregate(query),
+  list: (query) => User.aggregate(query).project({ password: false, __v: false }),
   getById: (id) => User.findById(id),
   get: (params) => User.findOne(params),
   create: (params) => User.create(params),
