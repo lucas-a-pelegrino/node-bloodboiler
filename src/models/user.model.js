@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { omit } = require('lodash');
 
 const userSchema = mongoose.Schema(
   {
@@ -36,18 +37,18 @@ const userSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    id: false,
     toObject: { getters: true },
     toJSON: { getters: true },
   },
 );
 
-userSchema.methods.toJSON = () => {
-  const user = this;
-  const attrToOmit = ['password', '__v', 'passwordResetToken', 'passwordResetTokenExpiration'];
-  return Object.keys(user.toObject()).filter((attribute) => !attrToOmit.includes(attribute));
+userSchema.methods.toJSON = function() {
+  const userRaw = this;
+  return omit(userRaw.toObject(), ['password', '__v']);
 };
 
-userSchema.pre('save', async (next) => {
+userSchema.pre('save', async function(next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8);
