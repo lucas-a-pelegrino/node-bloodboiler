@@ -48,4 +48,21 @@ module.exports = {
       });
     }
   },
+
+  update: async (req, res) => {
+    try {
+      const {
+        params: { id },
+        body,
+      } = req;
+      const response = await usersService.update(id, body);
+      return res.status(200).json(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(error.status || 500).json({
+        name: error.name,
+        messages: [error.message],
+      });
+    }
+  },
 };
