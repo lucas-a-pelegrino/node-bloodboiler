@@ -5,7 +5,7 @@ const swagger = require('swagger-ui-express');
 require('dotenv').config();
 
 const database = require('../database/mongodb');
-const routes = require('../../routes');
+// const routes = require('../../routes');
 const swaggerDocs = require('../swagger/swagger.json');
 
 const {
@@ -28,6 +28,6 @@ app.use(
 app.use('/documentation', swagger.serve);
 app.use('/documentation', swagger.setup(swaggerDocs));
 
-Object.keys(routes).forEach((key) => app.use(`/api/${key}`, routes[key]));
+// Object.keys(routes).forEach((key) => app.use(`/api/${key}`, routes[key]));
 
 module.exports = app;
