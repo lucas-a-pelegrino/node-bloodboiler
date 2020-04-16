@@ -44,3 +44,4 @@ rules:
   prettier/prettier: error
   no-throw-literal: 0
   func-names: 'off'
+  consistent-return: 'off'

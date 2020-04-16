@@ -6,10 +6,14 @@ module.exports = {
       const { skip, limit, currentPage = 1 } = req.query;
       const response = await usersService.list({ skip, limit, currentPage });
 
-      res.status(200).json(response);
+      if (response.metadata.length === 0) {
+        return res.status(204).end();
+      }
+
+      return res.status(200).json(response);
     } catch (error) {
       console.error(error);
-      res.status(error.status).json({
+      res.status(error.status || 500).json({
         name: error.name,
         messages: [error.message],
       });
@@ -21,10 +25,10 @@ module.exports = {
       const { body } = req;
       const response = await usersService.create(body);
 
-      res.status(200).json(response);
+      return res.status(200).json(response);
     } catch (error) {
       console.error(error);
-      res.status(error.status).json({
+      return res.status(error.status || 500).json({
         name: error.name,
         messages: [error.message],
       });
