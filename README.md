@@ -1,8 +1,8 @@
 # Node API Bloodboiler
 
-A API boilerplate built on top of ExpressJS.
+[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]()
 
-### Version: v0.1.1
+A API boilerplate built on top of ExpressJS.
 
 ### Features
 
@@ -12,18 +12,67 @@ A API boilerplate built on top of ExpressJS.
 - **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
 - **Error handling:** Basic error handler;
 - **HTTP Security:** TODO
-- Swagger
+- **Code coverage**: [Coveralls](https://coveralls.io)
+- **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io)
+- **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com)
 
-### Installation
+### Installation Steps
 
-Install the dependencies and devDependencies and start the server.
+Clone the repository
 
 ```sh
+$ git clone https://github.com/lucas-a-pelegrino/node-bloodboiler
 $ cd node-bloodboiler
-$ npm install -d
-$ node app
+```
+
+Install the dependencies
+
+```sh
+$ npm install
+# or
+$ yarn install
+```
+
+Setup environment variables (modify/add more variables if needed)
+
+```sh
+$ cp .env.example .env
+```
+
+### Commands
+
+Start application
+
+```sh
+# locally:
+$ npm run start:dev
+$ yarn start:dev
+
+# staging:
+$ npm run start:staging
+$ yarn start:staging
+
+# production
+$ npm start
+$ yarn start
+
+# debug (VSCode)
+$ npm run start:debug
+$ yarn start:debug
+```
+
+Testing
+
+```sh
+# Run tests
+$ npm test
+$ yarn test
+
+# Run tests with coverage
+$ npm run test:coverage
+$ yarn test:coverage
 ```
 
 ## License
 
-MIT
+[MIT](https://opensource.org/licenses/MIT)
