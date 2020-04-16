@@ -65,4 +65,18 @@ module.exports = {
       });
     }
   },
+
+  destroy: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await usersService.destroy(id);
+      return res.status(204).end();
+    } catch (error) {
+      console.error(error);
+      return res.status(error.status || 500).json({
+        name: error.name,
+        messages: [error.message],
+      });
+    }
+  },
 };

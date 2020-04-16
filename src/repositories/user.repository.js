@@ -6,5 +6,5 @@ module.exports = {
   get: (params) => User.findOne(params),
   create: (params) => User.create(params),
   update: (user) => user.save(),
-  delete: (id) => User.findByIdAndDelete(id),
+  destroy: (id) => User.findByIdAndDelete(id),
 };
