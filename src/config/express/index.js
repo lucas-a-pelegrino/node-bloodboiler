@@ -1,56 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const swagger = require('swagger-express');
-// const createSwaggerMiddleware = require('swagger-express-middleware');
-const {
-  [process.env.NODE_ENV]: { version, corsOptions },
-} = require('../env');
-const routes = require('../../routes');
+const swagger = require('swagger-ui-express');
+require('dotenv').config();
+
 const database = require('../database/mongodb');
+// const routes = require('../../routes');
+const swaggerDocs = require('../swagger/swagger.json');
+
+const {
+  [process.env.NODE_ENV]: { corsOptions },
+} = require('../env');
 
 const app = express();
 database.connect();
 
 app.set('port', process.env.PORT || 3000);
-// const host = process.env.HOST || 'localhost';
 
-// app.use(express.static('public'));
-// app.use(
-//   swagger.init(app, {
-//     apiVersion: '1.0',
-//     swaggerVersion: '2.0',
-//     swaggerURL: '/swagger',
-//     swaggerYML: './public/swagger.yml',
-//     swaggerUI: './public/swagger/',
-//     basePath: host,
-//     apis: ['./public/swagger.yml'],
-//     middleware: () => {},
-//   }),
-// );
-
-// createSwaggerMiddleware('./public/swagger.yml', app, (error, middleware) => {
-//   app.enable('strict routing');
-//   app.use(middleware.metadata());
-//   app.use(middleware.parseRequest());
-//   app.use(middleware.CORS(), middleware.validateRequest());
-//   app.use(bodyParser.json());
-//   app.use(
-//     bodyParser.urlencoded({
-//       extended: false,
-//     }),
-//   );
-
-//   app.use(`/api/${version}`, routes);
-// });
-app.use(bodyParser.json());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
   }),
 );
 
-Object.keys(routes).forEach(key => app.use(`/api/${version}/${key}`, routes[key]));
+app.use('/documentation', swagger.serve);
+app.use('/documentation', swagger.setup(swaggerDocs));
+
+// Object.keys(routes).forEach((key) => app.use(`/api/${key}`, routes[key]));
 
 module.exports = app;

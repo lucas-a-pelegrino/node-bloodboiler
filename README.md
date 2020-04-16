@@ -1,40 +1,78 @@
 # Node API Bloodboiler
 
-A API boilerplate built on top of Express, with a ready to use user authentication and more.
+[![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]()
 
-### Version: 0.1.0
-### Tech
-  - NodeJS: 10.16.0
-  - Express: 4.16.4
-  - Mongoose: 5.4.1
-  - MongoDB: 4.0.3
+A API boilerplate built on top of ExpressJS.
 
 ### Features
 
-  - Basic User CRUD
-  - Basic User Authentication using JWT
-  - Password Reset with Mailer
-  - Custom Error Handler
-  - Basic tests with JEST
-  - Query Builder
+- **Database:** [Mongoose](https://mongoosejs.com)
+- **Authentication**: TODO;
+- **Logging:** TODO;
+- **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
+- **Error handling:** Basic error handler;
+- **HTTP Security:** TODO
+- **Code coverage**: [Coveralls](https://coveralls.io)
+- **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io)
+- **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com)
 
-### TODO
+### Installation Steps
 
-  - Swagger
-  - Improve the query builder to allow associations searchs with populate (lookup)
-
-### Installation
-
-Install the dependencies and devDependencies and start the server.
+Clone the repository
 
 ```sh
+$ git clone https://github.com/lucas-a-pelegrino/node-bloodboiler
 $ cd node-bloodboiler
-$ npm install -d
-$ node app
 ```
 
-License
-----
+Install the dependencies
 
-MIT
+```sh
+$ npm install
+# or
+$ yarn install
+```
 
+Setup environment variables (modify/add more variables if needed)
+
+```sh
+$ cp .env.example .env
+```
+
+### Commands
+
+Start application
+
+```sh
+# locally:
+$ npm run start:dev
+$ yarn start:dev
+
+# staging:
+$ npm run start:staging
+$ yarn start:staging
+
+# production
+$ npm start
+$ yarn start
+
+# debug (VSCode)
+$ npm run start:debug
+$ yarn start:debug
+```
+
+Testing
+
+```sh
+# Run tests
+$ npm test
+$ yarn test
+
+# Run tests with coverage
+$ npm run test:coverage
+$ yarn test:coverage
+```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)

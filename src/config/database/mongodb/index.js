@@ -4,7 +4,6 @@ const {
   [process.env.NODE_ENV]: { database },
 } = require('../../env');
 
-
 module.exports = {
   connect: async () => {
     try {
@@ -18,6 +17,7 @@ module.exports = {
       await mongoose.connect(`mongodb://${dbUrl}`, {
         useNewUrlParser: true,
         useCreateIndex: true,
+        useUnifiedTopology: true,
         useFindAndModify: false,
       });
     } catch (error) {
