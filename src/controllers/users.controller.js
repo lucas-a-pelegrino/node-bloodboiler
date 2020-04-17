@@ -1,82 +1,43 @@
+const { catchAsync } = require('../utils');
 const { usersService } = require('../services');
 
 module.exports = {
-  list: async (req, res) => {
-    try {
-      const { skip, limit, currentPage = 1 } = req.query;
-      const response = await usersService.list({ skip, limit, currentPage });
+  list: catchAsync(async (req, res) => {
+    const { skip, limit, currentPage = 1 } = req.query;
+    const response = await usersService.list({ skip, limit, currentPage });
 
-      if (!response || response.data.length === 0) {
-        return res.status(204).end();
-      }
-
-      return res.status(200).json(response);
-    } catch (error) {
-      console.error(error);
-      return res.status(error.status || 500).json({
-        name: error.name,
-        messages: [error.message],
-      });
-    }
-  },
-
-  get: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const response = await usersService.get(id);
-      return res.status(200).json(response);
-    } catch (error) {
-      console.error(error);
-      return res.status(error.status || 500).json({
-        name: error.name,
-        messages: [error.message],
-      });
-    }
-  },
-
-  create: async (req, res) => {
-    try {
-      const { body } = req;
-      const response = await usersService.create(body);
-
-      return res.status(200).json(response);
-    } catch (error) {
-      console.error(error);
-      return res.status(error.status || 500).json({
-        name: error.name,
-        messages: [error.message],
-      });
-    }
-  },
-
-  update: async (req, res) => {
-    try {
-      const {
-        params: { id },
-        body,
-      } = req;
-      const response = await usersService.update(id, body);
-      return res.status(200).json(response);
-    } catch (error) {
-      console.error(error);
-      return res.status(error.status || 500).json({
-        name: error.name,
-        messages: [error.message],
-      });
-    }
-  },
-
-  destroy: async (req, res) => {
-    try {
-      const { id } = req.params;
-      await usersService.destroy(id);
+    if (!response || response.data.length === 0) {
       return res.status(204).end();
-    } catch (error) {
-      console.error(error);
-      return res.status(error.status || 500).json({
-        name: error.name,
-        messages: [error.message],
-      });
     }
-  },
+
+    return res.status(200).json(response);
+  }),
+
+  get: catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const response = await usersService.get(id);
+    return res.status(200).json(response);
+  }),
+
+  create: catchAsync(async (req, res) => {
+    const { body } = req;
+    const response = await usersService.create(body);
+
+    return res.status(200).json(response);
+  }),
+
+  update: catchAsync(async (req, res) => {
+    const {
+      params: { id },
+      body,
+    } = req;
+    const response = await usersService.update(id, body);
+    return res.status(200).json(response);
+  }),
+
+  destroy: catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await usersService.destroy(id);
+    return res.status(204).end();
+  }),
 };
