@@ -43,3 +43,6 @@ rules:
   max-len: 0
   prettier/prettier: error
   no-throw-literal: 0
+  func-names: 'off'
+  consistent-return: 'off'
+  import/no-extraneous-dependencies: 'off'

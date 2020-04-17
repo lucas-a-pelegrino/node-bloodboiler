@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'pokedex-api-cacher',
+      name: 'node-bloodboiler-api',
       script: 'app.js',
       instances: 1,
       autorestart: true,
