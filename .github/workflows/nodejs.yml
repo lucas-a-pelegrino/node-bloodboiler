@@ -30,7 +30,7 @@ jobs:
           mongodb-replica-set: test-rs
 
       - run: npm install
-      - run: npm test
+      - run: npm run test:coverage
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
