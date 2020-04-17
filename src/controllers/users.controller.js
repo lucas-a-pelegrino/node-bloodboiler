@@ -6,7 +6,7 @@ module.exports = {
       const { skip, limit, currentPage = 1 } = req.query;
       const response = await usersService.list({ skip, limit, currentPage });
 
-      if (response.metadata.length === 0) {
+      if (!response || response.data.length === 0) {
         return res.status(204).end();
       }
 
