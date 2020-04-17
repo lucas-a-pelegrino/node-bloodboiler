@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        mongodb-version: [4.0, 4.2]
+        mongodb-version: [4.0]
 
     steps:
       - uses: actions/checkout@v2
@@ -29,21 +29,13 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-replica-set: test-rs
-
-      - run: npm install
-      - run: make test-coverage
-
-      - name: Coveralls Parallel
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Run tests
+      - run: npm run test:coverage
+      - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          parallel: true
-
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          parallel-finished: true
-
         env:
           CI: true
