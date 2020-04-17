@@ -1,5 +1,6 @@
-const isAuthorized = require('./isAuthorized');
+const { errorTracker, errorHandler } = require('./error');
 
 module.exports = {
-  isAuthorized,
+  errorTracker,
+  errorHandler,
 };
