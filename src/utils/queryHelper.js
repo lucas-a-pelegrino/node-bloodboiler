@@ -10,6 +10,7 @@ module.exports.queryHelper = (options) => {
         data: [],
       },
     },
+    { $unwind: '$metadata' },
   ];
 
   if (options.skip) {
