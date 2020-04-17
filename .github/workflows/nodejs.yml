@@ -29,10 +29,10 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-replica-set: test-rs
-      - name: Install npm dependencies
-        run: npm ci
-      - name: Run tests
+      - name: Install NPM dependencies and run tests
+      - run: npm ci
       - run: npm run test:coverage
+
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
