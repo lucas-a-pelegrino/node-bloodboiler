@@ -32,10 +32,11 @@ jobs:
       - name: Install NPM dependencies and run tests
         run: |
           npm install
+          npm test
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        # - name: Coveralls
+        #   uses: coverallsapp/github-action@master
+        #   with:
+        #     github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true
