@@ -28,7 +28,9 @@
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.9",
-    "swagger-ui-express": "^4.1.4"
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.1.4",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

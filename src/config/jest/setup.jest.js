@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const {
   test: { database },
 } = require('../env');
+const { logger } = require('../../utils');
 
 const connect = async () => {
   try {
@@ -29,7 +30,7 @@ module.exports = async () => {
   try {
     await connect();
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw new Error(error);
   }
 };
