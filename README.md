@@ -10,9 +10,9 @@ A API boilerplate built on top of ExpressJS.
 - **Authentication**: TODO;
 - **Logging:** TODO;
 - **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
-- **Error handling:** Basic error handler;
+- **Error handling:** Centralized error handling middleware;
 - **HTTP Security:** TODO
-- **Code coverage**: [Coveralls](https://coveralls.io)
+- **Code coverage**: [Coveralls](https://coveralls.io)/[Codacy](https://www.codacy.com)
 - **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io)
 - **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com)
 
