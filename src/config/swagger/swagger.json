@@ -3,17 +3,358 @@
   "info": {
     "title": "Node Bloodboiler",
     "version": "v0.1.1",
-    "description": "A API boilerplate built on top of expressJS"
+    "description": "A API boilerplate built on top of expressJS",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api",
-      "description": "Development Environment"
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development Environment - v1"
     }
   ],
-  "tags": [],
-  "paths": {},
+  "tags": [
+    {
+      "name": "User"
+    }
+  ],
+  "paths": {
+    "/users/": {
+      "summary": "Users CRUD",
+      "get": {
+        "summary": "Lists all users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The number of documents to skip for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The number of documents to limit for pagination"
+          },
+          {
+            "in": "query",
+            "name": "currentPage",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The current page being shown to the client"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users with metadata details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "currentPage": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "metadata": {
+                    "total": 1,
+                    "currentPage": 1,
+                    "totalPages": 1
+                  },
+                  "data": [
+                    {
+                      "_id": "5e98e39dc0a02022f2d02b4c",
+                      "passwordResetToken": null,
+                      "passwordTokenExpirationDate": null,
+                      "name": "John Doe",
+                      "email": "johndoe@ioasys.com.br",
+                      "createdAt": "2020-04-16T23:00:45.179Z",
+                      "updatedAt": "2020-04-16T23:41:38.451Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "No users were found for the used criteria"
+          }
+        },
+        "tags": ["User"]
+      },
+      "post": {
+        "summary": "Creates an user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfully creates a new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "passwordTokenExpirationDate": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The email used is already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "Error",
+                  "messages": ["Email already in use"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      }
+    },
+    "/users/{id}": {
+      "summary": "Represents an user",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Returns an user based on its id",
+        "responses": {
+          "200": {
+            "description": "Return a user based on its id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "passwordTokenExpirationDate": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      },
+      "patch": {
+        "summary": "Updates an user based on its id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfully updated an user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "passwordTokenExpirationDate": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      },
+      "delete": {
+        "summary": "Deletes an user based on its id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      }
+    }
+  },
   "components": {
-    "schemas": {}
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "passwordResetToken": {
+            "type": "string"
+          },
+          "passwordTokenExpirationDate": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
   }
 }
