@@ -8,7 +8,7 @@ const database = require('../database/mongodb');
 const routes = require('../../routes');
 const swaggerDocs = require('../swagger/swagger.json');
 const { errorTracker, errorHandler } = require('../../middlewares');
-const { ApplicationError } = require('../../utils');
+const { ApplicationError, logger, morgan } = require('../../utils');
 
 const {
   [process.env.NODE_ENV]: { version, corsOptions },
@@ -18,6 +18,11 @@ const app = express();
 database.connect();
 
 app.set('port', process.env.PORT || 3000);
+
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan.successHandler);
+  app.use(morgan.errorHandler);
+}
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -40,8 +45,8 @@ app.use(errorTracker);
 app.use(errorHandler);
 
 const unexpectedErrorCatcher = (error) => {
-  console.error(error);
-  app.close();
+  logger.error(error);
+  process.exit(1);
 };
 
 process.on('unhandledRejection', unexpectedErrorCatcher);

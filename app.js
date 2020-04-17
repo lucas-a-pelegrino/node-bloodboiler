@@ -1,7 +1,8 @@
 const app = require('./src/config/express');
+const { logger } = require('./src/utils');
 
 const port = app.get('port');
 
 app.listen(port, () =>
-  console.info(`Application currently running on port: ${port} for ${process.env.NODE_ENV}`),
+  logger.info(`Application currently running on port: ${port} for ${process.env.NODE_ENV}`),
 );
