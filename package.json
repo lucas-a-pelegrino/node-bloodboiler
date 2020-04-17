@@ -11,7 +11,7 @@
     "start:dev": "NODE_ENV=development nodemon app.js",
     "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
     "test": "jest --runInBand --forceExit",
-    "test:coverage": "jest --runInBand --coverage --coverageReporters=text-lcov | coveralls --forceExit"
+    "test:coverage": "jest --runInBand --coverage && coveralls < coverage/lcov.info --forceExit"
   },
   "husky": {
     "hooks": {
