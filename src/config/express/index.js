@@ -39,4 +39,12 @@ app.use((req, res, next) => {
 app.use(errorTracker);
 app.use(errorHandler);
 
+const unexpectedErrorCatcher = (error) => {
+  console.error(error);
+  app.close();
+};
+
+process.on('unhandledRejection', unexpectedErrorCatcher);
+process.on('uncaughtException', unexpectedErrorCatcher);
+
 module.exports = app;
