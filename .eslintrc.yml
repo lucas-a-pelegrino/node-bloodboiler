@@ -45,3 +45,4 @@ rules:
   no-throw-literal: 0
   func-names: 'off'
   consistent-return: 'off'
+  import/no-extraneous-dependencies: 'off'
