@@ -20,7 +20,7 @@ const errorHandler = (err, req, res, next) => {
 
   res.locals.errorMessage = err.message;
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (['development', 'staging'].includes(process.env.NODE_ENV)) {
     logger.error(err);
   }
 
