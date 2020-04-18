@@ -5,6 +5,10 @@ const { ApplicationError } = require('../../utils');
 const { encryptor } = require('../../helpers');
 const userService = require('../users/update.service');
 
+const {
+  [process.env.NODE_ENV]: { resetTokenExpiresTime, resetTokenExpiresTimeFormat },
+} = require('../../config/env');
+
 module.exports.forgotPassword = async (email) => {
   const user = await usersRepository.get({ email });
   if (!user) {
@@ -15,7 +19,7 @@ module.exports.forgotPassword = async (email) => {
     sub: user._id,
     iat: moment().unix(),
     exp: moment()
-      .add(30, 'minutes')
+      .add(resetTokenExpiresTime, resetTokenExpiresTimeFormat)
       .unix(),
   };
 
