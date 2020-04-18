@@ -19,12 +19,7 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 6,
-      validate(value) {
-        if (!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/)) {
-          throw new Error('password-rules-unmet');
-        }
-      },
+      minlength: 8,
     },
     passwordResetToken: {
       type: String,
