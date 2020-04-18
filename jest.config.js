@@ -6,6 +6,7 @@ module.exports = {
   automock: false,
   clearMocks: false,
   restoreMocks: false,
+  collectCoverage: true,
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['node_modules', 'src/config', 'app.js', 'tests'],
   coverageReporters: ['json', 'text', 'lcov', 'clover'],

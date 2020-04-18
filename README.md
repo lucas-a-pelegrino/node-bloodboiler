@@ -7,8 +7,8 @@ A API boilerplate built on top of ExpressJS.
 ### Features
 
 - **Database:** NoSQL with [MongoDB](https://www.mongodb.com)/[Mongoose](https://mongoosejs.com)
-- **Authentication**: TODO;
-- **Logging:** Logging info with [Winston](https://github.com/winstonjs/winston) and [Morgan](https://github.com/expressjs/morgan);
+- **Authentication**: Authentication made with [JWT](https://jwt.io);
+- **Logging:** Logging info with [Winston](https://github.com/winstonjs/winston)/[Morgan](https://github.com/expressjs/morgan);
 - **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
 - **Error handling:** Centralized error handling middleware;
 - **HTTP Security:** TODO

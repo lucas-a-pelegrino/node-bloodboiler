@@ -18,7 +18,9 @@ const errorHandler = (err, req, res, next) => {
     message = 'Internal Server Error';
   }
 
-  if (process.env.NODE_ENV !== 'production') {
+  res.locals.errorMessage = err.message;
+
+  if (['development', 'staging'].includes(process.env.NODE_ENV)) {
     logger.error(err);
   }
 

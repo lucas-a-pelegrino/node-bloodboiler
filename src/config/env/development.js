@@ -1,6 +1,9 @@
 module.exports = {
   baseUrl: `http://localhost:${process.env.PORT}`,
   version: 'v1',
+  secret: process.env.JWT_SECRET,
+  resetTokenExpiresTime: process.env.RESET_TOKEN_EXPIRES_TIME,
+  resetTokenExpiresTimeFormat: process.env.RESET_TOKEN_EXPIRES_TIME_FORMAT,
   corsOptions: {
     origin: '*',
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',

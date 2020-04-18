@@ -4,4 +4,4 @@ node_modules
 coverage
 
 .env
-.coveralls.yml
+.codecov.yml
