@@ -1,10 +1,14 @@
 {
   "name": "node-bloodboiler",
-  "version": "v0.1.1",
+  "version": "v2.0.0",
   "description": "A API built on top of expressJS",
   "main": "app.js",
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/lucas-a-pelegrino/node-bloodboiler.git",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "start:staging": "NODE_ENV=staging node app.js",
@@ -51,5 +55,17 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "supertest": "^4.0.2"
-  }
+  },
+  "keywords": [
+    "node",
+    "javascript",
+    "express",
+    "boilerplate",
+    "mongoose",
+    "jsonwebtoken",
+    "RESTful",
+    "rest",
+    "api",
+    "jest"
+  ]
 }

@@ -1,11 +1,13 @@
 module.exports.queryHelper = (options) => {
-  const currentPage = parseInt(options.currentPage, 10);
+  const limit = parseInt(options.perPage || 10, 10);
+  let skip = parseInt(options.page || 1, 10);
+
   const pipeline = [
     {
       $facet: {
         metadata: [
           { $count: 'total' },
-          { $addFields: { currentPage, totalPages: Math.ceil(currentPage / options.limit) } },
+          { $addFields: { currentPage: skip, totalPages: Math.ceil(skip / limit) } },
         ],
         data: [],
       },
@@ -13,25 +15,15 @@ module.exports.queryHelper = (options) => {
     { $unwind: '$metadata' },
   ];
 
-  if (options.skip) {
-    pipeline[0].$facet.data.push({
-      $skip: parseInt(options.skip, 10),
-    });
-  } else {
-    pipeline[0].$facet.data.push({
-      $skip: 0,
-    });
-  }
+  skip = limit * (skip - 1);
 
-  if (options.limit) {
-    pipeline[0].$facet.data.push({
-      $limit: parseInt(options.limit, 10),
-    });
-  } else {
-    pipeline[0].$facet.data.push({
-      $limit: 10,
-    });
-  }
+  pipeline[0].$facet.data.push({
+    $limit: limit,
+  });
+
+  pipeline[0].$facet.data.push({
+    $skip: skip,
+  });
 
   return pipeline;
 };

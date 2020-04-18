@@ -3,8 +3,8 @@ const { usersService } = require('../services');
 
 module.exports = {
   list: catchAsync(async (req, res) => {
-    const { skip, limit, currentPage = 1 } = req.query;
-    const response = await usersService.list({ skip, limit, currentPage });
+    const { page, perPage } = req.query;
+    const response = await usersService.list({ page, perPage });
 
     if (!response || response.data.length === 0) {
       return res.status(204).end();

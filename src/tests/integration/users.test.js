@@ -48,8 +48,10 @@ describe('User Endpoints', () => {
 
   describe('GET /users', () => {
     test('Should return a list of users and metadata', async () => {
+      const page = 1;
+      const perPage = 10;
       const response = await request(app)
-        .get(`${baseURL}?skip=0&limit=10&currentPage=1`)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
@@ -62,8 +64,10 @@ describe('User Endpoints', () => {
     });
 
     test('Should return 204 - No Content', async () => {
+      const page = 2;
+      const perPage = 10;
       const response = await request(app)
-        .get(`${baseURL}?skip=10&limit=10&currentPage=1`)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(204);
