@@ -25,10 +25,8 @@ const generateExpiredToken = async (id) => {
 
 const generateSampleToken = async (id) => {
   const payload = {
-    sub: id,
-    exp: moment()
-      .add(resetTokenExpiresTime, resetTokenExpiresTimeFormat)
-      .unix(),
+    sub: { id },
+    iat: moment().unix(),
   };
 
   return jwt.issue(payload);

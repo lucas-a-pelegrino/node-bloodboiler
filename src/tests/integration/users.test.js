@@ -4,25 +4,31 @@ const app = require('../../config/express');
 const {
   test: { version },
 } = require('../../config/env');
-const { createSampleUsers, randomMongoId } = require('../fixtures/users.fixtures');
+const { createSampleUsers, createSampleUser, randomMongoId } = require('../fixtures/users.fixtures');
+const { generateSampleToken } = require('../fixtures/auth.fixtures');
 
-const baseURL = `/api/${version}`;
+const baseURL = `/api/${version}/users`;
 
 let sampleUser;
+let token;
 beforeAll(async () => {
   await createSampleUsers();
-  sampleUser = {
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    password: 'P@ssw0rd',
-  };
+  const auth = await createSampleUser();
+  token = await generateSampleToken(auth._id);
 });
 
 describe('User Endpoints', () => {
   describe('POST /users', () => {
     test('Should create an user', async () => {
+      sampleUser = {
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: 'P@ssw0rd',
+      };
+
       const response = await request(app)
-        .post(`${baseURL}/users`)
+        .post(`${baseURL}/`)
+        .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
       sampleUser = response.body;
@@ -32,7 +38,8 @@ describe('User Endpoints', () => {
 
     test('Should return 409 - Conflict', async () => {
       const response = await request(app)
-        .post(`${baseURL}/users`)
+        .post(`${baseURL}/`)
+        .set('Authorization', `Bearer ${token}`)
         .send(sampleUser);
 
       expect(response.status).toBe(409);
@@ -41,24 +48,23 @@ describe('User Endpoints', () => {
 
   describe('GET /users', () => {
     test('Should return a list of users and metadata', async () => {
-      const response = await request(app).get(`${baseURL}/users?skip=0&limit=10&currentPage=1`);
+      const response = await request(app)
+        .get(`${baseURL}?skip=0&limit=10&currentPage=1`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
 
-      const { metadata, data } = response.body;
-      expect(metadata).toBeInstanceOf(Object);
-      expect(metadata).toEqual({
-        total: 4,
-        currentPage: 1,
-        totalPages: 1,
+      const { body } = response;
+      expect(body).toMatchObject({
+        metadata: expect.any(Object),
+        data: expect.any(Array),
       });
-      expect(data).toBeInstanceOf(Array);
-      expect(data).toHaveLength(4);
-      expect(data[3]).toEqual(sampleUser);
     });
 
     test('Should return 204 - No Content', async () => {
-      const response = await request(app).get(`${baseURL}/users?skip=10&limit=10&currentPage=1`);
+      const response = await request(app)
+        .get(`${baseURL}?skip=10&limit=10&currentPage=1`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(204);
     });
@@ -66,14 +72,18 @@ describe('User Endpoints', () => {
 
   describe('GET /users/:id', () => {
     test('Should return an user by its id', async () => {
-      const response = await request(app).get(`${baseURL}/users/${sampleUser._id}`);
+      const response = await request(app)
+        .get(`${baseURL}/${sampleUser._id}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual(sampleUser);
     });
 
     test('Should return 404 - Not Found', async () => {
-      const response = await request(app).get(`${baseURL}/users/${randomMongoId}`);
+      const response = await request(app)
+        .get(`${baseURL}/${randomMongoId}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(404);
     });
@@ -88,7 +98,8 @@ describe('User Endpoints', () => {
       };
 
       const response = await request(app)
-        .put(`${baseURL}/users/${sampleUser._id}`)
+        .put(`${baseURL}/${sampleUser._id}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(params);
 
       expect(response.status).toBe(200);
@@ -103,7 +114,8 @@ describe('User Endpoints', () => {
       };
 
       const response = await request(app)
-        .put(`${baseURL}/users/${randomMongoId}`)
+        .put(`${baseURL}/${randomMongoId}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(params);
 
       expect(response.status).toBe(404);
@@ -112,13 +124,17 @@ describe('User Endpoints', () => {
 
   describe('DELETE /users/:id', () => {
     test('Should delete an user', async () => {
-      const response = await request(app).delete(`${baseURL}/users/${sampleUser._id}`);
+      const response = await request(app)
+        .delete(`${baseURL}/${sampleUser._id}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(204);
     });
 
     test('Should return 404 - Not Found', async () => {
-      const response = await request(app).delete(`${baseURL}/users/${randomMongoId}`);
+      const response = await request(app)
+        .delete(`${baseURL}/${randomMongoId}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(404);
     });

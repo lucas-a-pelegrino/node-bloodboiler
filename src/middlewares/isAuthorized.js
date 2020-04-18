@@ -10,10 +10,10 @@ module.exports = catchAsync(async (req, res, next) => {
     if (scheme.match(/^Bearer$/i)) {
       token = credentials;
     } else {
-      throw new ApplicationError('Invalid Authorization Format', 403);
+      throw new ApplicationError('Invalid Authorization Format', 401);
     }
   } else {
-    throw new ApplicationError('Missing Authorization', 403);
+    throw new ApplicationError('Missing Authorization', 401);
   }
 
   let userId;

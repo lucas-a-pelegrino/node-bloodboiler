@@ -10,8 +10,8 @@
     "start:staging": "NODE_ENV=staging node app.js",
     "start:dev": "NODE_ENV=development nodemon app.js",
     "start:debug": "NODE_ENV=development node --inspect-brk=5858 app.js",
-    "test": "jest --runInBand --forceExit",
-    "test:coverage": "jest --runInBand --coverage && coveralls < coverage/lcov.info --forceExit"
+    "test": "jest -i",
+    "test:coverage": "jest -i && codecov"
   },
   "husky": {
     "hooks": {
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "coveralls": "^3.0.11",
+    "codecov": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.10.0",

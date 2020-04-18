@@ -8,24 +8,31 @@ const password = 'P@ssw0rd';
 
 const sampleUsersArray = [
   {
-    _id: mongoose.Types.ObjectId(),
     name: faker.name.findName(),
     email: faker.internet.email().toLowerCase(),
     password,
   },
   {
-    _id: mongoose.Types.ObjectId(),
     name: faker.name.findName(),
     email: faker.internet.email().toLowerCase(),
     password,
   },
   {
-    _id: mongoose.Types.ObjectId(),
     name: faker.name.findName(),
     email: faker.internet.email().toLowerCase(),
     password,
   },
 ];
+
+const createSampleUser = async () => {
+  const sampleUser = {
+    name: faker.name.findName(),
+    email: faker.internet.email().toLowerCase(),
+    password,
+  };
+
+  return usersRepository.create(sampleUser);
+};
 
 const createSampleUsers = async () => {
   const promises = [];
@@ -39,5 +46,6 @@ const createSampleUsers = async () => {
 module.exports = {
   randomMongoId,
   sampleUsersArray,
+  createSampleUser,
   createSampleUsers,
 };
