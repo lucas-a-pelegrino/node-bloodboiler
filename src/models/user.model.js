@@ -25,10 +25,6 @@ const userSchema = mongoose.Schema(
       type: String,
       default: null,
     },
-    passwordTokenExpirationDate: {
-      type: Date,
-      default: null,
-    },
   },
   {
     timestamps: true,
