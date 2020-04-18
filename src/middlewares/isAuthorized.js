@@ -1,8 +1,5 @@
-const { promisify } = require('util');
 const { jwt, catchAsync, ApplicationError } = require('../utils');
 const { usersRepository } = require('../repositories');
-
-const verify = promisify(jwt.verify);
 
 module.exports = catchAsync(async (req, res, next) => {
   let token;
@@ -19,8 +16,16 @@ module.exports = catchAsync(async (req, res, next) => {
     throw new ApplicationError('Missing Authorization', 403);
   }
 
-  const decoded = await verify(token);
-  const decodedUser = await usersRepository.getById(decoded.user.id);
+  let userId;
+  jwt.verify(token, (err, decoded) => {
+    if (err) {
+      throw new ApplicationError(err.message, 401);
+    }
+
+    userId = decoded.sub.id;
+  });
+
+  const decodedUser = await usersRepository.getById(userId);
 
   if (!decodedUser) {
     throw new ApplicationError('User Not Found', 404);
