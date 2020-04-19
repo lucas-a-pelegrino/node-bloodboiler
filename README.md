@@ -1,20 +1,24 @@
-# Node API Bloodboiler
+# Node API Bloodboiler :skull_with_bones:
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a7eafd4c4c145faad8aece85c786b2d)](https://www.codacy.com/manual/lucas.assuncao.p/node-bloodboiler?utm_source=github.com&utm_medium=referral&utm_content=lucas-a-pelegrino/node-bloodboiler&utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler/branch/develop/graph/badge.svg)](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler) [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]() [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT)
 
-A API boilerplate built on top of ExpressJS.
+> A API boilerplate built on top of ExpressJS.
 
 ## Features
 
 - **Database:** NoSQL with [MongoDB](https://www.mongodb.com)/[Mongoose](https://mongoosejs.com)
 - **Authentication**: Authenticate users with [JWT](https://jwt.io);
-- **Logging:** Logging info with [Winston](https://github.com/winstonjs/winston)/[Morgan](https://github.com/expressjs/morgan);
-- **Testing:** Unit/Integration Tests running with [Jest](https://jestjs.io);
+- **Logs:** Logging info with [Winston](https://github.com/winstonjs/winston)/[Morgan](https://github.com/expressjs/morgan);
+- **Tests:** Unit/Integration Tests running with [Jest](https://jestjs.io);
 - **Error handling:** Centralized error handling middleware;
-- **HTTP Security:** TODO
-- **Code Analisys**: [Codecov](https://codecov.io)/[Codacy](https://www.codacy.com)
-- **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io)
-- **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com)
+- **Security:**
+  - [CORS](https://github.com/expressjs/cors) enabled;
+  - Secured HTTP headers using [Helmet](https://helmetjs.github.io);
+  - Protecting requests against xss;
+  - Data validation middleware; (TODO)
+- **Code Analisys**: [Codecov](https://codecov.io)/[Codacy](https://www.codacy.com);
+- **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io);
+- **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com);
 
 ## Getting Started
 
