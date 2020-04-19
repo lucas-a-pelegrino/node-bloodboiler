@@ -72,37 +72,6 @@ describe('User Endpoints', () => {
 
       expect(response.status).toBe(204);
     });
-
-    test('Should return 401 - Unauthorized if Authorization header is missing', async () => {
-      const page = 2;
-      const perPage = 10;
-      const response = await request(app).get(`${baseURL}?page=${page}&perPage=${perPage}`);
-
-      expect(response.status).toBe(401);
-      expect(response.body.message).toMatch('Missing Authorization');
-    });
-
-    test('Should return 401 - Unauthorized if Authorization format is invalid', async () => {
-      const page = 2;
-      const perPage = 10;
-      const response = await request(app)
-        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
-        .set('Authorization', `Beaver ${token}`);
-
-      expect(response.status).toBe(401);
-      expect(response.body.message).toMatch('Invalid Authorization Format');
-    });
-
-    test('Should return 401 - Unauthorized if JWT token is invalid', async () => {
-      const page = 2;
-      const perPage = 10;
-      const response = await request(app)
-        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
-        .set('Authorization', `Bearer some.invalid.jwt`);
-
-      expect(response.status).toBe(401);
-      expect(response.body.message).toMatch('invalid token');
-    });
   });
 
   describe('GET /users/:id', () => {
@@ -172,6 +141,51 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(404);
+    });
+  });
+
+  describe('Authorization', () => {
+    test('Should return 401 - Unauthorized if Authorization header is missing', async () => {
+      const page = 2;
+      const perPage = 10;
+      const response = await request(app).get(`${baseURL}?page=${page}&perPage=${perPage}`);
+
+      expect(response.status).toBe(401);
+      expect(response.body.message).toMatch('Missing Authorization');
+    });
+
+    test('Should return 401 - Unauthorized if Authorization format is invalid', async () => {
+      const page = 2;
+      const perPage = 10;
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
+        .set('Authorization', `Beaver ${token}`);
+
+      expect(response.status).toBe(401);
+      expect(response.body.message).toMatch('Invalid Authorization Format');
+    });
+
+    test('Should return 401 - Unauthorized if JWT token is invalid', async () => {
+      const page = 2;
+      const perPage = 10;
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
+        .set('Authorization', `Bearer some.invalid.jwt`);
+
+      expect(response.status).toBe(401);
+      expect(response.body.message).toMatch('invalid token');
+    });
+
+    test("Should return 404 - Not Found if provided token doesn't match to any existing user", async () => {
+      const page = 2;
+      const perPage = 10;
+      const token = await generateSampleToken(randomMongoId);
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(404);
+      expect(response.body.message).toMatch('User Not Found');
     });
   });
 });

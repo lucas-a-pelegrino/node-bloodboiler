@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const { Types } = require('mongoose');
 const faker = require('faker');
 
 const { usersRepository } = require('../../repositories');
 
-const randomMongoId = mongoose.Types.ObjectId();
+const randomMongoId = Types.ObjectId();
 const password = 'P@ssw0rd';
 
 const sampleUsersArray = [
