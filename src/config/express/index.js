@@ -1,5 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 const cors = require('cors');
 const swagger = require('swagger-ui-express');
 require('dotenv').config();
@@ -24,13 +25,15 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan.errorHandler);
 }
 
+app.use(helmet());
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   }),
 );
+app.use(xss());
 
 app.use('/documentation', swagger.serve);
 app.use('/documentation', swagger.setup(swaggerDocs));

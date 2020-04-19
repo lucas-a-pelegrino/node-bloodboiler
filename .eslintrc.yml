@@ -6,11 +6,13 @@ env:
 plugins:
   - prettier
   - jest
+  - security
 extends:
   - airbnb-base
   - prettier
   - plugin:prettier/recommended
   - plugin:jest/recommended
+  - plugin:security/recommended
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -47,3 +49,4 @@ rules:
   consistent-return: 'off'
   import/no-extraneous-dependencies: 'off'
   no-underscore-dangle: 'off'
+  security/detect-object-injection: 'off'
