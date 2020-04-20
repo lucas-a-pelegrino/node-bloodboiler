@@ -39,7 +39,7 @@ const forgotPassword = {
 
 const resetPassword = {
   params: yup.object().shape({
-    token: yup.string().require(),
+    token: yup.string().required(),
   }),
   body: yup.object().shape({
     newPassword: yup
