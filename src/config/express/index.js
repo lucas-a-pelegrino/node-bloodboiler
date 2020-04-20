@@ -35,8 +35,8 @@ app.use(
 );
 app.use(xss());
 
-app.use('/documentation', swagger.serve);
-app.use('/documentation', swagger.setup(swaggerDocs));
+app.use(`/api/${version}/documentation`, swagger.serve);
+app.use(`/api/${version}/documentation`, swagger.setup(swaggerDocs));
 
 Object.keys(routes).forEach((key) => app.use(`/api/${version}/${key}`, routes[key]));
 
