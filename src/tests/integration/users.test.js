@@ -69,6 +69,20 @@ describe('User Endpoints', () => {
       });
     });
 
+    test('Should return a list of users and metadata (without query params)', async () => {
+      const response = await request(app)
+        .get(`${baseURL}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+
+      const { body } = response;
+      expect(body).toMatchObject({
+        metadata: expect.any(Object),
+        data: expect.any(Array),
+      });
+    });
+
     test('Should return 204 - No Content', async () => {
       const page = 2;
       const perPage = 10;
