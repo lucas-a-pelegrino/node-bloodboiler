@@ -3,13 +3,18 @@ const { pick } = require('lodash');
 const { ApplicationError } = require('../utils');
 
 module.exports = (schema) => async (req, res, next) => {
-  const requestSchema = pick(schema.fields, ['params', 'query', 'body']);
-  const requestObject = pick(req, Object.keys(requestSchema));
+  const requestObject = pick(req, Object.keys(schema));
 
-  const validated = await schema.validate(requestObject, {
-    stripUnknown: true,
-    abortEarly: false,
-  });
+  try {
+    const value = await yup
+      .object()
+      .shape(schema)
+      .validate(requestObject, { stripUnknown: true, abortEarly: false });
 
-  next();
+    Object.assign(req, value);
+    next();
+  } catch (error) {
+    const message = error.errors.join(', ');
+    next(new ApplicationError(message, 400));
+  }
 };
