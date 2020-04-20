@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: `http://localhost:3001`,
+  clientURL: process.env.CLIENT_URL,
   version: 'v1',
   secret: 'b19aa5c2dfeb3fae917140794c9eed35bf831df83ffe9b13549a177db561fee123c6346a386a58133e5eb4ba2950b2bf',
   resetTokenExpiresTime: 5,
@@ -10,10 +10,11 @@ module.exports = {
     preflightContinue: false,
     optionsSuccessStatus: 204,
   },
-  mailAuth: {
-    host: process.env.MAIL_HOST,
-    port: process.env.MAIL_PORT,
+  email: {
+    from: process.env.MAIL_FROM,
     auth: {
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
     },
