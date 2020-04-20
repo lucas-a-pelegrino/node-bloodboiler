@@ -15,7 +15,7 @@
   - [CORS](https://github.com/expressjs/cors) enabled;
   - Secured HTTP headers using [Helmet](https://helmetjs.github.io);
   - Protecting requests against xss;
-  - Data validation middleware; (TODO)
+  - Data validation middleware using [Yup](https://github.com/jquense/yup)
 - **Code Analisys**: [Codecov](https://codecov.io)/[Codacy](https://www.codacy.com);
 - **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io);
 - **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com);
