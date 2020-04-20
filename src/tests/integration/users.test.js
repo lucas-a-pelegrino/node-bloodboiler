@@ -37,10 +37,16 @@ describe('User Endpoints', () => {
     });
 
     test('Should return 409 - Conflict', async () => {
+      const params = {
+        name: faker.name.findName(),
+        email: sampleUser.email,
+        password: 'P@ssw0rd',
+      };
+
       const response = await request(app)
         .post(`${baseURL}/`)
         .set('Authorization', `Bearer ${token}`)
-        .send(sampleUser);
+        .send(params);
 
       expect(response.status).toBe(409);
     });
