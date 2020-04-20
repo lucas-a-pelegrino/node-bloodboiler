@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const { omit } = require('lodash');
+const { encryptor } = require('../helpers');
 
 const userSchema = mongoose.Schema(
   {
@@ -39,15 +39,10 @@ userSchema.methods.toJSON = function() {
   return omit(userRaw.toObject(), ['password', '__v']);
 };
 
-userSchema.methods.transform = function() {
-  const userRaw = this;
-  return omit(userRaw.toJSON(), ['password', '__v']);
-};
-
 userSchema.pre('save', async function(next) {
   const user = this;
   if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
+    user.password = await encryptor.hashPassword(user.password);
   }
   next();
 });
