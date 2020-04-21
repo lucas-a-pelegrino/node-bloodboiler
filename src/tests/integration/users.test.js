@@ -82,6 +82,16 @@ describe('User Endpoints', () => {
       });
     });
 
+    test('Should return 204 - No Content', async () => {
+      const page = 2;
+      const perPage = 10;
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(204);
+    });
+
     test('Should return 400 - Bad Request if sortBy has invalid input', async () => {
       const page = 1;
       const perPage = 10;
@@ -94,16 +104,6 @@ describe('User Endpoints', () => {
 
       const { body } = response;
       expect(body).toHaveProperty('message', "Sort order must be one of the following: 'asc' or 'desc'");
-    });
-
-    test('Should return 204 - No Content', async () => {
-      const page = 2;
-      const perPage = 10;
-      const response = await request(app)
-        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.status).toBe(204);
     });
   });
 
