@@ -1,8 +1,6 @@
 const nodemailer = require('nodemailer');
 const { logger } = require('./logger');
-const {
-  [process.env.NODE_ENV]: { email },
-} = require('../config/env');
+const { email } = require('../config/env');
 
 const transporter = nodemailer.createTransport({
   pool: true,

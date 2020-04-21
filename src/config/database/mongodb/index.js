@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const {
-  [process.env.NODE_ENV]: { database },
-} = require('../../env');
+const { database } = require('../../env');
 const { logger } = require('../../../utils');
 
 module.exports = {

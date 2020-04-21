@@ -1,9 +1,7 @@
 const faker = require('faker');
 const request = require('supertest');
 const app = require('../../config/express');
-const {
-  test: { version },
-} = require('../../config/env');
+const { version } = require('../../config/env');
 
 const { getSampleUser, generateExpiredToken, generateSampleToken } = require('../fixtures/auth.fixtures');
 

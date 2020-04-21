@@ -1,9 +1,7 @@
 const faker = require('faker');
 const request = require('supertest');
 const app = require('../../config/express');
-const {
-  test: { version },
-} = require('../../config/env');
+const { version } = require('../../config/env');
 const { createSampleUsers, createSampleUser, randomMongoId } = require('../fixtures/users.fixtures');
 const { generateSampleToken } = require('../fixtures/auth.fixtures');
 

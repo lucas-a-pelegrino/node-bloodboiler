@@ -1,8 +1,6 @@
 const { transporter } = require('../utils');
 const {
-  [process.env.NODE_ENV]: {
-    email: { from },
-  },
+  email: { from },
 } = require('../config/env');
 
 module.exports.mailer = {
