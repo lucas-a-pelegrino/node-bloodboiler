@@ -1,6 +1,6 @@
 const httpMocks = require('node-mocks-http');
-const { errorTracker, errorHandler } = require('../../middlewares');
-const { ApplicationError, logger } = require('../../utils');
+const { errorTracker, errorHandler } = require('../../../middlewares');
+const { ApplicationError, logger } = require('../../../utils');
 
 describe('Error Middlewares', () => {
   describe('Error Tracker', () => {
