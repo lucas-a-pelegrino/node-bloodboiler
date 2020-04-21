@@ -14,8 +14,8 @@ DB_PORT=27017
 DB_USER=
 DB_PASSWORD=
 
-MAIL_FROM=no-reply <apps@ioasys.com.br>
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=465
-MAIL_USER=apps@ioasys.com.br
+MAIL_FROM=no-reply <$MAIL_USER>
+MAIL_HOST=${MAIL_HOST}
+MAIL_PORT=${MAIL_PORT}
+MAIL_USER=$MAIL_USER
 MAIL_PASS=$MAIL_PASS" > .env
