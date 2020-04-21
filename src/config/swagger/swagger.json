@@ -1,0 +1,677 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Node Bloodboiler",
+    "version": "v2.0.0",
+    "description": "A API boilerplate built on top of expressJS",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development Environment - v1"
+    }
+  ],
+  "externalDocs": {
+    "url": "https://documenter.getpostman.com/view/2660803/S1TN61BV",
+    "description": "Postman"
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "User"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "User's self registration",
+        "description": "User's self registration",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Succesfully register an user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Returned if the email sent on body is already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Email already in use"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticates the user",
+        "description": "Authenticates the user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticates the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOiI1ZTk5M2E2ZjI0Yzc1ODZjNmFjYmIxNDYiLCJuYW1lIjoiSm9obm55IERvZSIsImVtYWlsIjoiam9obmRvZUBpb2FzeXMuY29tLmJyIn0sImlhdCI6MTU4NzMzODI1OX0.rvLyJvCj0vC3CyuZbrTTSR5NzKgV5-jOybMlZtcY0jM"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The password used is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Password"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the email used",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sends an email to reset the users's password",
+        "description": "Sends an email to reset the users's password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "johndoe@ioasys.com.br"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "An email was sent for the email address provided"
+          },
+          "404": {
+            "description": "No user was found for the email used",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/{token}/reset-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resets the user's password with the new password provided",
+        "description": "Resets the user's password with the new password provided",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Password Reset Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": {
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTk5M2E2ZjI0Yzc1ODZjNmFjYmIxNDYiLCJpYXQiOjE1ODcxOTE3NzYsImV4cCI6MTU4NzE5MzU3Nn0.ccInU_Rv-NraFAZSHnp7rQnTg_PQwgYmciFYwvopjy8"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The password was updated and the user can try to authenticate again"
+          },
+          "401": {
+            "description": "The token provided has expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Token Expired"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the token provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/": {
+      "summary": "Users CRUD",
+      "get": {
+        "description": "Returns a list of all users registered with pagination",
+        "summary": "Returns a list of all users registered with pagination",
+        "security": [{ "BearerToken": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The page to be returned"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The number of documents to limit per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users with metadata details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "currentPage": {
+                          "type": "integer"
+                        },
+                        "totalPages": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "metadata": {
+                    "total": 1,
+                    "currentPage": 1,
+                    "totalPages": 1
+                  },
+                  "data": [
+                    {
+                      "_id": "5e98e39dc0a02022f2d02b4c",
+                      "passwordResetToken": null,
+                      "name": "John Doe",
+                      "email": "johndoe@ioasys.com.br",
+                      "createdAt": "2020-04-16T23:00:45.179Z",
+                      "updatedAt": "2020-04-16T23:41:38.451Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No users were found for the used criteria"
+          },
+          "401": {
+            "description": "The authorization header is missing or the token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Token"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      },
+      "post": {
+        "summary": "Creates an user",
+        "description": "Creates an user in the application",
+        "security": [{ "BearerToken": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfully creates a new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing or the token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Token"]
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The email used is already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Email already in use"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "User ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "Returns the user's data",
+        "summary": "Returns the user's data",
+        "security": [{ "BearerToken": [] }],
+        "responses": {
+          "200": {
+            "description": "Return a user based on its id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing or the token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Token"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      },
+      "patch": {
+        "description": "Updates the user's information",
+        "summary": "Updates the user's information",
+        "security": [{ "BearerToken": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johndoe@ioasys.com.br",
+                "password": "P@ssw0rd"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfully updated an user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "5e98e39dc0a02022f2d02b4c",
+                  "passwordResetToken": null,
+                  "name": "John Doe",
+                  "email": "johndoe@ioasys.com.br",
+                  "createdAt": "2020-04-16T23:00:45.179Z",
+                  "updatedAt": "2020-04-16T23:41:38.451Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing or the token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Token"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      },
+      "delete": {
+        "summary": "Deletes the user from the application",
+        "description": "Deletes the user from the application",
+        "security": [{ "BearerToken": [] }],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "The authorization header is missing or the token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["Invalid Token"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user was found for the id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "name": "ApplicationError",
+                  "messages": ["User Not Found"]
+                }
+              }
+            }
+          }
+        },
+        "tags": ["User"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "passwordResetToken": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Bearer token to authenticate the user"
+      }
+    }
+  }
+}

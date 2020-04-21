@@ -1,46 +1,37 @@
-const { promisify } = require('util');
-const jwt = require('../utils/jwt');
-const { getUserById } = require('../services/user');
-const { ApplicationError } = require('../lib/errors');
+const { jwt, catchAsync, ApplicationError } = require('../utils');
+const { usersRepository } = require('../repositories');
 
-const verify = promisify(jwt.verify);
-
-module.exports = async (req, res, next) => {
+module.exports = catchAsync(async (req, res, next) => {
   let token;
-  try {
-    if (req.headers && req.headers.authorization) {
-      const parts = req.headers.authorization.split(' ');
 
-      if (parts.length === 2) {
-        const scheme = parts[0];
-        const credentials = parts[1];
+  if (req.headers && req.headers.authorization) {
+    const [scheme, credentials] = req.headers.authorization.split(' ');
 
-        if (/^Bearer$/i.test(scheme)) {
-          token = credentials;
-        } else {
-          throw new ApplicationError('wrong-authorization-format');
-        }
-      }
+    if (scheme.match(/^Bearer$/i)) {
+      token = credentials;
     } else {
-      throw new ApplicationError('wrong-authorization-format');
+      throw new ApplicationError('Invalid Authorization Format', 401);
     }
-    const decoded = await verify(token);
-    const user = await getUserById(decoded.user.id);
-
-    if (!user) {
-      throw new ApplicationError('user-not-found', 404);
-    }
-
-    req.session = {
-      token,
-      user,
-    };
-
-    next();
-  } catch (error) {
-    res.status(error.status).json({
-      name: error.name,
-      message: error.message,
-    });
+  } else {
+    throw new ApplicationError('Missing Authorization', 401);
   }
-};
+
+  let userId;
+  jwt.verify(token, (err, decoded) => {
+    if (err) {
+      throw new ApplicationError(err.message, 401);
+    }
+
+    userId = decoded.sub.id;
+  });
+
+  const decodedUser = await usersRepository.getById(userId);
+
+  if (!decodedUser) {
+    throw new ApplicationError('User Not Found', 404);
+  }
+
+  req.session = { token, _id: decodedUser._id, email: decodedUser.email };
+
+  next();
+});

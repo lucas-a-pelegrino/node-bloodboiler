@@ -1,5 +1,7 @@
-node_modules
 .vscode
+
+node_modules
 coverage
-package-lock.json
-yarn.lock
+
+.env
+.codecov.yml

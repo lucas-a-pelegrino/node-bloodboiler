@@ -1,17 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+const { users } = require('./users.routes');
+const { auth } = require('./auth.routes');
 
-const basename = path.basename(__filename);
-
-const modules = fs
-  .readdirSync(__dirname)
-  .filter(file => file !== basename)
-  .reduce((previous, current) => {
-    const [fileName] = current.split('.');
-    // eslint-disable-next-line
-    previous[fileName] = require(path.join(__dirname, fileName));
-    return previous;
-  }, {});
-
-
-module.exports = modules;
+module.exports = {
+  users,
+  auth,
+};

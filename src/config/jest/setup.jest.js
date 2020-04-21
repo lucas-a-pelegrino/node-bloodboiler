@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
-
-const {
-  database,
-} = require(`../env/test`); //eslint-disable-line
-const {
-  createUser,
-} = require('../../services/user');
+const { database } = require('../env');
+const { logger } = require('../../utils');
 
 const connect = async () => {
   try {
@@ -19,6 +14,7 @@ const connect = async () => {
     await mongoose.connect(`mongodb://${dbUrl}`, {
       useNewUrlParser: true,
       useCreateIndex: true,
+      useUnifiedTopology: true,
       useFindAndModify: false,
     });
 
@@ -30,25 +26,9 @@ const connect = async () => {
 
 module.exports = async () => {
   try {
-    const params = {
-      name: 'John Doe',
-      email: 'johndoe@email.com',
-      password: '12341234',
-    };
-
-    const connection = await connect();
-
-    if (connection) {
-      const testUser = await createUser(params);
-
-      if (testUser) {
-        console.info('Test user successfully connected.'); //eslint-disable-line
-      } else {
-        console.info('Test user creation failed.'); //eslint-disable-line
-      }
-    }
+    await connect();
   } catch (error) {
-    console.error(error); //eslint-disable-line
+    logger.error(error);
     throw new Error(error);
   }
 };

@@ -1,56 +1,56 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 const cors = require('cors');
-// const swagger = require('swagger-express');
-// const createSwaggerMiddleware = require('swagger-express-middleware');
-const {
-  [process.env.NODE_ENV]: { version, corsOptions },
-} = require('../env');
-const routes = require('../../routes');
+const swagger = require('swagger-ui-express');
+require('dotenv').config();
+
 const database = require('../database/mongodb');
+const routes = require('../../routes');
+const swaggerDocs = require('../swagger/swagger.json');
+const { errorTracker, errorHandler } = require('../../middlewares');
+const { ApplicationError, logger, morgan } = require('../../utils');
+
+const { port, version, corsOptions } = require('../env');
 
 const app = express();
 database.connect();
 
-app.set('port', process.env.PORT || 3000);
-// const host = process.env.HOST || 'localhost';
+app.set('port', port || 3000);
 
-// app.use(express.static('public'));
-// app.use(
-//   swagger.init(app, {
-//     apiVersion: '1.0',
-//     swaggerVersion: '2.0',
-//     swaggerURL: '/swagger',
-//     swaggerYML: './public/swagger.yml',
-//     swaggerUI: './public/swagger/',
-//     basePath: host,
-//     apis: ['./public/swagger.yml'],
-//     middleware: () => {},
-//   }),
-// );
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan.successHandler);
+  app.use(morgan.errorHandler);
+}
 
-// createSwaggerMiddleware('./public/swagger.yml', app, (error, middleware) => {
-//   app.enable('strict routing');
-//   app.use(middleware.metadata());
-//   app.use(middleware.parseRequest());
-//   app.use(middleware.CORS(), middleware.validateRequest());
-//   app.use(bodyParser.json());
-//   app.use(
-//     bodyParser.urlencoded({
-//       extended: false,
-//     }),
-//   );
-
-//   app.use(`/api/${version}`, routes);
-// });
-app.use(bodyParser.json());
+app.use(helmet());
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   }),
 );
+app.use(xss());
 
-Object.keys(routes).forEach(key => app.use(`/api/${version}/${key}`, routes[key]));
+app.use(`/api/${version}/documentation`, swagger.serve);
+app.use(`/api/${version}/documentation`, swagger.setup(swaggerDocs));
+
+Object.keys(routes).forEach((key) => app.use(`/api/${version}/${key}`, routes[key]));
+
+app.use((req, res, next) => {
+  next(new ApplicationError(404, 'Resource Not Found'));
+});
+
+app.use(errorTracker);
+app.use(errorHandler);
+
+const unexpectedErrorCatcher = (error) => {
+  logger.error(error);
+  process.exit(1);
+};
+
+process.on('unhandledRejection', unexpectedErrorCatcher);
+process.on('uncaughtException', unexpectedErrorCatcher);
 
 module.exports = app;

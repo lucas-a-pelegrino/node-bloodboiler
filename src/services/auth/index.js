@@ -1,7 +1,9 @@
-const { authenticate } = require('./authenticate');
-const { resetPassword } = require('./resetPassword');
+const { signin } = require('./signin.service');
+const { forgotPassword } = require('./forgotPassword.service');
+const { resetPassword } = require('./resetPassword.service');
 
 module.exports = {
-  authenticate,
+  signin,
+  forgotPassword,
   resetPassword,
 };

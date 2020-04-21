@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
-const {
-  [process.env.NODE_ENV]: { database },
-} = require('../../env');
-
+const { database } = require('../../env');
+const { logger } = require('../../../utils');
 
 module.exports = {
   connect: async () => {
@@ -18,10 +16,11 @@ module.exports = {
       await mongoose.connect(`mongodb://${dbUrl}`, {
         useNewUrlParser: true,
         useCreateIndex: true,
+        useUnifiedTopology: true,
         useFindAndModify: false,
       });
     } catch (error) {
-      console.error('Error: ', error);
+      logger.error('Error: ', error);
       throw error;
     }
   },
