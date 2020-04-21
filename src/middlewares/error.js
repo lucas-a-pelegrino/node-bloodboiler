@@ -23,7 +23,6 @@ const errorHandler = (err, req, res, next) => {
   if (['development', 'staging'].includes(process.env.NODE_ENV)) {
     logger.error(err);
   }
-
   res.status(status).json({
     name: err.name,
     message,
