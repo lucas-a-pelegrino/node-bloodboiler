@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const {
-  [process.env.NODE_ENV]: { secret },
-} = require('../config/env');
+const { secret } = require('../config/env');
 
 module.exports.jwt = {
   issue: (payload) => jwt.sign(payload, secret, { algorithm: 'HS256' }),

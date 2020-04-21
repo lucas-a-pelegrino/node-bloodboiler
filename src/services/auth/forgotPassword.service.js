@@ -5,9 +5,7 @@ const { ApplicationError } = require('../../utils');
 const { encryptor, mailer } = require('../../helpers');
 const userService = require('../users/update.service');
 
-const {
-  [process.env.NODE_ENV]: { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL },
-} = require('../../config/env');
+const { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL } = require('../../config/env');
 
 module.exports.forgotPassword = async (email) => {
   const user = await usersRepository.get({ email });
