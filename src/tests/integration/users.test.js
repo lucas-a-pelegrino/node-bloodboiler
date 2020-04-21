@@ -54,8 +54,9 @@ describe('User Endpoints', () => {
     test('Should return a list of users and metadata', async () => {
       const page = 1;
       const perPage = 10;
+      const sortBy = 'createdAt:asc';
       const response = await request(app)
-        .get(`${baseURL}?page=${page}&perPage=${perPage}`)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
@@ -89,6 +90,20 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(204);
+    });
+
+    test('Should return 400 - Bad Request if sortBy has invalid input', async () => {
+      const page = 1;
+      const perPage = 10;
+      const sortBy = 'createdAtdesc';
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(400);
+
+      const { body } = response;
+      expect(body).toHaveProperty('message', "Sort order must be one of the following: 'asc' or 'desc'");
     });
   });
 
