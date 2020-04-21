@@ -32,6 +32,9 @@ jobs:
         run: npm install
 
       - name: Run tests
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
         run: |
           npm install
           bash scripts/environment.sh
