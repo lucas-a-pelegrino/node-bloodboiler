@@ -61,10 +61,6 @@ $ yarn start:staging
 # production
 $ npm start
 $ yarn start
-
-# debug (VSCode)
-$ npm run start:debug
-$ yarn start:debug
 ```
 
 Testing
@@ -73,18 +69,14 @@ Testing
 # Run tests
 $ npm test
 $ yarn test
-
-# Run tests with coverage
-$ npm run test:coverage
-$ yarn test:coverage
 ```
 
 ## Documentation
 
 You might want to check the API docs as well!
 
-- [Postman](https://documenter.getpostman.com/view/2660803/S1TN61BV);
-- Swagger: Just start the application at your desired `host:port` and use the route: `/documentation` to open the swagger docs;
+- Collection on [Postman](https://documenter.getpostman.com/view/2660803/S1TN61BV);
+- Swagger: Just start the application at your desired `host:port` and use the route: `/api/v1/documentation` to open the swagger docs;
 
 ## License
 
