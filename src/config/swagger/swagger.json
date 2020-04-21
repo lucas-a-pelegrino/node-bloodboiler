@@ -288,6 +288,14 @@
               "type": "integer"
             },
             "description": "The number of documents to limit per page"
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sort order of the documents returned, ex: createdAt:desc. Format: attribute:value -> ['asc', 'desc']"
           }
         ],
         "responses": {
