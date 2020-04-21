@@ -102,6 +102,15 @@ describe('User Endpoints', () => {
       expect(response.body).toEqual(sampleUser);
     });
 
+    test('Should return 400 - Bad Request', async () => {
+      const response = await request(app)
+        .get(`${baseURL}/1`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toEqual(expect.stringMatching('id must be a valid mongo id'));
+    });
+
     test('Should return 404 - Not Found', async () => {
       const response = await request(app)
         .get(`${baseURL}/${randomMongoId}`)
