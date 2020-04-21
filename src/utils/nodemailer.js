@@ -13,6 +13,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/* istanbul ignore next */
 transporter
   .verify()
   .then(() => logger.info('Successfully connected to the email server...'))

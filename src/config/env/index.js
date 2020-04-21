@@ -27,7 +27,7 @@ module.exports = {
     },
   },
   database: {
-    name: process.env.DB_NAME,
+    name: process.env.NODE_ENV !== 'test' ? process.env.DB_NAME : `${process.env.DB_NAME}-test`,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,

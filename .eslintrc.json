@@ -1,0 +1,63 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "plugins": ["prettier", "jest", "security"],
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended",
+    "plugin:security/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src"]
+      }
+    }
+  },
+  "rules": {
+    "linebreak-style": 0,
+    "operator-linebreak": 0,
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "info", "error"]
+      }
+    ],
+    "no-plusplus": 0,
+    "no-restricted-syntax": 0,
+    "guard-for-in": 0,
+    "no-continue": 0,
+    "prefer-promise-reject-CONSTANTS": 0,
+    "implicit-arrow-linebreak": 0,
+    "no-shadow": 0,
+    "function-paren-newline": 0,
+    "no-case-declarations": 0,
+    "max-len": 0,
+    "prettier/prettier": "error",
+    "no-throw-literal": 0,
+    "func-names": "off",
+    "consistent-return": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-underscore-dangle": "off",
+    "security/detect-object-injection": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ]
+  }
+}

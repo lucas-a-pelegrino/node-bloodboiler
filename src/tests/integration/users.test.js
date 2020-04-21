@@ -67,6 +67,20 @@ describe('User Endpoints', () => {
       });
     });
 
+    test('Should return a list of users and metadata (without query params)', async () => {
+      const response = await request(app)
+        .get(`${baseURL}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+
+      const { body } = response;
+      expect(body).toMatchObject({
+        metadata: expect.any(Object),
+        data: expect.any(Array),
+      });
+    });
+
     test('Should return 204 - No Content', async () => {
       const page = 2;
       const perPage = 10;
@@ -86,6 +100,15 @@ describe('User Endpoints', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual(sampleUser);
+    });
+
+    test('Should return 400 - Bad Request', async () => {
+      const response = await request(app)
+        .get(`${baseURL}/1`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toEqual(expect.stringMatching('id must be a valid mongo id'));
     });
 
     test('Should return 404 - Not Found', async () => {
