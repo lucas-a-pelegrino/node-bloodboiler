@@ -4,6 +4,7 @@ const list = {
   query: yup.object().shape({
     page: yup.number().integer(),
     perPage: yup.number().integer(),
+    sortBy: yup.string(),
   }),
 };
 
