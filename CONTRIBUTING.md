@@ -12,7 +12,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 1. **Open an issue** describing the feature, it's details must contain a **compreehensive description** of the feature;
 2. **Fork and clone** the repo;
 3. Setup your local repo as the [installation steps](https://github.com/lucas-a-pelegrino/node-bloodboiler/tree/develop#installation-steps);
-4. Work on the feature and **be sure** to add the integration/unit tests need to **keep coverage at 100%**;
+4. Work on the feature and **be sure** to add the integration/unit tests needed to **keep coverage at 100%**;
 5. Create and send a **Pull Request**;
 
 ### Bugs
@@ -22,7 +22,7 @@ Please note we have a code of conduct, please follow it in all your interactions
    - It would be great if details of the input used, error thrown could be copied into the issue description;
 2. **Fork and clone** the repo;
 3. Setup your local repo as the [installation steps](https://github.com/lucas-a-pelegrino/node-bloodboiler/tree/develop#installation-steps);
-4. Work on the feature and be sure to add the integration/unit tests need to keep coverage at 100%;
+4. Work on the feature and be sure to add the integration/unit tests needed to **keep coverage at 100%**;
 5. Create and send a **Pull Request**;
 
 ### Observations
@@ -42,7 +42,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 - **Title:** Short but objective title;
 - **Description:** Feature/Bug description;
 - **Issue Link:** Link of the issue this new feature is referecing;
-- **Libraries:** Any new packages used on development;
+- **Libraries:** Any new packages used on the feature implementation;
 
 ## Code of Conduct
 
