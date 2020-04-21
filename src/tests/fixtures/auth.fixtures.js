@@ -1,8 +1,6 @@
 const moment = require('moment');
 
-const {
-  test: { resetTokenExpiresTime, resetTokenExpiresTimeFormat },
-} = require('../../config/env');
+const { resetTokenExpiresTime, resetTokenExpiresTimeFormat } = require('../../config/env');
 
 const { usersService } = require('../../services');
 const { jwt } = require('../../utils');

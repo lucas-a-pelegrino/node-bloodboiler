@@ -1,9 +1,7 @@
 const faker = require('faker');
 const request = require('supertest');
 const app = require('../../config/express');
-const {
-  test: { version },
-} = require('../../config/env');
+const { version } = require('../../config/env');
 
 const { getSampleUser, generateExpiredToken, generateSampleToken } = require('../fixtures/auth.fixtures');
 
@@ -73,6 +71,8 @@ describe('Auth Endpoints', () => {
   });
 
   describe('POST /auth/forgot-password', () => {
+    beforeEach(() => jest.setTimeout(10000));
+
     test('Should create an reset token for the user and send it to its email', async () => {
       const response = await request(app)
         .post(`${baseURL}/forgot-password`)

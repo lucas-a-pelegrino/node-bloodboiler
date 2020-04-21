@@ -11,14 +11,12 @@ const swaggerDocs = require('../swagger/swagger.json');
 const { errorTracker, errorHandler } = require('../../middlewares');
 const { ApplicationError, logger, morgan } = require('../../utils');
 
-const {
-  [process.env.NODE_ENV]: { version, corsOptions },
-} = require('../env');
+const { port, version, corsOptions } = require('../env');
 
 const app = express();
 database.connect();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', port || 3000);
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan.successHandler);
