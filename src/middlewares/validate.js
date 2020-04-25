@@ -14,7 +14,15 @@ module.exports = (schema) => async (req, res, next) => {
     Object.assign(req, value);
     next();
   } catch (error) {
-    const message = error.errors.join(', ');
-    next(new ApplicationError(message, 400));
+    const errors = {};
+    error.inner.forEach((error) => {
+      if (error.path.indexOf('.') === -1) {
+        errors[error.path] = error.message;
+      } else {
+        const [outerKey, innerKey] = error.path.split('.');
+        errors[outerKey] = { [innerKey]: error.message };
+      }
+    });
+    next(new ApplicationError('Invalid Fields', 400, true, '', errors));
   }
 };
