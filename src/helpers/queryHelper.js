@@ -31,7 +31,7 @@ module.exports.queryHelper = (options) => {
   const [sortKey, sortValue] = sort.trim().split(':');
   if (!['asc', 'desc'].includes(sortValue)) {
     throw new ApplicationError('Invalid Fields', 400, true, '', {
-      sortBy: "Sort order must be one of the following: 'asc' or 'desc'",
+      query: { sortBy: "Sort order must be one of the following: 'asc' or 'desc'" },
     });
   }
 
