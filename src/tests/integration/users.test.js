@@ -101,9 +101,16 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(400);
-
-      const { body } = response;
-      expect(body).toHaveProperty('message', "Sort order must be one of the following: 'asc' or 'desc'");
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          message: 'Invalid Fields',
+          errors: {
+            query: {
+              sortBy: "Sort order must be one of the following: 'asc' or 'desc'",
+            },
+          },
+        }),
+      );
     });
   });
 
@@ -123,7 +130,16 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toEqual(expect.stringMatching('id must be a valid mongo id'));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          message: 'Invalid Fields',
+          errors: {
+            params: {
+              id: 'id must be a valid mongo id',
+            },
+          },
+        }),
+      );
     });
 
     test('Should return 404 - Not Found', async () => {
