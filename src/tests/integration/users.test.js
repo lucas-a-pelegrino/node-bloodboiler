@@ -106,7 +106,7 @@ describe('User Endpoints', () => {
           message: 'Invalid Fields',
           errors: {
             query: {
-              sortBy: "Sort order must be one of the following: 'asc' or 'desc'",
+              sortBy: "sorting order must be one of the following: 'asc' or 'desc'",
             },
           },
         }),
