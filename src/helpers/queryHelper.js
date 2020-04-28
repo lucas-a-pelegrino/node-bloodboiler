@@ -1,7 +1,7 @@
 module.exports.queryHelper = (options) => {
-  const sort = options.sortBy || 'createdAt:desc';
-  const limit = parseInt(options.perPage || 10, 10);
-  const skip = parseInt(options.page || 1, 10);
+  const sort = options.sortBy;
+  const limit = parseInt(options.perPage, 10);
+  const skip = parseInt(options.page, 10);
 
   const pipeline = [
     {

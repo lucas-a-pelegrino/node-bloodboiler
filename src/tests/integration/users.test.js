@@ -63,7 +63,10 @@ describe('User Endpoints', () => {
 
       const { body } = response;
       expect(body).toMatchObject({
-        metadata: expect.any(Object),
+        metadata: expect.objectContaining({
+          total: expect.any(Number),
+          totalPages: expect.any(Number),
+        }),
         data: expect.any(Array),
       });
     });
@@ -71,6 +74,26 @@ describe('User Endpoints', () => {
     test('Should return a list of users and metadata (without query params)', async () => {
       const response = await request(app)
         .get(`${baseURL}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+
+      const { body } = response;
+      expect(body).toMatchObject({
+        metadata: expect.objectContaining({
+          total: expect.any(Number),
+          totalPages: expect.any(Number),
+        }),
+        data: expect.any(Array),
+      });
+    });
+
+    test('Should return metadata with nextPage params', async () => {
+      const page = 1;
+      const perPage = 1;
+      const sortBy = 'createdAt:asc';
+      const response = await request(app)
+        .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
