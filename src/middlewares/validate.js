@@ -1,9 +1,10 @@
 const yup = require('yup');
-const { pick } = require('lodash');
 const { ApplicationError } = require('../utils');
 
 module.exports = (schema) => async (req, res, next) => {
-  const requestObject = pick(req, Object.keys(schema));
+  const requestObject = Object.fromEntries(
+    Object.entries(req).filter(([key]) => ['query', 'params', 'body'].includes(key)),
+  );
 
   try {
     const value = await yup
