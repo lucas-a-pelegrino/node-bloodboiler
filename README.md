@@ -20,6 +20,8 @@
 - **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io);
 - **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com);
 
+> This boilerplate is also available with Sequelize/PostgreSQL on this [repository](https://github.com/lucas-a-pelegrino/node-bloodboiler-sequelized)!
+
 ## Getting Started
 
 ### Installation Steps
