@@ -1,6 +1,6 @@
 {
   "name": "node-bloodboiler",
-  "version": "v2.0.0",
+  "version": "2.0.0",
   "description": "A API built on top of expressJS",
   "main": "app.js",
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
