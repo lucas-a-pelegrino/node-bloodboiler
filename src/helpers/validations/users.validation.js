@@ -2,9 +2,18 @@ const yup = require('yup');
 
 const list = {
   query: yup.object().shape({
-    page: yup.number().integer(),
-    perPage: yup.number().integer(),
-    sortBy: yup.string(),
+    page: yup
+      .number()
+      .integer()
+      .default(1),
+    perPage: yup
+      .number()
+      .integer()
+      .default(10),
+    sortBy: yup
+      .string()
+      .matches(/[:](asc|desc)/i, "sorting order must be one of the following: 'asc' or 'desc'")
+      .default('createdAt:desc'),
   }),
 };
 

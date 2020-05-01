@@ -1,9 +1,10 @@
 const yup = require('yup');
-const { pick } = require('lodash');
 const { ApplicationError } = require('../utils');
 
 module.exports = (schema) => async (req, res, next) => {
-  const requestObject = pick(req, Object.keys(schema));
+  const requestObject = Object.fromEntries(
+    Object.entries(req).filter(([key]) => ['query', 'params', 'body'].includes(key)),
+  );
 
   try {
     const value = await yup
@@ -14,7 +15,11 @@ module.exports = (schema) => async (req, res, next) => {
     Object.assign(req, value);
     next();
   } catch (error) {
-    const message = error.errors.join(', ');
-    next(new ApplicationError(message, 400));
+    const errors = {};
+    error.inner.forEach((error) => {
+      const [outerKey, innerKey] = error.path.split('.');
+      errors[outerKey] = { [innerKey]: error.message };
+    });
+    next(new ApplicationError('Invalid Fields', 400, true, '', errors));
   }
 };

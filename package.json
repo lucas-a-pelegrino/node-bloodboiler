@@ -1,6 +1,6 @@
 {
   "name": "node-bloodboiler",
-  "version": "v2.0.0",
+  "version": "2.0.0",
   "description": "A API built on top of expressJS",
   "main": "app.js",
   "author": "Lucas A Pelegrino <lucas.assuncao.p@gmail.com>",
@@ -31,7 +31,6 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
     "morgan": "^1.10.0",

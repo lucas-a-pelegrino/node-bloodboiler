@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { omit } = require('lodash');
 const { encryptor } = require('../helpers');
 
 const userSchema = mongoose.Schema(
@@ -36,7 +35,9 @@ const userSchema = mongoose.Schema(
 
 userSchema.methods.toJSON = function() {
   const userRaw = this;
-  return omit(userRaw.toObject(), ['password', '__v']);
+  return Object.fromEntries(
+    Object.entries(userRaw.toObject()).filter(([key]) => !['password', '__v'].includes(key)),
+  );
 };
 
 userSchema.pre('save', async function(next) {
