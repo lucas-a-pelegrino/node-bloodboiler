@@ -31,7 +31,7 @@ describe('User Endpoints', () => {
 
       sampleUser = response.body;
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(201);
     });
 
     test('Should return 409 - Conflict', async () => {
