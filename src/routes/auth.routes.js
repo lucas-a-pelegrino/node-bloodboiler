@@ -3,7 +3,7 @@ const { authController } = require('../controllers');
 const { validate } = require('../middlewares');
 const {
   validationSchemas: { auth, users },
-} = require('../helpers');
+} = require('../validations');
 
 router.post('/register', validate(users.create), authController.register);
 router.post('/signin', validate(auth.signin), authController.signin);
