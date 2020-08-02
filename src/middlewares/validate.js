@@ -1,3 +1,4 @@
+const httpStatus = require('http-status-codes');
 const yup = require('yup');
 const { ApplicationError } = require('../utils');
 
@@ -20,6 +21,6 @@ module.exports = (schema) => async (req, res, next) => {
       const [outerKey, innerKey] = error.path.split('.');
       errors[outerKey] = { [innerKey]: error.message };
     });
-    next(new ApplicationError('Invalid Fields', 400, true, '', errors));
+    next(new ApplicationError('Invalid Fields', httpStatus.BAD_REQUEST, true, '', errors));
   }
 };
