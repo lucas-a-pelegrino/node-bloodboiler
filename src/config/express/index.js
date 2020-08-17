@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const swagger = require('swagger-ui-express');
+const httpStatus = require('http-status-codes');
 require('dotenv').config();
 
 const database = require('../database/mongodb');
@@ -39,7 +40,7 @@ app.use(`/api/${version}/documentation`, swagger.setup(swaggerDocs));
 Object.keys(routes).forEach((key) => app.use(`/api/${version}/${key}`, routes[key]));
 
 app.use((req, res, next) => {
-  next(new ApplicationError(404, 'Resource Not Found'));
+  next(new ApplicationError(httpStatus.NOT_FOUND, 'Resource Not Found'));
 });
 
 app.use(errorTracker);
