@@ -1,14 +1,8 @@
 const httpStatus = require('http-status-codes');
 const { catchAsync } = require('../utils');
-const { authService, usersService } = require('../services');
+const { authService } = require('../services');
 
 module.exports = {
-  register: catchAsync(async (req, res) => {
-    const { body } = req;
-    const response = await usersService.create(body);
-    return res.status(httpStatus.CREATED).json(response);
-  }),
-
   signin: catchAsync(async (req, res) => {
     const { email, password } = req.body;
     const response = await authService.signin(email, password);
