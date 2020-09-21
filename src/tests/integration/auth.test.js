@@ -1,5 +1,6 @@
 const faker = require('faker');
 const request = require('supertest');
+const httpStatus = require('http-status-codes');
 const app = require('../../config/express');
 const { version } = require('../../config/env');
 
@@ -23,7 +24,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/register`)
         .send(sampleAuth);
 
-      expect(response.status).toBe(201);
+      expect(response.status).toBe(httpStatus.CREATED);
       expect(response.body).not.toHaveProperty('password');
       expect(response.body).toMatchObject({
         _id: expect.anything(),
@@ -39,7 +40,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/register`)
         .send(sampleAuth);
 
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(httpStatus.CONFLICT);
     });
   });
 
@@ -49,7 +50,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: sampleAuth.email, password: sampleAuth.password });
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
       expect(response.body).toHaveProperty('token');
     });
 
@@ -58,7 +59,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: faker.internet.email(), password: sampleAuth.password });
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
 
     test('Should return with 401 - Unauthorized', async () => {
@@ -66,7 +67,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: sampleAuth.email, password: '12345678' });
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
     });
   });
 
@@ -78,7 +79,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/forgot-password`)
         .send({ email: sampleAuth.email });
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(httpStatus.NO_CONTENT);
     });
 
     test('Should return with 404 - Not Found', async () => {
@@ -86,7 +87,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/forgot-password`)
         .send({ email: faker.internet.email() });
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
 
@@ -101,7 +102,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${passwordResetToken}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(httpStatus.NO_CONTENT);
     });
 
     test('Should return 401 - Unauthorized', async () => {
@@ -110,7 +111,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
     });
 
     test('Should return 404 - Not Found', async () => {
@@ -119,7 +120,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
 });

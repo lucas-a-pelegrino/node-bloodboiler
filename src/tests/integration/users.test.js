@@ -1,5 +1,6 @@
 const faker = require('faker');
 const request = require('supertest');
+const httpStatus = require('http-status-codes');
 const app = require('../../config/express');
 const { version } = require('../../config/env');
 const { createSampleUsers, createSampleUser, randomMongoId } = require('../fixtures/users.fixtures');
@@ -31,7 +32,7 @@ describe('User Endpoints', () => {
 
       sampleUser = response.body;
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.CREATED);
     });
 
     test('Should return 409 - Conflict', async () => {
@@ -46,7 +47,7 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(params);
 
-      expect(response.status).toBe(409);
+      expect(response.status).toBe(httpStatus.CONFLICT);
     });
   });
 
@@ -59,7 +60,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
 
       const { body } = response;
       expect(body).toMatchObject({
@@ -76,7 +77,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
 
       const { body } = response;
       expect(body).toMatchObject({
@@ -96,7 +97,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
 
       const { body } = response;
       expect(body).toMatchObject({
@@ -112,7 +113,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(httpStatus.NO_CONTENT);
     });
 
     test('Should return 400 - Bad Request if sortBy has invalid input', async () => {
@@ -123,7 +124,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}&sortBy=${sortBy}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
       expect(response.body).toEqual(
         expect.objectContaining({
           message: 'Invalid Fields',
@@ -143,7 +144,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}/${sampleUser._id}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
       expect(response.body).toEqual(sampleUser);
     });
 
@@ -152,7 +153,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}/1`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(httpStatus.BAD_REQUEST);
       expect(response.body).toEqual(
         expect.objectContaining({
           message: 'Invalid Fields',
@@ -170,7 +171,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}/${randomMongoId}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
 
@@ -187,7 +188,7 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(params);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(httpStatus.OK);
       expect(response.body.name).toEqual(expect.stringMatching('John Doe'));
     });
 
@@ -203,7 +204,7 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(params);
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
 
@@ -213,7 +214,7 @@ describe('User Endpoints', () => {
         .delete(`${baseURL}/${sampleUser._id}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(204);
+      expect(response.status).toBe(httpStatus.NO_CONTENT);
     });
 
     test('Should return 404 - Not Found', async () => {
@@ -221,7 +222,7 @@ describe('User Endpoints', () => {
         .delete(`${baseURL}/${randomMongoId}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
 
@@ -231,7 +232,7 @@ describe('User Endpoints', () => {
       const perPage = 10;
       const response = await request(app).get(`${baseURL}?page=${page}&perPage=${perPage}`);
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
       expect(response.body.message).toMatch('Missing Authorization');
     });
 
@@ -242,7 +243,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Beaver ${token}`);
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
       expect(response.body.message).toMatch('Invalid Authorization Format');
     });
 
@@ -253,7 +254,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer some.invalid.jwt`);
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
       expect(response.body.message).toMatch('invalid token');
     });
 
@@ -265,7 +266,7 @@ describe('User Endpoints', () => {
         .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(httpStatus.NOT_FOUND);
       expect(response.body.message).toMatch('User Not Found');
     });
   });
