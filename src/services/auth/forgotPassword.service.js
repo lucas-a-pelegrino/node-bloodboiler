@@ -2,7 +2,7 @@ const httpStatus = require('http-status-codes');
 const moment = require('moment');
 const { usersRepository } = require('../../repositories');
 const { ApplicationError } = require('../../utils');
-const { encryptor, mailer } = require('../../helpers');
+const { encryptor, mailer, messages } = require('../../helpers');
 const userService = require('../users/update.service');
 
 const { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL } = require('../../config/env');
@@ -10,7 +10,7 @@ const { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL } = requir
 module.exports.forgotPassword = async (email) => {
   const user = await usersRepository.get({ email });
   if (!user) {
-    throw new ApplicationError('User not found', httpStatus.NOT_FOUND);
+    throw new ApplicationError(messages.notFound('user'), httpStatus.NOT_FOUND);
   }
 
   const payload = {
