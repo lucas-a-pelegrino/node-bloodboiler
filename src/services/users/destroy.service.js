@@ -1,11 +1,11 @@
 const httpStatus = require('http-status-codes');
 const { usersRepository } = require('../../repositories');
-const { ApplicationError } = require('../../utils');
+const { ApplicationError, messages } = require('../../utils');
 
 module.exports.destroy = async (id) => {
   const user = await usersRepository.getById(id);
   if (!user) {
-    throw new ApplicationError('User not found', httpStatus.NOT_FOUND);
+    throw new ApplicationError(messages.notFound('user'), httpStatus.NOT_FOUND);
   }
 
   return usersRepository.destroy(id);
