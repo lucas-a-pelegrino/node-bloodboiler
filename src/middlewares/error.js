@@ -1,11 +1,12 @@
-const httpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { ApplicationError, logger } = require('../utils');
+const { messages } = require('../helpers');
 
 const errorTracker = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApplicationError)) {
-    const status = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
-    const message = error.message || 'Internal Server Error';
+    const status = error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
+    const message = error.message || messages.internalError;
     error = new ApplicationError(message, status, false, err.stack);
   }
   next(error);
@@ -15,8 +16,8 @@ const errorHandler = (err, req, res, next) => {
   let { status, message } = err;
 
   if (process.env.NODE_ENV === 'production' && !err.isOperational) {
-    status = httpStatus.INTERNAL_SERVER_ERROR;
-    message = 'Internal Server Error';
+    status = StatusCodes.INTERNAL_SERVER_ERROR;
+    message = messages.internalError;
   }
 
   res.locals.errorMessage = err.message;
@@ -27,7 +28,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(status).json({
     name: err.name,
     message,
-    ...(err.status === httpStatus.BAD_REQUEST && { errors: err.errors }),
+    ...(err.status === StatusCodes.BAD_REQUEST && { errors: err.errors }),
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 };
