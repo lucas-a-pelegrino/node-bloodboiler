@@ -1,6 +1,6 @@
 const faker = require('faker');
 const request = require('supertest');
-const httpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const app = require('../../config/express');
 const { version } = require('../../config/env');
 
@@ -20,11 +20,9 @@ beforeAll(async () => {
 describe('Auth Endpoints', () => {
   describe('POST /auth/register', () => {
     test('Should succesfully register an user', async () => {
-      const response = await request(app)
-        .post(`${baseURL}/register`)
-        .send(sampleAuth);
+      const response = await request(app).post(`${baseURL}/register`).send(sampleAuth);
 
-      expect(response.status).toBe(httpStatus.CREATED);
+      expect(response.status).toBe(StatusCodes.CREATED);
       expect(response.body).not.toHaveProperty('password');
       expect(response.body).toMatchObject({
         _id: expect.anything(),
@@ -36,11 +34,9 @@ describe('Auth Endpoints', () => {
     });
 
     test('Should return with 409 - Conflict', async () => {
-      const response = await request(app)
-        .post(`${baseURL}/register`)
-        .send(sampleAuth);
+      const response = await request(app).post(`${baseURL}/register`).send(sampleAuth);
 
-      expect(response.status).toBe(httpStatus.CONFLICT);
+      expect(response.status).toBe(StatusCodes.CONFLICT);
     });
   });
 
@@ -50,7 +46,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: sampleAuth.email, password: sampleAuth.password });
 
-      expect(response.status).toBe(httpStatus.OK);
+      expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toHaveProperty('token');
     });
 
@@ -59,7 +55,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: faker.internet.email(), password: sampleAuth.password });
 
-      expect(response.status).toBe(httpStatus.NOT_FOUND);
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
     });
 
     test('Should return with 401 - Unauthorized', async () => {
@@ -67,7 +63,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/signin`)
         .send({ email: sampleAuth.email, password: '12345678' });
 
-      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
     });
   });
 
@@ -79,7 +75,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/forgot-password`)
         .send({ email: sampleAuth.email });
 
-      expect(response.status).toBe(httpStatus.NO_CONTENT);
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
     });
 
     test('Should return with 404 - Not Found', async () => {
@@ -87,7 +83,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/forgot-password`)
         .send({ email: faker.internet.email() });
 
-      expect(response.status).toBe(httpStatus.NOT_FOUND);
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
     });
   });
 
@@ -102,7 +98,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${passwordResetToken}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(httpStatus.NO_CONTENT);
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
     });
 
     test('Should return 401 - Unauthorized', async () => {
@@ -111,7 +107,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
     });
 
     test('Should return 404 - Not Found', async () => {
@@ -120,7 +116,7 @@ describe('Auth Endpoints', () => {
         .post(`${baseURL}/${token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(httpStatus.NOT_FOUND);
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
     });
   });
 });
