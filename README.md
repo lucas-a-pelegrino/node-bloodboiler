@@ -1,6 +1,6 @@
 # Node API Bloodboiler :rocket:
 
-![Build](https://github.com/lucas-a-pelegrino/node-bloodboiler/workflows/Build/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a7eafd4c4c145faad8aece85c786b2d)](https://www.codacy.com/manual/lucas.assuncao.p/node-bloodboiler?utm_source=github.com&utm_medium=referral&utm_content=lucas-a-pelegrino/node-bloodboiler&utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler/branch/develop/graph/badge.svg)](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]() [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT) [![sequelized version](https://img.shields.io/badge/bloodboiler-sequelized-blue)](https://github.com/lucas-a-pelegrino/node-bloodboiler-sequelized)
+![Build](https://github.com/lucas-a-pelegrino/node-bloodboiler/workflows/Build/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a7eafd4c4c145faad8aece85c786b2d)](https://www.codacy.com/manual/lucas.assuncao.p/node-bloodboiler?utm_source=github.com&utm_medium=referral&utm_content=lucas-a-pelegrino/node-bloodboiler&utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler/branch/develop/graph/badge.svg)](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]() [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT)
 
 > A API boilerplate built on top of ExpressJS.
 
@@ -19,7 +19,7 @@
 - **Code Analisys**: [Codecov](https://codecov.io)/[Codacy](https://www.codacy.com);
 - **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io);
 - **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com);
-- **[Docker](https://docker.com) Support**
+- **[Docker](https://docker.com) Support**;
 
 > This boilerplate is also available with Sequelize/PostgreSQL on this [repository](https://github.com/lucas-a-pelegrino/node-bloodboiler-sequelized)!
 
@@ -55,14 +55,17 @@ Start application
 ```sh
 # locally:
 $ npm run start:dev
+# or
 $ yarn start:dev
 
 # staging:
 $ npm run start:staging
+# or
 $ yarn start:staging
 
 # production
 $ npm start
+# or
 $ yarn start
 ```
 
@@ -71,20 +74,23 @@ Testing
 ```sh
 # Run tests
 $ npm test
+# or
 $ yarn test
 ```
 
 ### Docker
 
-Bloodboiler comes with Docker support, you can develop and test your code using Docker for minimal configuration, Nodemon takes care of restarting the the application inside Docker so you can code locally.
+Bloodboiler comes with Docker support, you can develop and test your code using Docker for minimal configuration, Nodemon takes care of restarting the application inside Docker so you can code locally.
 
 ```sh
 # Code Locally with:
 $ npm run docker:dev
+# or
 $ yarn docker:dev
 
 # Run Test Suites inside Docker:
 $ npm run docker:test
+# or
 $ yarn docker:test
 ```
 
