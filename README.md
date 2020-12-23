@@ -19,6 +19,7 @@
 - **Code Analisys**: [Codecov](https://codecov.io)/[Codacy](https://www.codacy.com);
 - **Linting:** [ESLint](https://eslint.org)/[Prettier](https://prettier.io);
 - **API Documentation:** [Swagger](https://swagger.io)/[Postman](https://www.postman.com);
+- **[Docker](https://docker.com) Support**
 
 > This boilerplate is also available with Sequelize/PostgreSQL on this [repository](https://github.com/lucas-a-pelegrino/node-bloodboiler-sequelized)!
 
@@ -72,6 +73,22 @@ Testing
 $ npm test
 $ yarn test
 ```
+
+### Docker
+
+Bloodboiler comes with Docker support, you can develop and test your code using Docker for minimal configuration, Nodemon takes care of restarting the the application inside Docker so you can code locally.
+
+```sh
+# Code Locally with:
+$ npm run docker:dev
+$ yarn docker:dev
+
+# Run Test Suites inside Docker:
+$ npm run docker:test
+$ yarn docker:test
+```
+
+> NOTE: In order to use the methods listed above, make sure you have Docker installed on your local machine!
 
 ## Documentation
 

@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  database:
+    container_name: bloodboiler-database
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+    logging:
+      driver: none
+    networks:
+      - app-network
+
+  backend:
+    container_name: bloodboiler-backend
+    build: .
+    image: bloodboiler
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/opt/node_app/app
+    networks:
+      - app-network
+    depends_on:
+      - database
+
+volumes:
+  dbdata:
+
+networks:
+  app-network:
+    driver: bridge
