@@ -1,11 +1,13 @@
 const httpMocks = require('node-mocks-http');
+const { StatusCodes } = require('http-status-codes');
 const { errorTracker, errorHandler } = require('../../../middlewares');
 const { ApplicationError, logger } = require('../../../utils');
+const { messages } = require('../../../helpers/messages');
 
 describe('Error Middlewares', () => {
   describe('Error Tracker', () => {
     test('Should return ApplicationError with 400 - Bad Request', () => {
-      const error = new ApplicationError('Bad Request', 400);
+      const error = new ApplicationError('Bad Request', StatusCodes.BAD_REQUEST);
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const next = jest.fn();
@@ -45,8 +47,8 @@ describe('Error Middlewares', () => {
       expect(next).toHaveBeenCalledWith(expect.any(ApplicationError));
       expect(next).toHaveBeenCalledWith(
         expect.objectContaining({
-          status: 500,
-          message: 'Internal Server Error',
+          status: StatusCodes.INTERNAL_SERVER_ERROR,
+          message: messages.internalError,
           isOperational: false,
         }),
       );
@@ -57,28 +59,28 @@ describe('Error Middlewares', () => {
     beforeEach(() => jest.spyOn(logger, 'error').mockImplementation(() => {}));
 
     test('Should build error response and set message on res.locals', () => {
-      const error = new ApplicationError('Bad Request', 400);
+      const error = new ApplicationError('Bad Request', StatusCodes.BAD_REQUEST);
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const spy = jest.spyOn(res, 'json');
 
       errorHandler(error, req, res);
 
-      expect(res.statusCode).toBe(400);
+      expect(res.statusCode).toBe(StatusCodes.BAD_REQUEST);
       expect(res.locals.errorMessage).toBe(error.message);
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ message: error.message }));
     });
 
     test('Should have error stack on response body if env === development', () => {
       process.env.NODE_ENV = 'development';
-      const error = new ApplicationError('Bad Request', 400);
+      const error = new ApplicationError('Bad Request', StatusCodes.BAD_REQUEST);
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const spy = jest.spyOn(res, 'json');
 
       errorHandler(error, req, res);
 
-      expect(res.statusCode).toBe(400);
+      expect(res.statusCode).toBe(StatusCodes.BAD_REQUEST);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ message: error.message, stack: error.stack }),
       );
@@ -87,29 +89,29 @@ describe('Error Middlewares', () => {
 
     test("Should keep error status code and message if env === production and it's an operational error", () => {
       process.env.NODE_ENV = 'production';
-      const error = new ApplicationError('Bad Request', 400);
+      const error = new ApplicationError('Bad Request', StatusCodes.BAD_REQUEST);
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const spy = jest.spyOn(res, 'json');
 
       errorHandler(error, req, res);
 
-      expect(res.statusCode).toBe(400);
+      expect(res.statusCode).toBe(StatusCodes.BAD_REQUEST);
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ message: error.message }));
       process.env.NODE_ENV = 'test';
     });
 
     test("Should send 500 - Internal Server Error if env === production and it's not an operational error", () => {
       process.env.NODE_ENV = 'production';
-      const error = new ApplicationError('Bad Request', 400, false);
+      const error = new ApplicationError('Bad Request', StatusCodes.BAD_REQUEST, false);
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const spy = jest.spyOn(res, 'json');
 
       errorHandler(error, req, res);
 
-      expect(res.statusCode).toBe(500);
-      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ message: 'Internal Server Error' }));
+      expect(res.statusCode).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ message: messages.internalError }));
       process.env.NODE_ENV = 'test';
     });
   });

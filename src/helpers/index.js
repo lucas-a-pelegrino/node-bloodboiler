@@ -1,11 +1,11 @@
 const { queryHelper } = require('./queryHelper');
 const { encryptor } = require('./encryptor');
-const { validationSchemas } = require('./validations');
 const { mailer } = require('./mailer');
+const { messages } = require('./messages');
 
 module.exports = {
   queryHelper,
   encryptor,
-  validationSchemas,
   mailer,
+  messages,
 };

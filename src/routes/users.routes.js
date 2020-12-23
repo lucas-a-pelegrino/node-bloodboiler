@@ -3,7 +3,7 @@ const { usersController } = require('../controllers');
 const { isAuthorized, validate } = require('../middlewares');
 const {
   validationSchemas: { users },
-} = require('../helpers');
+} = require('../validations');
 
 router.use(isAuthorized);
 

@@ -1,4 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
 const { jwt, catchAsync, ApplicationError } = require('../utils');
+const { messages } = require('../helpers');
 const { usersRepository } = require('../repositories');
 
 module.exports = catchAsync(async (req, res, next) => {
@@ -10,16 +12,16 @@ module.exports = catchAsync(async (req, res, next) => {
     if (scheme.match(/^Bearer$/i)) {
       token = credentials;
     } else {
-      throw new ApplicationError('Invalid Authorization Format', 401);
+      throw new ApplicationError(messages.invalidAuthFormat, StatusCodes.UNAUTHORIZED);
     }
   } else {
-    throw new ApplicationError('Missing Authorization', 401);
+    throw new ApplicationError(messages.authMissing, StatusCodes.UNAUTHORIZED);
   }
 
   let userId;
   jwt.verify(token, (err, decoded) => {
     if (err) {
-      throw new ApplicationError(err.message, 401);
+      throw new ApplicationError(err.message, StatusCodes.UNAUTHORIZED);
     }
 
     userId = decoded.sub.id;
@@ -28,7 +30,7 @@ module.exports = catchAsync(async (req, res, next) => {
   const decodedUser = await usersRepository.getById(userId);
 
   if (!decodedUser) {
-    throw new ApplicationError('User Not Found', 404);
+    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
   }
 
   req.session = { token, _id: decodedUser._id, email: decodedUser.email };
