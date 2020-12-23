@@ -1,6 +1,6 @@
 # Node API Bloodboiler :rocket:
 
-![Build](https://github.com/lucas-a-pelegrino/node-bloodboiler/workflows/Build/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a7eafd4c4c145faad8aece85c786b2d)](https://www.codacy.com/manual/lucas.assuncao.p/node-bloodboiler?utm_source=github.com&utm_medium=referral&utm_content=lucas-a-pelegrino/node-bloodboiler&utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler/branch/develop/graph/badge.svg)](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]() [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT) [![sequelized version](https://img.shields.io/badge/bloodboiler-sequelized-blue)](https://github.com/lucas-a-pelegrino/node-bloodboiler-sequelized)
+![Build](https://github.com/lucas-a-pelegrino/node-bloodboiler/workflows/Build/badge.svg) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7a7eafd4c4c145faad8aece85c786b2d)](https://www.codacy.com/manual/lucas.assuncao.p/node-bloodboiler?utm_source=github.com&utm_medium=referral&utm_content=lucas-a-pelegrino/node-bloodboiler&utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler/branch/develop/graph/badge.svg)](https://codecov.io/gh/lucas-a-pelegrino/node-bloodboiler) [![GitHub Release](https://img.shields.io/github/v/release/lucas-a-pelegrino/node-bloodboiler?sort=semver)]() [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://opensource.org/licenses/MIT)
 
 > A API boilerplate built on top of ExpressJS.
 
@@ -80,7 +80,7 @@ $ yarn test
 
 ### Docker
 
-Bloodboiler comes with Docker support, you can develop and test your code using Docker for minimal configuration, Nodemon takes care of restarting the the application inside Docker so you can code locally.
+Bloodboiler comes with Docker support, you can develop and test your code using Docker for minimal configuration, Nodemon takes care of restarting the application inside Docker so you can code locally.
 
 ```sh
 # Code Locally with:
