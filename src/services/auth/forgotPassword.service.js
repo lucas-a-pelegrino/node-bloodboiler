@@ -1,4 +1,4 @@
-const httpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const moment = require('moment');
 const { usersRepository } = require('../../repositories');
 const { ApplicationError } = require('../../utils');
@@ -10,15 +10,13 @@ const { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL } = requir
 module.exports.forgotPassword = async (email) => {
   const user = await usersRepository.get({ email });
   if (!user) {
-    throw new ApplicationError(messages.notFound('user'), httpStatus.NOT_FOUND);
+    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
   }
 
   const payload = {
     sub: user._id,
     iat: moment().unix(),
-    exp: moment()
-      .add(resetTokenExpiresTime, resetTokenExpiresTimeFormat)
-      .unix(),
+    exp: moment().add(resetTokenExpiresTime, resetTokenExpiresTimeFormat).unix(),
   };
 
   const token = await encryptor.generateToken(payload);
