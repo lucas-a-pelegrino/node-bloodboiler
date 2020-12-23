@@ -1,4 +1,4 @@
-const httpStatus = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const { usersRepository } = require('../../repositories');
 const { ApplicationError } = require('../../utils');
 const { messages } = require('../../helpers');
@@ -6,7 +6,7 @@ const { messages } = require('../../helpers');
 module.exports.get = async (id) => {
   const user = await usersRepository.getById(id);
   if (!user) {
-    throw new ApplicationError(messages.notFound('user'), httpStatus.NOT_FOUND);
+    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
   }
 
   return user;
