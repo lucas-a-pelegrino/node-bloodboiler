@@ -14,7 +14,31 @@ const userSchema = mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
+      index: true,
     },
+    accessTokens: [
+      {
+        _id: {
+          type: mongoose.Types.ObjectId(),
+          required: true,
+          unique: true,
+          index: true,
+        },
+        authToken: {
+          type: String,
+        },
+        refreshToken: {
+          type: String,
+        },
+        valid: {
+          type: Boolean,
+          default: true,
+        },
+        expiresAt: {
+          type: Date,
+        },
+      },
+    ],
     password: {
       type: String,
       required: true,
@@ -33,14 +57,14 @@ const userSchema = mongoose.Schema(
   },
 );
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const userRaw = this;
   return Object.fromEntries(
     Object.entries(userRaw.toObject()).filter(([key]) => !['password', '__v'].includes(key)),
   );
 };
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = await encryptor.hashPassword(user.password);
