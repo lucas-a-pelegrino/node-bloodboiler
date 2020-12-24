@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { encryptor } = require('../helpers');
+const { AccessToken } = require('./accessToken.model');
 
 const userSchema = mongoose.Schema(
   {
@@ -16,28 +17,7 @@ const userSchema = mongoose.Schema(
       lowercase: true,
       index: true,
     },
-    tokens: [
-      {
-        token: {
-          type: String,
-          required: true,
-          index: true,
-        },
-        type: {
-          type: String,
-          required: true,
-          enum: ['access', 'refresh'],
-        },
-        expired: {
-          type: Boolean,
-          default: true,
-        },
-        expiresAt: {
-          type: Date,
-          required: true,
-        },
-      },
-    ],
+    tokens: [AccessToken],
     password: {
       type: String,
       required: true,
