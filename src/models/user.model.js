@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema(
           required: true,
           enum: ['access', 'refresh'],
         },
-        valid: {
+        expired: {
           type: Boolean,
           default: true,
         },
