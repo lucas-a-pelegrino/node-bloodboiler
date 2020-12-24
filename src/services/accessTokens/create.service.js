@@ -30,7 +30,7 @@ module.exports = {
       },
     );
 
-    const user = usersRepository.getById(payload.sub.id);
+    const user = await usersRepository.getById(payload.sub.id);
     user.tokens.push({ token: accessToken, type: 'access' }, { token: refreshToken, type: 'refresh' });
 
     await usersRepository.update(user);
