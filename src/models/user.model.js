@@ -16,19 +16,17 @@ const userSchema = mongoose.Schema(
       lowercase: true,
       index: true,
     },
-    accessTokens: [
+    tokens: [
       {
-        _id: {
-          type: mongoose.Types.ObjectId(),
+        token: {
+          type: String,
           required: true,
-          unique: true,
           index: true,
         },
-        authToken: {
+        type: {
           type: String,
-        },
-        refreshToken: {
-          type: String,
+          required: true,
+          enum: ['access', 'refresh'],
         },
         valid: {
           type: Boolean,
@@ -36,6 +34,7 @@ const userSchema = mongoose.Schema(
         },
         expiresAt: {
           type: Date,
+          required: true,
         },
       },
     ],
