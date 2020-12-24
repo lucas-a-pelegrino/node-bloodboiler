@@ -14,7 +14,7 @@ const accessTokenSchema = mongoose.Schema(
     },
     expired: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {
