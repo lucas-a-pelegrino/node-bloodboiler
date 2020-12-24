@@ -16,10 +16,6 @@ const accessTokenSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    expiresAt: {
-      type: Date,
-      required: true,
-    },
   },
   {
     timestamps: true,
