@@ -1,5 +1,8 @@
+// models
 const { User } = require('./user.model');
-const { AccessToken } = require('./accessToken.model');
+
+// schemas
+const { AccessToken } = require('./accessToken.schema');
 
 module.exports = {
   User,

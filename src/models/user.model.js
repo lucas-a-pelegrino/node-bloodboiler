@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { encryptor } = require('../helpers');
-const { AccessToken } = require('./accessToken.model');
+const { AccessToken } = require('./accessToken.schema');
 
 const userSchema = mongoose.Schema(
   {

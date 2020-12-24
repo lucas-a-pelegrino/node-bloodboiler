@@ -23,4 +23,4 @@ const accessTokenSchema = mongoose.Schema(
   },
 );
 
-module.exports.AccessToken = mongoose.model('AccessToken', accessTokenSchema);
+module.exports.AccessToken = accessTokenSchema;
