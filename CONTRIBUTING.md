@@ -3,46 +3,32 @@
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+Please note we have a code of conduct, follow it in all your interactions with the project.
 
 ## Guidelines
 
-### New Features
+### Feature Requests
 
-1. **Open an issue** describing the feature, it's details must contain a **compreehensive description** of the feature;
-2. **Fork and clone** the repo;
-3. Setup your local repo as the [installation steps](https://github.com/lucas-a-pelegrino/node-bloodboiler/tree/develop#installation-steps);
-4. Work on the feature and **be sure** to add the integration/unit tests needed to **keep coverage at 100%**;
-5. Create and send a **Pull Request**;
+1. **Open an issue** describing what it is you feel it's missing, make sure you are using the **Feature Request** template when opening new issues;
+2. You are welcome to work on the feature yourself, but note that it might be rejected if it doesn't follow our contribution guidelines;
+3. Remember to tag the issue correctly so it can be tracked easily;
 
 ### Bugs
 
-1. **Open an issue** describing the bug you found, if possible:
-   - Detail the steps to reproduce the bug as much as possible;
-   - It would be great if details of the input used, error thrown could be copied into the issue description;
-2. **Fork and clone** the repo;
-3. Setup your local repo as the [installation steps](https://github.com/lucas-a-pelegrino/node-bloodboiler/tree/develop#installation-steps);
-4. Work on the feature and be sure to add the integration/unit tests needed to **keep coverage at 100%**;
-5. Create and send a **Pull Request**;
+1. **Open an issue** describing the bug, make sure you are using the **Bug Report** template when opening an issue for bug reporting;
+2. Make sure that everything necessary for the maintainers or the person assigned to work on the bug can track and fix it properly;
+3. Remember to tag the issue correctly so it can be tracked easily;
 
 ### Observations
 
-- **ALL PRs will be reviewing by two or more of the repo's maintainers and it will be approved and merged by them**
-- **Also, it's important to note that a new feature will be reviewed and discussed in the issue and might be closed if the repo's maintainers judge that said issue is not interesting for the repo's purpose. In that case, the issue will be closed and the PR will be rejected.**
+- **ALL PRs will be reviewed by two or more of the repo's maintainers and it will be approved and merged by them**
+- **Also, it's important to note that a new feature should be reviewed and discussed in the issue related to it and if the repo's maintainers judge that said issue is not interesting for the repo's purpose the issue will be closed and the PR will be rejected.**
+- **IMPORTANT: Communication on issues, pull requests should be in english, so all people interested in the project can participate across the world.**
 
 ## Commits Guidelines
 
 1. We use **Git Flow** as our git workflow, check out this [cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet/index.html) to have a clear understanding of it's use;
 2. We are also using **commitlint** to keep an organized log of commits and commit messages;
-
-## Pull Requests Guidelines
-
-1. For new features, use the following template:
-
-- **Title:** Short but objective title;
-- **Description:** Feature/Bug description;
-- **Issue Link:** Link of the issue this new feature is referecing;
-- **Libraries:** Any new packages used on the feature implementation;
 
 ## Code of Conduct
 
