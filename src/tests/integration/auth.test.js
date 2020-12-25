@@ -47,7 +47,8 @@ describe('Auth Endpoints', () => {
         .send({ email: sampleAuth.email, password: sampleAuth.password });
 
       expect(response.status).toBe(StatusCodes.OK);
-      expect(response.body).toHaveProperty('token');
+      expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('refreshToken');
     });
 
     test('Should return with 404 - Not Found', async () => {
