@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const accessTokenSchema = mongoose.Schema(
   {
-    token: {
+    access: {
       type: String,
       required: true,
       index: true,
     },
-    type: {
+    refresh: {
       type: String,
-      enum: ['access', 'refresh'],
       required: true,
+      index: true,
     },
     expired: {
       type: Boolean,

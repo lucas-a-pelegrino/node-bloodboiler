@@ -31,7 +31,7 @@ module.exports = {
     );
 
     const user = await usersRepository.getById(payload.sub.id);
-    user.tokens.push({ token: accessToken, type: 'access' }, { token: refreshToken, type: 'refresh' });
+    user.tokens.push({ access: accessToken, refresh: refreshToken });
 
     await usersRepository.update(user);
 
