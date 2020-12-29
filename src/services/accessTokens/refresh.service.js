@@ -6,9 +6,16 @@ const accessTokensService = require('./create.service');
 
 module.exports = {
   refreshTokens: async (refreshToken) => {
-    const decoded = await jwt.verify(refreshToken);
+    let userId;
+    jwt.verify(refreshToken, (err, decoded) => {
+      if (err) {
+        throw new ApplicationError(err.message, StatusCodes.UNAUTHORIZED);
+      }
 
-    const user = await usersService.get(decoded.sub.id);
+      userId = decoded.sub.id;
+    });
+
+    const user = await usersService.get(userId);
     const userRefreshToken = user.tokens.find((document) => document.refresh === refreshToken);
 
     if (!userRefreshToken) {
