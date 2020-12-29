@@ -2,20 +2,20 @@ const yup = require('yup');
 
 const signin = {
   body: yup.object().shape({
-    email: yup
-      .string()
-      .email()
-      .required(),
+    email: yup.string().email().required(),
     password: yup.string().required(),
+  }),
+};
+
+const refreshToken = {
+  body: yup.object().shape({
+    refreshToken: yup.string().required(),
   }),
 };
 
 const forgotPassword = {
   body: yup.object().shape({
-    email: yup
-      .string()
-      .email()
-      .required(),
+    email: yup.string().email().required(),
   }),
 };
 
@@ -37,6 +37,7 @@ const resetPassword = {
 
 module.exports.auth = {
   signin,
+  refreshToken,
   forgotPassword,
   resetPassword,
 };
