@@ -133,7 +133,8 @@
                   }
                 },
                 "example": {
-                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOiI1ZTk5M2E2ZjI0Yzc1ODZjNmFjYmIxNDYiLCJuYW1lIjoiSm9obm55IERvZSIsImVtYWlsIjoiam9obmRvZUBpb2FzeXMuY29tLmJyIn0sImlhdCI6MTU4NzMzODI1OX0.rvLyJvCj0vC3CyuZbrTTSR5NzKgV5-jOybMlZtcY0jM"
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOiI1ZmU1MjYzZWRkMTkxNTAxMjRjZWQxYWEiLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20ifSwiaWF0IjoxNjA4ODUzNDA5fQ.WjEIkJohurkk7wHDFxPxAitEE-rXkP7_4VqhJASH_lE",
+                  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOiI1ZmU1MjYzZWRkMTkxNTAxMjRjZWQxYWEifSwiaWF0IjoxNjA4ODUzNDA5fQ.B8vGNL4jl_twji4iRyHW83C-Jc9ry-iyNnhXd6nKH3g"
                 }
               }
             }

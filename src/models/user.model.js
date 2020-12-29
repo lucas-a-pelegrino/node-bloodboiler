@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { encryptor } = require('../helpers');
+const { AccessToken } = require('./accessToken.schema');
 
 const userSchema = mongoose.Schema(
   {
@@ -14,7 +15,9 @@ const userSchema = mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
+      index: true,
     },
+    tokens: [AccessToken],
     password: {
       type: String,
       required: true,
@@ -33,14 +36,14 @@ const userSchema = mongoose.Schema(
   },
 );
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const userRaw = this;
   return Object.fromEntries(
     Object.entries(userRaw.toObject()).filter(([key]) => !['password', '__v'].includes(key)),
   );
 };
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   const user = this;
   if (user.isModified('password')) {
     user.password = await encryptor.hashPassword(user.password);
