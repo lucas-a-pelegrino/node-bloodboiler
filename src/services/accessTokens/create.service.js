@@ -20,7 +20,7 @@ module.exports = {
     const refreshToken = encryptor.generateToken(
       {
         sub: {
-          id: payload.sub.id,
+          userId: payload.sub.id,
         },
         iat: moment().unix(),
       },
@@ -31,7 +31,14 @@ module.exports = {
     );
 
     const user = await usersRepository.getById(payload.sub.id);
-    user.tokens.push({ access: accessToken, refresh: refreshToken });
+
+    if (user.tokens.length > 0) {
+      for (const token of user.tokens) {
+        token.expired = true;
+      }
+    }
+
+    user.tokens.unshift({ access: accessToken, refresh: refreshToken });
 
     await usersRepository.update(user);
 

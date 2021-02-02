@@ -6,24 +6,19 @@ const accessTokensService = require('./create.service');
 
 module.exports = {
   refreshTokens: async (refreshToken) => {
-    let userId;
-    jwt.verify(refreshToken, (err, decoded) => {
-      if (err) {
-        throw new ApplicationError(err.message, StatusCodes.UNAUTHORIZED);
-      }
-
-      userId = decoded.sub.id;
-    });
+    const {
+      sub: { userId },
+    } = await jwt.verify(refreshToken);
 
     const user = await usersService.get(userId);
-    const userRefreshToken = user.tokens.find((document) => document.refresh === refreshToken);
+    const userRefreshToken = user.tokens.find((token) => token.refresh === refreshToken);
 
     if (!userRefreshToken) {
       throw new ApplicationError(messages.notFound('token'), StatusCodes.NOT_FOUND);
     }
 
     if (userRefreshToken.expired) {
-      throw new ApplicationError(messages.expiredToken, StatusCodes.UNAUTHORIZED);
+      throw new ApplicationError(messages.expiredToken, StatusCodes.FORBIDDEN);
     }
 
     const payload = {
@@ -33,8 +28,6 @@ module.exports = {
         email: user.email,
       },
     };
-
-    user.tokens.id(userRefreshToken._id).expired = true;
 
     await usersService.update(user._id, user);
 
