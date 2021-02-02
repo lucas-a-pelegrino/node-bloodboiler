@@ -19,12 +19,18 @@
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "test": "jest -i",
     "test:coverage": "jest -i && codecov",
-    "commit": "commit"
+    "commit": "git-cz"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "commitiquette"
     }
   },
   "dependencies": {
@@ -48,6 +54,8 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "codecov": "^3.8.1",
+    "commitiquette": "^1.0.9",
+    "commitizen": "^4.2.3",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
