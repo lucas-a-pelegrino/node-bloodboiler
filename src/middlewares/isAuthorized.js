@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { jwt, catchAsync, ApplicationError } = require('../utils');
 const { messages } = require('../helpers');
-const { usersRepository } = require('../repositories');
+const usersService = require('../services/users');
 
 module.exports = catchAsync(async (req, res, next) => {
   let token;
@@ -18,19 +18,20 @@ module.exports = catchAsync(async (req, res, next) => {
     throw new ApplicationError(messages.authMissing, StatusCodes.UNAUTHORIZED);
   }
 
-  let userId;
-  jwt.verify(token, (err, decoded) => {
-    if (err) {
-      throw new ApplicationError(err.message, StatusCodes.UNAUTHORIZED);
-    }
+  const {
+    sub: { id: userId },
+  } = await jwt.verifyToken(token);
 
-    userId = decoded.sub.id;
-  });
+  const decodedUser = await usersService.get(userId);
 
-  const decodedUser = await usersRepository.getById(userId);
+  const userAccessToken = decodedUser.tokens.find((AccessToken) => AccessToken.access === token);
 
-  if (!decodedUser) {
-    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
+  if (!userAccessToken) {
+    throw new ApplicationError(messages.notFound('token'), StatusCodes.NOT_FOUND);
+  }
+
+  if (userAccessToken.expired) {
+    throw new ApplicationError(messages.expiredToken, StatusCodes.FORBIDDEN);
   }
 
   req.session = { token, _id: decodedUser._id, email: decodedUser.email };
