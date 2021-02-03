@@ -8,7 +8,7 @@ module.exports = {
   refreshTokens: async (refreshToken) => {
     const {
       sub: { userId },
-    } = await jwt.verify(refreshToken);
+    } = await jwt.verifyToken(refreshToken);
 
     const user = await usersService.get(userId);
     const userRefreshToken = user.tokens.find((token) => token.refresh === refreshToken);
