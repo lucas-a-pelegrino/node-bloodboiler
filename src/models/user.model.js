@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { encryptor } = require('../helpers');
-const { AccessToken } = require('./accessToken.schema');
 
 const userSchema = mongoose.Schema(
   {
@@ -17,7 +16,6 @@ const userSchema = mongoose.Schema(
       lowercase: true,
       index: true,
     },
-    tokens: [AccessToken],
     password: {
       type: String,
       required: true,
