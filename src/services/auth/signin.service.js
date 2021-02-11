@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const { usersRepository } = require('../../repositories');
-const accessTokensService = require('../accessTokens/create.service');
+const tokensService = require('../tokens/create.service');
 const { ApplicationError } = require('../../utils');
 const { encryptor, messages } = require('../../helpers');
 
@@ -16,12 +16,8 @@ module.exports.signin = async (email, password) => {
   }
 
   const payload = {
-    sub: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    },
+    id: user._id,
   };
 
-  return accessTokensService.create(payload);
+  return tokensService.create(payload);
 };
