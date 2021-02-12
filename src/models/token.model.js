@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const TokenTypes = {
-  access: 'access-token',
   refresh: 'refresh-token',
   reset: 'reset-token',
 };
@@ -20,7 +19,7 @@ const tokenSchema = mongoose.Schema(
     },
     tokenType: {
       type: String,
-      enum: [TokenTypes.access, TokenTypes.refresh, TokenTypes.reset],
+      enum: [TokenTypes.refresh, TokenTypes.reset],
       required: true,
     },
     hasExpired: {

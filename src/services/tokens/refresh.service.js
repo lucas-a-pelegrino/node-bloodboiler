@@ -1,36 +1,45 @@
 const { StatusCodes } = require('http-status-codes');
 const { jwt, ApplicationError } = require('../../utils');
 const { messages } = require('../../helpers');
-const usersService = require('../users');
-const accessTokensService = require('./create.service');
+const { tokensRepository } = require('../../repositories');
+const tokensService = require('./create.service');
 
 module.exports = {
   refreshTokens: async (refreshToken) => {
-    const {
-      sub: { userId },
-    } = await jwt.verifyToken(refreshToken);
+    const decoded = await jwt.verifyToken(refreshToken);
 
-    const user = await usersService.get(userId);
-    const userRefreshToken = user.tokens.find((token) => token.refresh === refreshToken);
+    if (decoded.expired) {
+      const expiredToken = await tokensRepository.get({ token: refreshToken });
 
-    if (!userRefreshToken) {
-      throw new ApplicationError(messages.notFound('token'), StatusCodes.NOT_FOUND);
-    }
+      Object.assign(expiredToken, {
+        ...expiredToken,
+        hasExpired: true,
+      });
 
-    if (userRefreshToken.expired) {
+      await tokensRepository.update(expiredToken);
+
       throw new ApplicationError(messages.expiredToken, StatusCodes.FORBIDDEN);
     }
 
-    const payload = {
-      sub: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    };
+    const token = await tokensRepository.get({
+      token: refreshToken,
+      userId: decoded.sub.id,
+      hasExpired: false,
+    });
 
-    await usersService.update(user._id, user);
+    if (!token) {
+      throw new ApplicationError(messages.notFound('token'), StatusCodes.NOT_FOUND);
+    }
 
-    return accessTokensService.create(payload);
+    Object.assign(token, {
+      ...token,
+      hasExpired: true,
+    });
+
+    await tokensRepository.update(token);
+
+    const payload = { id: decoded.sub.id };
+
+    return tokensService.create(payload);
   },
 };

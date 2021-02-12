@@ -7,7 +7,7 @@ const { TokenTypes } = require('../../models');
 
 module.exports = {
   create: async (payload) => {
-    let accessToken = encryptor.generateToken(
+    const accessToken = encryptor.generateToken(
       {
         sub: { ...payload },
         iat: moment().unix(),
@@ -29,12 +29,6 @@ module.exports = {
       },
     );
 
-    accessToken = await tokensRepository.create({
-      token: accessToken,
-      userId: payload.id,
-      tokenType: TokenTypes.access,
-    });
-
     refreshToken = await tokensRepository.create({
       token: refreshToken,
       userId: payload.id,
@@ -42,7 +36,7 @@ module.exports = {
     });
 
     return {
-      accessToken: accessToken.token,
+      accessToken,
       refreshToken: refreshToken.token,
     };
   },
