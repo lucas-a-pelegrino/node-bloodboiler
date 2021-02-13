@@ -4,7 +4,16 @@ const { StatusCodes } = require('http-status-codes');
 const app = require('../../config/express');
 const { version } = require('../../config/env');
 
-const { getSampleUser, generateExpiredToken, generateSampleToken } = require('../fixtures/auth.fixtures');
+const { messages } = require('../../helpers');
+
+const {
+  getSampleUser,
+  generateExpiredToken,
+  generateSampleToken,
+  fakeRefreshToken,
+  jwtRegex,
+  invalidToken,
+} = require('../fixtures/auth.fixtures');
 
 const baseURL = `/api/${version}/auth`;
 
@@ -49,6 +58,9 @@ describe('Auth Endpoints', () => {
       expect(response.status).toBe(StatusCodes.OK);
       expect(response.body).toHaveProperty('accessToken');
       expect(response.body).toHaveProperty('refreshToken');
+
+      sampleAuth.accessToken = response.body.accessToken;
+      sampleAuth.refreshToken = response.body.refreshToken;
     });
 
     test('Should return with 404 - Not Found', async () => {
@@ -65,6 +77,52 @@ describe('Auth Endpoints', () => {
         .send({ email: sampleAuth.email, password: '12345678' });
 
       expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+  });
+
+  describe('POST /auth/refresh-token', () => {
+    test('Should refresh the access and refresh tokens', async () => {
+      const response = await request(app)
+        .post(`${baseURL}/refresh-token`)
+        .send({ refreshToken: sampleAuth.refreshToken });
+
+      expect(response.status).toBe(StatusCodes.OK);
+      expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('refreshToken');
+      expect(response.body.accessToken).toMatch(jwtRegex);
+      expect(response.body.refreshToken).toMatch(jwtRegex);
+    });
+
+    test('Should return 404 - Not Found', async () => {
+      const response = await request(app)
+        .post(`${baseURL}/refresh-token`)
+        .send({ refreshToken: fakeRefreshToken });
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toMatchObject({
+        name: 'ApplicationError',
+        message: messages.notFound('token'),
+      });
+    });
+
+    test('Should return 401 - Unauthorized', async () => {
+      const response = await request(app)
+        .post(`${baseURL}/refresh-token`)
+        .send({ refreshToken: invalidToken });
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+      expect(new Set(['jwt-malformed', 'invalid-signature'])).toContain(response.body.message);
+    });
+
+    test('Should return 403 - Forbidden', async () => {
+      const token = await generateExpiredToken(sampleAuth._id);
+      const response = await request(app).post(`${baseURL}/refresh-token`).send({ refreshToken: token });
+
+      expect(StatusCodes.FORBIDDEN).toBe(StatusCodes.FORBIDDEN);
+      expect(response.body).toMatchObject({
+        name: 'ApplicationError',
+        message: messages.expiredToken,
+      });
     });
   });
 
