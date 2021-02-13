@@ -39,7 +39,7 @@ const generateExpiredToken = async (id) => {
 };
 
 const generateSampleToken = async (id) => {
-  const token = jwt.signToken(
+  return jwt.signToken(
     {
       sub: { id },
       iat: moment().unix(),
@@ -49,10 +49,6 @@ const generateSampleToken = async (id) => {
       expiresIn: '5min',
     },
   );
-
-  await saveSampleToken(token);
-
-  return token;
 };
 
 module.exports = {
