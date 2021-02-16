@@ -12,7 +12,6 @@ module.exports = {
       const expiredToken = await tokensRepository.get({ token: refreshToken });
 
       Object.assign(expiredToken, {
-        ...expiredToken,
         hasExpired: true,
       });
 
@@ -32,7 +31,6 @@ module.exports = {
     }
 
     Object.assign(token, {
-      ...token,
       hasExpired: true,
     });
 
