@@ -11,8 +11,7 @@ module.exports = {
   secret: process.env.JWT_SECRET,
   accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
   refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
-  resetTokenExpiresTime: process.env.RESET_TOKEN_EXPIRES_TIME,
-  resetTokenExpiresTimeFormat: process.env.RESET_TOKEN_EXPIRES_TIME_FORMAT,
+  resetTokenExpiresIn: process.env.RESET_TOKEN_EXPIRES_IN,
   corsOptions: {
     origin: '*',
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
