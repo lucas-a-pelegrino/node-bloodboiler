@@ -5,12 +5,12 @@ const app = require('../../config/express');
 const { version } = require('../../config/env');
 
 const { messages } = require('../../helpers');
+const { TokenTypes } = require('../../models');
 
 const {
-  getSampleUser,
-  generateExpiredToken,
+  getSampleToken,
   generateSampleToken,
-  fakeRefreshToken,
+  fakeToken,
   jwtRegex,
   invalidToken,
 } = require('../fixtures/auth.fixtures');
@@ -18,6 +18,7 @@ const {
 const baseURL = `/api/${version}/auth`;
 
 let sampleAuth;
+let sampleToken;
 beforeAll(async () => {
   sampleAuth = {
     name: faker.name.findName(),
@@ -94,9 +95,7 @@ describe('Auth Endpoints', () => {
     });
 
     test('Should return 404 - Not Found', async () => {
-      const response = await request(app)
-        .post(`${baseURL}/refresh-token`)
-        .send({ refreshToken: fakeRefreshToken });
+      const response = await request(app).post(`${baseURL}/refresh-token`).send({ refreshToken: fakeToken });
 
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
       expect(response.body).toMatchObject({
@@ -115,7 +114,7 @@ describe('Auth Endpoints', () => {
     });
 
     test('Should return 403 - Forbidden', async () => {
-      const token = await generateExpiredToken(sampleAuth._id);
+      const token = await generateSampleToken(sampleAuth._id, TokenTypes.refresh, true);
       const response = await request(app).post(`${baseURL}/refresh-token`).send({ refreshToken: token });
 
       expect(StatusCodes.FORBIDDEN).toBe(StatusCodes.FORBIDDEN);
@@ -148,34 +147,40 @@ describe('Auth Endpoints', () => {
 
   describe('POST /auth/:token/reset-password', () => {
     beforeAll(async () => {
-      sampleAuth = await getSampleUser(sampleAuth._id);
+      sampleToken = await getSampleToken(sampleAuth._id, TokenTypes.reset);
     });
 
     test("Should reset the user's password", async () => {
-      const { passwordResetToken } = sampleAuth;
       const response = await request(app)
-        .post(`${baseURL}/${passwordResetToken}/reset-password`)
+        .post(`${baseURL}/${sampleToken.token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
       expect(response.status).toBe(StatusCodes.NO_CONTENT);
     });
 
-    test('Should return 401 - Unauthorized', async () => {
-      const token = await generateExpiredToken(sampleAuth._id);
+    test('Should return 403 - Forbidden', async () => {
+      const token = await generateSampleToken(sampleAuth._id, TokenTypes.reset, true);
       const response = await request(app)
         .post(`${baseURL}/${token}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
-      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+      expect(response.status).toBe(StatusCodes.FORBIDDEN);
+      expect(response.body).toMatchObject({
+        name: 'ApplicationError',
+        message: messages.expiredToken,
+      });
     });
 
     test('Should return 404 - Not Found', async () => {
-      const token = await generateSampleToken(sampleAuth._id);
       const response = await request(app)
-        .post(`${baseURL}/${token}/reset-password`)
+        .post(`${baseURL}/${fakeToken}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
 
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body).toMatchObject({
+        name: 'ApplicationError',
+        message: messages.notFound('token'),
+      });
     });
   });
 });
