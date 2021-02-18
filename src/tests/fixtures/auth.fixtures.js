@@ -1,11 +1,9 @@
 const moment = require('moment');
 
-const { usersService } = require('../../services');
 const { jwt } = require('../../utils');
 const { tokensRepository } = require('../../repositories');
-const { TokenTypes } = require('../../models');
 
-const fakeRefreshToken =
+const fakeToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOiI1ZjIzOTY5YTYzNzE5ZDI2ZjQ3YTlmZjcifSwiaWF0IjoxNjEzMDc5NzkwLCJleHAiOjE2MTM2ODQ1OTB9.BpcUzyImFNSlA-mc952LfYnBekjU3SQ45gh9qForHAk';
 
 const invalidToken =
@@ -13,49 +11,50 @@ const invalidToken =
 
 const jwtRegex = new RegExp(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/);
 
-const getSampleUser = async (id) => usersService.get(id);
+const getSampleToken = async (userId, tokenType) => tokensRepository.get({ userId, tokenType });
 
 const saveSampleToken = (token) => tokensRepository.create(token);
 
-const generateExpiredToken = async (id) => {
-  const token = jwt.signToken(
+const accessToken = (userId) => {
+  return jwt.signToken(
     {
-      sub: { id },
+      sub: { id: userId },
       iat: moment().unix(),
     },
     {
       algorithm: 'HS384',
-      expiresIn: '0s',
+      expiresIn: '5m',
+    },
+  );
+};
+
+const generateSampleToken = async (userId, tokenType, expired = false) => {
+  const token = jwt.signToken(
+    {
+      sub: { id: userId },
+      iat: moment().unix(),
+    },
+    {
+      algorithm: 'HS384',
+      expiresIn: expired ? '-30m' : '5m',
     },
   );
 
   await saveSampleToken({
     token,
-    userId: id,
-    tokenType: TokenTypes.refresh,
+    userId,
+    tokenType,
+    hasExpired: expired,
   });
 
   return token;
 };
 
-const generateSampleToken = async (id) => {
-  return jwt.signToken(
-    {
-      sub: { id },
-      iat: moment().unix(),
-    },
-    {
-      algorithm: 'HS256',
-      expiresIn: '5min',
-    },
-  );
-};
-
 module.exports = {
-  getSampleUser,
-  generateExpiredToken,
+  getSampleToken,
   generateSampleToken,
-  fakeRefreshToken,
+  accessToken,
+  fakeToken,
   jwtRegex,
   invalidToken,
 };
