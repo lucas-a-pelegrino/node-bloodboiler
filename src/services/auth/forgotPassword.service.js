@@ -1,26 +1,31 @@
-const { StatusCodes } = require('http-status-codes');
 const moment = require('moment');
-const { usersRepository } = require('../../repositories');
-const { ApplicationError } = require('../../utils');
-const { encryptor, mailer, messages } = require('../../helpers');
-const userService = require('../users/update.service');
-
-const { resetTokenExpiresTime, resetTokenExpiresTimeFormat, clientURL } = require('../../config/env');
+const { encryptor, mailer } = require('../../helpers');
+const userService = require('../users');
+const { TokenTypes } = require('../../models');
+const { tokensRepository } = require('../../repositories');
+const { resetTokenExpiresIn, clientURL } = require('../../config/env');
 
 module.exports.forgotPassword = async (email) => {
-  const user = await usersRepository.get({ email });
-  if (!user) {
-    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
-  }
+  const user = await userService.getBy({ email });
 
-  const payload = {
-    sub: user._id,
-    iat: moment().unix(),
-    exp: moment().add(resetTokenExpiresTime, resetTokenExpiresTimeFormat).unix(),
-  };
+  const token = await encryptor.generateToken(
+    {
+      sub: {
+        id: user._id,
+      },
+      iat: moment().unix(),
+    },
+    {
+      algorithm: 'HS256',
+      expiresIn: resetTokenExpiresIn,
+    },
+  );
 
-  const token = await encryptor.generateToken(payload);
-  await userService.update(user._id, { passwordResetToken: token });
+  await tokensRepository.create({
+    token,
+    userId: user._id,
+    tokenType: TokenTypes.reset,
+  });
 
   const mailContent = {
     text: `To reset your password, access the following link: ${clientURL}/${token}/reset-password`,

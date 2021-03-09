@@ -1,37 +1,53 @@
 const moment = require('moment');
 
-const { resetTokenExpiresTime, resetTokenExpiresTimeFormat } = require('../../config/env');
-
-const { usersService } = require('../../services');
 const { jwt } = require('../../utils');
+const { tokensRepository } = require('../../repositories');
 
-const getSampleUser = async (id) => usersService.get(id);
+const jwtRegex = new RegExp(/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/);
 
-const generateExpiredToken = async (id) => {
-  const payload = {
-    sub: id,
-    exp: moment()
-      .subtract(resetTokenExpiresTime, resetTokenExpiresTimeFormat)
-      .unix(),
-  };
+const getSampleToken = async (userId, tokenType) => tokensRepository.get({ userId, tokenType });
+const saveSampleToken = (token) => tokensRepository.create(token);
 
-  const token = await jwt.issue(payload);
-  await usersService.update(id, { passwordResetToken: token });
+const accessToken = (userId) => {
+  return jwt.signToken(
+    {
+      sub: { id: userId },
+      iat: moment().unix(),
+    },
+    {
+      algorithm: 'HS384',
+      expiresIn: '5m',
+    },
+  );
+};
+
+const generateSampleToken = async (userId, tokenType, expired = false, persist = true) => {
+  const token = jwt.signToken(
+    {
+      sub: { id: userId },
+      iat: moment().unix(),
+    },
+    {
+      algorithm: 'HS384',
+      expiresIn: expired ? '-30m' : '5m',
+    },
+  );
+
+  if (persist) {
+    await saveSampleToken({
+      token,
+      userId,
+      tokenType,
+      hasExpired: expired,
+    });
+  }
 
   return token;
 };
 
-const generateSampleToken = async (id) => {
-  const payload = {
-    sub: { id },
-    iat: moment().unix(),
-  };
-
-  return jwt.issue(payload);
-};
-
 module.exports = {
-  getSampleUser,
-  generateExpiredToken,
+  getSampleToken,
   generateSampleToken,
+  accessToken,
+  jwtRegex,
 };

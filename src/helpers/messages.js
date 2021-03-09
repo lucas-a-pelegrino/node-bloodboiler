@@ -3,7 +3,7 @@ module.exports.messages = {
   alreadyExists: (param) => `${param}-already-registered`,
   invalidFields: 'invalid-fields',
   invalidPassword: 'invalid-password',
-  expiredToken: 'expired-token',
+  expiredToken: 'jwt-expired',
   invalidAuthFormat: `invalid-authorization-format`,
   authMissing: `missing-authorization-header`,
   internalError: 'internal-server-error',

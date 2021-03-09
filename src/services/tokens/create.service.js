@@ -2,13 +2,14 @@ const moment = require('moment');
 
 const { accessTokenExpiresIn, refreshTokenExpiresIn } = require('../../config/env');
 const { encryptor } = require('../../helpers');
-const { usersRepository } = require('../../repositories');
+const { tokensRepository } = require('../../repositories');
+const { TokenTypes } = require('../../models');
 
 module.exports = {
   create: async (payload) => {
     const accessToken = encryptor.generateToken(
       {
-        ...payload,
+        sub: { ...payload },
         iat: moment().unix(),
       },
       {
@@ -17,11 +18,9 @@ module.exports = {
       },
     );
 
-    const refreshToken = encryptor.generateToken(
+    let refreshToken = encryptor.generateToken(
       {
-        sub: {
-          id: payload.sub.id,
-        },
+        sub: { ...payload },
         iat: moment().unix(),
       },
       {
@@ -30,14 +29,15 @@ module.exports = {
       },
     );
 
-    const user = await usersRepository.getById(payload.sub.id);
-    user.tokens.push({ access: accessToken, refresh: refreshToken });
-
-    await usersRepository.update(user);
+    refreshToken = await tokensRepository.create({
+      token: refreshToken,
+      userId: payload.id,
+      tokenType: TokenTypes.refresh,
+    });
 
     return {
       accessToken,
-      refreshToken,
+      refreshToken: refreshToken.token,
     };
   },
 };
