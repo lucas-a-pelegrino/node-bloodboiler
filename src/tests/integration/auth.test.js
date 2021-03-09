@@ -7,13 +7,8 @@ const { version } = require('../../config/env');
 const { messages } = require('../../helpers');
 const { TokenTypes } = require('../../models');
 
-const {
-  getSampleToken,
-  generateSampleToken,
-  fakeToken,
-  jwtRegex,
-  invalidToken,
-} = require('../fixtures/auth.fixtures');
+const { getSampleToken, generateSampleToken, jwtRegex } = require('../fixtures/auth.fixtures');
+const { randomMongoId } = require('../fixtures/users.fixtures');
 
 const baseURL = `/api/${version}/auth`;
 
@@ -95,6 +90,7 @@ describe('Auth Endpoints', () => {
     });
 
     test('Should return 404 - Not Found', async () => {
+      const fakeToken = await generateSampleToken(randomMongoId, TokenTypes.refresh, false, false);
       const response = await request(app).post(`${baseURL}/refresh-token`).send({ refreshToken: fakeToken });
 
       expect(response.status).toBe(StatusCodes.NOT_FOUND);
@@ -102,15 +98,6 @@ describe('Auth Endpoints', () => {
         name: 'ApplicationError',
         message: messages.notFound('token'),
       });
-    });
-
-    test('Should return 401 - Unauthorized', async () => {
-      const response = await request(app)
-        .post(`${baseURL}/refresh-token`)
-        .send({ refreshToken: invalidToken });
-
-      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
-      expect(new Set(['jwt-malformed', 'invalid-signature'])).toContain(response.body.message);
     });
 
     test('Should return 403 - Forbidden', async () => {
@@ -172,6 +159,7 @@ describe('Auth Endpoints', () => {
     });
 
     test('Should return 404 - Not Found', async () => {
+      const fakeToken = await generateSampleToken(randomMongoId, TokenTypes.reset, false, false);
       const response = await request(app)
         .post(`${baseURL}/${fakeToken}/reset-password`)
         .send({ newPassword: 'P@ssW0rd' });
