@@ -2,7 +2,7 @@ version: '3'
 
 services:
   database:
-    container_name: bloodboiler-database
+    container_name: database
     image: mongo:latest
     ports:
       - '27017:27017'
@@ -13,14 +13,13 @@ services:
     networks:
       - app-network
 
-  backend:
-    container_name: bloodboiler-backend
-    build: .
-    image: bloodboiler
+  api:
+    container_name: api
     ports:
       - '3000:3000'
     volumes:
-      - .:/opt/node_app/app
+      - .:/node/app:delegated
+      - /node/app/node_modules
     networks:
       - app-network
     depends_on:

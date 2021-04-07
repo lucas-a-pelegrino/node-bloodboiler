@@ -1,7 +1,10 @@
 version: '3'
 
 services:
-  backend:
+  api:
     environment:
       - DB_HOST=database
+    build:
+      context: .
+      target: development
     command: ['npm', 'run', 'start:dev', '-L']

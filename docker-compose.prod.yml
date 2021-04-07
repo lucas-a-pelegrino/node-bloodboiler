@@ -1,5 +1,8 @@
 version: '3'
 
 services:
-  backend:
+  api:
+    build:
+      context: .
+      target: production
     command: ['npm', 'start']
