@@ -1,5 +1,8 @@
 FROM node:14-alpine AS base
 
+# Installing the latest version of NPM for performance improvements
+RUN npm i -g npm@latest
+
 EXPOSE 3000
 
 ENV NODE_ENV=production
@@ -23,7 +26,7 @@ ENV PATH=/node/node_modules/.bin:$PATH
 
 WORKDIR /node
 
-RUN npm install --only=development
+RUN npm install
 
 WORKDIR /node/app
 
