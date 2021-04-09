@@ -5,4 +5,5 @@ services:
     build:
       context: .
       target: production
+    image: bloodboiler-mongodb:${TAG}
     command: ['npm', 'start']

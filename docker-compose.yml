@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  database:
-    container_name: database
+  mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
       - '27017:27017'
@@ -14,7 +14,7 @@ services:
       - app-network
 
   api:
-    container_name: api
+    container_name: bloodboiler-mongodb-api
     ports:
       - '3000:3000'
     volumes:
@@ -23,7 +23,7 @@ services:
     networks:
       - app-network
     depends_on:
-      - database
+      - mongodb
 
 volumes:
   dbdata:
