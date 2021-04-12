@@ -1,5 +1,6 @@
 version: '3'
 
 services:
-  backend:
+  api:
+    image: bloodboiler-mongodb:${TAG}
     command: ['npm', 'start']

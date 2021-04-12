@@ -1,4 +1,9 @@
+# Directories
 .git
 .gitignore
-
+.github
+coverage
 node_modules
+
+# Files
+*.md
