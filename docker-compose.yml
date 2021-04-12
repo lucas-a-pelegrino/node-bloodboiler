@@ -15,6 +15,10 @@ services:
 
   api:
     container_name: bloodboiler-mongodb-api
+    build:
+      context: .
+      target: ${NODE_ENV}
+    image: bloodboiler-mongodb:latest
     ports:
       - '3000:3000'
     volumes:

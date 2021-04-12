@@ -2,10 +2,4 @@ version: '3'
 
 services:
   api:
-    environment:
-      - DB_HOST=mongodb
-    build:
-      context: .
-      target: development
-    image: bloodboiler-mongodb:latest
     command: ['npm', 'run', 'start:dev', '-L']
