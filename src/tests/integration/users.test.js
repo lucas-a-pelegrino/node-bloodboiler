@@ -7,7 +7,7 @@ const app = require('../../config/express');
 const { version } = require('../../config/env');
 
 const { createSampleUsers, createSampleUser, randomMongoId } = require('../fixtures/users.fixtures');
-const { generateSampleToken } = require('../fixtures/auth.fixtures');
+const { accessToken } = require('../fixtures/auth.fixtures');
 
 const baseURL = `/api/${version}/users`;
 
@@ -16,7 +16,7 @@ let token;
 beforeAll(async () => {
   await createSampleUsers();
   const auth = await createSampleUser();
-  token = await generateSampleToken(auth._id);
+  token = await accessToken(auth._id);
 });
 
 describe('User Endpoints', () => {
@@ -254,13 +254,13 @@ describe('User Endpoints', () => {
         .set('Authorization', `Bearer some.invalid.jwt`);
 
       expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
-      expect(response.body.message).toMatch('invalid token');
+      expect(response.body.message).toMatch('invalid-token');
     });
 
     test("Should return 404 - Not Found if provided token doesn't match to any existing user", async () => {
       const page = 2;
       const perPage = 10;
-      const token = await generateSampleToken(randomMongoId);
+      const token = await accessToken(randomMongoId);
       const response = await request(app)
         .get(`${baseURL}?page=${page}&perPage=${perPage}`)
         .set('Authorization', `Bearer ${token}`);
