@@ -1,7 +1,5 @@
 version: '3'
 
 services:
-  backend:
-    environment:
-      - DB_HOST=database
+  api:
     command: ['npm', 'run', 'start:dev', '-L']

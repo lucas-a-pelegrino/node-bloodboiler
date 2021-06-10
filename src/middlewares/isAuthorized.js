@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { jwt, catchAsync, ApplicationError } = require('../utils');
 const { messages } = require('../helpers');
-const { usersRepository } = require('../repositories');
+const usersService = require('../services/users');
 
 module.exports = catchAsync(async (req, res, next) => {
   let token;
@@ -18,22 +18,13 @@ module.exports = catchAsync(async (req, res, next) => {
     throw new ApplicationError(messages.authMissing, StatusCodes.UNAUTHORIZED);
   }
 
-  let userId;
-  jwt.verify(token, (err, decoded) => {
-    if (err) {
-      throw new ApplicationError(err.message, StatusCodes.UNAUTHORIZED);
-    }
+  const {
+    sub: { id: userId },
+  } = await jwt.verifyToken(token);
 
-    userId = decoded.sub.id;
-  });
+  const user = await usersService.get(userId);
 
-  const decodedUser = await usersRepository.getById(userId);
-
-  if (!decodedUser) {
-    throw new ApplicationError(messages.notFound('user'), StatusCodes.NOT_FOUND);
-  }
-
-  req.session = { token, _id: decodedUser._id, email: decodedUser.email };
+  req.session = { token, _id: user._id, email: user.email };
 
   next();
 });

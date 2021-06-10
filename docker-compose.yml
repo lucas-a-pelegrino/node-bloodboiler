@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  database:
-    container_name: bloodboiler-database
+  mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
       - '27017:27017'
@@ -13,18 +13,21 @@ services:
     networks:
       - app-network
 
-  backend:
-    container_name: bloodboiler-backend
-    build: .
-    image: bloodboiler
+  api:
+    container_name: bloodboiler-mongodb-api
+    build:
+      context: .
+      target: ${NODE_ENV}
+    image: bloodboiler-mongodb:latest
     ports:
       - '3000:3000'
     volumes:
-      - .:/opt/node_app/app
+      - .:/node/app:delegated
+      - /node/app/node_modules
     networks:
       - app-network
     depends_on:
-      - database
+      - mongodb
 
 volumes:
   dbdata:
